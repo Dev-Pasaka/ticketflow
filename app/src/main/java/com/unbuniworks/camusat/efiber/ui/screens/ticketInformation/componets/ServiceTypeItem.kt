@@ -63,7 +63,6 @@ fun ServiceTypeItem(
                 )
                 IconButton(onClick = {
                     ticketInformationViewModel.selectService(name = item)
-                    ticketInformationViewModel.openOrCloseCalender()
                 }) {
                     if (ticketInformationViewModel.selectedService == item) {
                         Icon(

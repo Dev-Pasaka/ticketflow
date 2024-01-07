@@ -40,12 +40,13 @@ fun MoreScreenUpperSection(moreScreenViewModel: MoreScreenViewModel) {
         horizontalAlignment = Alignment.Start,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp,  top = 68.dp)
+            .padding(start = 16.dp, end = 16.dp, top = 68.dp)
     ) {
         Text(
             text = "More Applications",
             fontWeight = FontWeight.Bold,
-            fontSize = 18.sp
+            fontSize = 18.sp,
+            color = colorResource(id = R.color.button_color)
         )
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
