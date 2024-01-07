@@ -45,6 +45,7 @@ fun BottomAppBar(bottomNavigationViewModel: BottomNavigationViewModel, navContro
         shape = RoundedCornerShape(5.dp),
         modifier = Modifier
             .fillMaxWidth()
+            .height(100.dp)
             .padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
 
@@ -89,7 +90,7 @@ fun BottomAppBar(bottomNavigationViewModel: BottomNavigationViewModel, navContro
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center,
                             modifier = Modifier
-                                .padding(horizontal = 8.dp)
+                                .padding(5.dp)
                         ) {
 
                             if (bottomNavigationViewModel.bottomBarDestinations[it].title == "Request") {
@@ -108,7 +109,7 @@ fun BottomAppBar(bottomNavigationViewModel: BottomNavigationViewModel, navContro
                                     modifier = if (
                                         bottomNavigationViewModel.selectedDestination.title
                                         == bottomNavigationViewModel.bottomBarDestinations[it].title
-                                    ) Modifier.size(25.dp) else Modifier.size(20.dp)
+                                    ) Modifier.size(22.dp) else Modifier.size(20.dp)
 
                                 )
                             }
@@ -116,7 +117,7 @@ fun BottomAppBar(bottomNavigationViewModel: BottomNavigationViewModel, navContro
                             Text(
                                 text = bottomNavigationViewModel.bottomBarDestinations[it].title,
                                 color = colorResource(id = R.color.button_color),
-                                fontSize = 14.sp,
+                                fontSize = 12.sp,
                                 fontWeight = if (
                                     bottomNavigationViewModel.selectedDestination.title
                                     == bottomNavigationViewModel.bottomBarDestinations[it].title
