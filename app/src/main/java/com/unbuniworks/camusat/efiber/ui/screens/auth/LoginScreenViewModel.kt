@@ -45,7 +45,7 @@ class LoginScreenViewModel:ViewModel() {
     suspend fun login() = withContext(context = Dispatchers.Main.immediate){
         try {
             loginState = loginState.copy(isSuccessful = false, loading = true)
-            delay(3000)
+            delay(1000)
             loginState = loginState.copy(isSuccessful = true, loading = false)
             println("Here is login state $loginState")
         }catch (e:Exception){

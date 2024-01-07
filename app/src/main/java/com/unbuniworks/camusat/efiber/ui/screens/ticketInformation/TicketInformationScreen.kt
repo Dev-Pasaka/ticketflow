@@ -35,7 +35,7 @@ fun TicketInformationScreen(navController: NavHostController, ticketInformationV
     val alphaAnim = animateFloatAsState(
         targetValue = if (startAnimation) 1f else 0f,
         animationSpec = tween(
-            durationMillis = 3000
+            durationMillis = 500
         ), label = ""
     )
 
@@ -60,7 +60,7 @@ fun TicketInformationScreen(navController: NavHostController, ticketInformationV
         ) {
         Column {
             TicketInformationUpperSection(){navController.popBackStack()}
-            TicketInformationMiddleScreen()
+            TicketInformationMiddleScreen(ticketInformationViewModel =ticketInformationViewModel)
             TicketInformationLowerSection(ticketInformationViewModel =ticketInformationViewModel )
         }
     }

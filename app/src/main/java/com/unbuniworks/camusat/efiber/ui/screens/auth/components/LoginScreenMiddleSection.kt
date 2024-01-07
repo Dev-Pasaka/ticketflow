@@ -36,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -83,6 +84,7 @@ fun LoginScreenMiddleSection(
 
 @Composable
 fun Login(loginScreenViewModel: LoginScreenViewModel, actionNavigateToSelectModule: () -> Unit) {
+    val keyBoardController = LocalSoftwareKeyboardController.current
     var startAnimation by remember {
         mutableStateOf(false)
     }
@@ -140,6 +142,9 @@ fun Login(loginScreenViewModel: LoginScreenViewModel, actionNavigateToSelectModu
             modifier = Modifier.fillMaxWidth(0.75f),
         )
 
+        Spacer(modifier = Modifier.height(16.dp))
+
+
         OutlinedTextField(
             placeholder = {
                 Text(
@@ -154,7 +159,8 @@ fun Login(loginScreenViewModel: LoginScreenViewModel, actionNavigateToSelectModu
             keyboardOptions = KeyboardOptions(imeAction = Done, keyboardType = KeyboardType.Text),
             keyboardActions = KeyboardActions(
                 onDone = {
-
+                    keyBoardController?.hide()
+                    actionNavigateToSelectModule()
                 }
             ),
             colors = TextFieldDefaults.colors(
@@ -168,7 +174,7 @@ fun Login(loginScreenViewModel: LoginScreenViewModel, actionNavigateToSelectModu
             modifier = Modifier.fillMaxWidth(0.75f),
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         when (loginScreenViewModel.loginState.loading) {
             true -> {

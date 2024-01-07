@@ -11,8 +11,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.unbuniworks.camusat.efiber.R
 import com.unbuniworks.camusat.efiber.ui.screens.bottomBar.screens.tickets.TicketsScreenViewModel
 import kotlin.random.Random
 
@@ -25,12 +27,11 @@ fun WorkOrderItem(
     val item = ticketsScreenViewModel.workOrder[index]
     Surface(
         onClick = actionNavigateToTicketInformationScreen,
-        color = Color(generateRandomColor().value),
+        color = colorResource(id = ticketsScreenViewModel.colors[index]),
         shape = RoundedCornerShape(5.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-        ,
+            .padding(horizontal = 16.dp, vertical = 8.dp),
     ) {
         
         Row(

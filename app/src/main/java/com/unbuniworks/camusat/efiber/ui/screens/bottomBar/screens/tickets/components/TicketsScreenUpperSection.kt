@@ -23,7 +23,7 @@ fun TicketsScreenUpperSection(){
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 48.dp)
+            .padding(start = 16.dp, end = 16.dp, top = 48.dp)
     ) {
         
         Row(
@@ -31,7 +31,7 @@ fun TicketsScreenUpperSection(){
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 16.dp)
+                .padding(horizontal = 16.dp, vertical = 8.dp)
         ) {
             Text(
                 text = "Tickets",

@@ -55,14 +55,15 @@ fun BottomAppBar(bottomNavigationViewModel: BottomNavigationViewModel, navContro
                 .fillMaxWidth()
                 .padding(horizontal = 8.dp, vertical = 8.dp)
         ) {
-            LazyRow(
+            Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 8.dp)
             ) {
-                items(bottomNavigationViewModel.bottomBarDestinations.size) {
+
+                bottomNavigationViewModel.bottomBarDestinations.forEachIndexed {it, _ ->
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,
@@ -88,26 +89,26 @@ fun BottomAppBar(bottomNavigationViewModel: BottomNavigationViewModel, navContro
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center,
                             modifier = Modifier
-                                .padding(8.dp)
+                                .padding(horizontal = 8.dp)
                         ) {
 
-                            if (bottomNavigationViewModel.bottomBarDestinations[it].title == "Request"){
+                            if (bottomNavigationViewModel.bottomBarDestinations[it].title == "Request") {
                                 Icon(
                                     imageVector = Icons.Outlined.SignalCellularAlt,
                                     contentDescription = bottomNavigationViewModel.bottomBarDestinations[it].title,
                                     tint = colorResource(id = R.color.button_color),
-                                    modifier = Modifier.size(40.dp)
+                                    modifier = Modifier.size(20.dp)
                                 )
 
-                            }else{
+                            } else {
                                 Icon(
                                     painter = painterResource(id = bottomNavigationViewModel.bottomBarDestinations[it].icon),
                                     contentDescription = bottomNavigationViewModel.bottomBarDestinations[it].title,
                                     tint = colorResource(id = R.color.button_color),
-                                    modifier = if(
+                                    modifier = if (
                                         bottomNavigationViewModel.selectedDestination.title
                                         == bottomNavigationViewModel.bottomBarDestinations[it].title
-                                    ) Modifier.size(40.dp) else Modifier.size(30.dp)
+                                    ) Modifier.size(25.dp) else Modifier.size(20.dp)
 
                                 )
                             }
@@ -116,10 +117,12 @@ fun BottomAppBar(bottomNavigationViewModel: BottomNavigationViewModel, navContro
                                 text = bottomNavigationViewModel.bottomBarDestinations[it].title,
                                 color = colorResource(id = R.color.button_color),
                                 fontSize = 14.sp,
-                                fontWeight = if(
+                                fontWeight = if (
                                     bottomNavigationViewModel.selectedDestination.title
                                     == bottomNavigationViewModel.bottomBarDestinations[it].title
-                                    ) FontWeight.Bold else FontWeight.Normal
+                                ) FontWeight.Bold else FontWeight.Normal,
+                                modifier = Modifier
+
                             )
                         }
 

@@ -15,4 +15,7 @@
     <color name="light_gray">#E7E6E6</color>
     <color name="green">#27B96A</color>
     <color name="light_blue">#9AE0F9</color>
+    <color name="ticket_green">#92D050</color>
+    <color name="ticket_orange">#FFCC66</color>
+    <color name="ticket_maroon">#FF5050</color>
 </resources>

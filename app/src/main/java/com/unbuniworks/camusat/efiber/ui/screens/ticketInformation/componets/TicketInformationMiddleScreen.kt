@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
@@ -36,11 +37,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.times
 import com.unbuniworks.camusat.efiber.R
+import com.unbuniworks.camusat.efiber.ui.screens.ticketInformation.TicketInformationViewModel
 
 @Composable
-fun TicketInformationMiddleScreen() {
+fun TicketInformationMiddleScreen(ticketInformationViewModel: TicketInformationViewModel) {
 
     val scrollState = rememberScrollState()
+    val context = LocalContext.current
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.Start,
@@ -77,7 +80,7 @@ fun TicketInformationMiddleScreen() {
                         color = colorResource(id = R.color.button_link_color),
                     )
                     Text(
-                        text = "Kasarani Installation",
+                        text = ticketInformationViewModel.customerInformation.project,
                         fontSize = 14.sp,
                         color = Color.DarkGray
                     )
@@ -95,29 +98,35 @@ fun TicketInformationMiddleScreen() {
                         color = colorResource(id = R.color.button_link_color),
                     )
                     Text(
-                        text = "Subscriber Installation",
+                        text = ticketInformationViewModel.customerInformation.type,
                         fontSize = 14.sp,
                         color = Color.DarkGray
                     )
                 }
-
-                Column(
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
-                        .fillMaxWidth(),
+                Surface (
+                    color = colorResource(id = R.color.background),
+                    onClick = {
+                    }
                 ) {
-                    Text(
-                        text = "Address",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 16.sp,
-                        color = colorResource(id = R.color.button_link_color),
-                    )
-                    Text(
-                        text = "Mirema drive 289",
-                        fontSize = 14.sp,
-                        color = colorResource(id = R.color.light_blue),
-                        textDecoration = TextDecoration.Underline
-                    )
+
+                    Column(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                            .fillMaxWidth(),
+                    ) {
+                        Text(
+                            text = "Address",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 16.sp,
+                            color = colorResource(id = R.color.button_link_color),
+                        )
+                        Text(
+                            text = ticketInformationViewModel.customerInformation.address,
+                            fontSize = 14.sp,
+                            color = colorResource(id = R.color.light_blue),
+                            textDecoration = TextDecoration.Underline
+                        )
+                    }
                 }
 
                 Column(
@@ -132,29 +141,36 @@ fun TicketInformationMiddleScreen() {
                         color = colorResource(id = R.color.button_link_color),
                     )
                     Text(
-                        text = "Muhamid Tali",
+                        text = ticketInformationViewModel.customerInformation.client,
                         fontSize = 14.sp,
                         color = Color.DarkGray
                     )
                 }
 
-                Column(
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
-                        .fillMaxWidth(),
-                ) {
-                    Text(
-                        text = "Contact",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 16.sp,
-                        color = colorResource(id = R.color.button_link_color),
-                    )
-                    Text(
-                        text = "0728671678",
-                        fontSize = 14.sp,
-                        color = colorResource(id = R.color.light_blue),
-                        textDecoration = TextDecoration.Underline
-                    )
+                Surface (
+                    color = colorResource(id = R.color.background),
+                    onClick = {
+                        ticketInformationViewModel.launchPhoneDial(context = context)
+                    }
+                ){
+                    Column(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                            .fillMaxWidth(),
+                    ) {
+                        Text(
+                            text = "Contact",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 16.sp,
+                            color = colorResource(id = R.color.button_link_color),
+                        )
+                        Text(
+                            text = ticketInformationViewModel.customerInformation.contact,
+                            fontSize = 14.sp,
+                            color = colorResource(id = R.color.light_blue),
+                            textDecoration = TextDecoration.Underline
+                        )
+                    }
                 }
 
                 Column(
@@ -169,7 +185,7 @@ fun TicketInformationMiddleScreen() {
                         color = colorResource(id = R.color.button_link_color),
                     )
                     Text(
-                        text = "Huawei wifi band ZTE 7823",
+                        text = ticketInformationViewModel.customerInformation.equipment,
                         fontSize = 14.sp,
                         color = Color.DarkGray
                     )

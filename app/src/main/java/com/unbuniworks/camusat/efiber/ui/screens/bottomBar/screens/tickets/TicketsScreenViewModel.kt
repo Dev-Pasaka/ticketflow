@@ -4,6 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.unbuniworks.camusat.efiber.R
 import com.unbuniworks.camusat.efiber.ui.screens.bottomBar.screens.tickets.model.WorkOrder
 
 class TicketsScreenViewModel():ViewModel() {
@@ -29,6 +30,15 @@ class TicketsScreenViewModel():ViewModel() {
                 id = "112743442",
                 name = "Sarit Center"
             )
-        )
+        //emptyList<WorkOrder>()
+
+    )
+    )
+    val colors = listOf(
+        R.color.ticket_green,
+        R.color.ticket_green,
+        R.color.ticket_orange,
+        R.color.ticket_maroon,
+        R.color.ticket_maroon,
     )
 }
