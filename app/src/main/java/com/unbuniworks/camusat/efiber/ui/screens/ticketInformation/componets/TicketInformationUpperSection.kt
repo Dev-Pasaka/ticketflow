@@ -1,5 +1,6 @@
 package com.unbuniworks.camusat.efiber.ui.screens.ticketInformation.componets
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -17,11 +18,13 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -84,18 +87,19 @@ fun TicketInformationUpperSection(goBack:() -> Unit) {
         }
         Spacer(modifier = Modifier.width(16.dp))
 
-        Button(
+        OutlinedButton(
             onClick = { /*TODO*/ },
             colors = ButtonDefaults.buttonColors(
-                containerColor = colorResource(id = R.color.light_gray),
-                contentColor = colorResource(id = R.color.green)
+                containerColor = Color.White,
+                contentColor = colorResource(id = R.color.ticket_orange),
             ),
+            border = BorderStroke(width = 1.dp, color = colorResource(id = R.color.ticket_orange)),
             shape = RoundedCornerShape(5.dp),
 
             ) {
 
             Text(
-                text = "Open",
+                text = "Scheduled",
             )
 
         }

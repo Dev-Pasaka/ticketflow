@@ -46,6 +46,21 @@ class TicketInformationViewModel():ViewModel() {
     var isCalenderOpen by mutableStateOf(false)
         private set
 
+    var macId by mutableStateOf("")
+        private set
+    var serialNo by mutableStateOf("")
+        private set
+    var gponId by mutableStateOf("")
+        private set
+
+    var comments by mutableStateOf("")
+        private set
+
+    fun updateMacId(id:String){macId = id}
+    fun updateSerialNo(serial:String){serialNo = serial}
+    fun updateGponId(serial:String){gponId = serial}
+    fun updateComments(comment:String){comments = comment}
+
     fun openOrCloseCalender(){
         isCalenderOpen = !isCalenderOpen
     }

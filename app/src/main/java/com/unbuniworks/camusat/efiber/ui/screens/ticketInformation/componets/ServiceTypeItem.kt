@@ -30,7 +30,6 @@ import com.unbuniworks.camusat.efiber.ui.screens.ticketInformation.TicketInforma
 fun ServiceTypeItem(
     index:Int,
     ticketInformationViewModel: TicketInformationViewModel,
-    content: @Composable () -> Unit
 ) {
     val item = ticketInformationViewModel.listOfServices[index]
     Column {
@@ -87,8 +86,11 @@ fun ServiceTypeItem(
             }
 
         }
-        if (item == "Schedule Survey"){
-            content()
+
+        if (item == "Schedule Survey" && ticketInformationViewModel.selectedService == item){
+            ScheduleInstallationItem(ticketInformationViewModel = ticketInformationViewModel)
+        }else if(item == "Installation" && ticketInformationViewModel.selectedService == item){
+            InstallationItem(ticketInformationViewModel = ticketInformationViewModel)
         }
     }
 }

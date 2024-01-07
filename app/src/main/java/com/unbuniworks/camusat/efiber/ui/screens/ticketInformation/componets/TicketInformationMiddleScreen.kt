@@ -63,7 +63,7 @@ fun TicketInformationMiddleScreen(ticketInformationViewModel: TicketInformationV
             shape = RoundedCornerShape(5.dp),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(320.dp)
+                .height(250.dp)
                 .verticalScroll(state = scrollState),
         ) {
             Column {
@@ -123,8 +123,7 @@ fun TicketInformationMiddleScreen(ticketInformationViewModel: TicketInformationV
                         Text(
                             text = ticketInformationViewModel.customerInformation.address,
                             fontSize = 14.sp,
-                            color = colorResource(id = R.color.light_blue),
-                            textDecoration = TextDecoration.Underline
+                            color = Color.DarkGray,
                         )
                     }
                 }
@@ -167,7 +166,7 @@ fun TicketInformationMiddleScreen(ticketInformationViewModel: TicketInformationV
                         Text(
                             text = ticketInformationViewModel.customerInformation.contact,
                             fontSize = 14.sp,
-                            color = colorResource(id = R.color.light_blue),
+                            color = Color.Blue,
                             textDecoration = TextDecoration.Underline
                         )
                     }

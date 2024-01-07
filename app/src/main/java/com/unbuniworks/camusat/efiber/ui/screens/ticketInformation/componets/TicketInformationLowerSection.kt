@@ -27,15 +27,7 @@ fun TicketInformationLowerSection(ticketInformationViewModel: TicketInformationV
         modifier = Modifier.fillMaxWidth()
     ){
         items(count = ticketInformationViewModel.listOfServices.size){
-            ServiceTypeItem(index = it, ticketInformationViewModel =ticketInformationViewModel ){
-               if (ticketInformationViewModel.selectedService == "Schedule Survey"){
-                    ScheduleInstallationItem(ticketInformationViewModel = ticketInformationViewModel)
-               }else{
-                   Column {
-
-                   }
-               }
-            }
+            ServiceTypeItem(index = it, ticketInformationViewModel =ticketInformationViewModel )
         }
     }
     
