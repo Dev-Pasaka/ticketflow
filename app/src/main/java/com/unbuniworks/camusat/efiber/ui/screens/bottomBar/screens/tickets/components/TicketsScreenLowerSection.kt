@@ -14,7 +14,10 @@ import com.unbuniworks.camusat.efiber.R
 import com.unbuniworks.camusat.efiber.ui.screens.bottomBar.screens.tickets.TicketsScreenViewModel
 
 @Composable
-fun TicketsScreenLowerSection(ticketsScreenViewModel: TicketsScreenViewModel) {
+fun TicketsScreenLowerSection(
+    ticketsScreenViewModel: TicketsScreenViewModel,
+    actionNavigateToTicketInformationScreen: () -> Unit
+) {
     TicketsScreenUpperSection()
     if(ticketsScreenViewModel.workOrder.isEmpty()){
 
@@ -35,7 +38,10 @@ fun TicketsScreenLowerSection(ticketsScreenViewModel: TicketsScreenViewModel) {
     }else{
         LazyColumn{
             items(count = ticketsScreenViewModel.workOrder.size){
-                WorkOrderItem(index = it, ticketsScreenViewModel =ticketsScreenViewModel )
+                WorkOrderItem(
+                    index = it,
+                    ticketsScreenViewModel =ticketsScreenViewModel,
+                    actionNavigateToTicketInformationScreen = actionNavigateToTicketInformationScreen                    )
             }
         }
     }

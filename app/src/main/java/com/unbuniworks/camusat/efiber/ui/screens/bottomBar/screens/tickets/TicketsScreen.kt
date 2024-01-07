@@ -15,14 +15,14 @@ import com.unbuniworks.camusat.efiber.navigation.BottomNavigationViewModel
 import com.unbuniworks.camusat.efiber.ui.commonComponents.BottomAppBar
 import com.unbuniworks.camusat.efiber.ui.commonComponents.TopAppBar
 import com.unbuniworks.camusat.efiber.ui.screens.bottomBar.screens.tickets.components.TicketsScreenLowerSection
-import com.unbuniworks.camusat.efiber.ui.screens.bottomBar.screens.tickets.components.TicketsScreenUpperSection
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun TicketsScreen(
     bottomNavigationViewModel: BottomNavigationViewModel,
     ticketsScreenViewModel: TicketsScreenViewModel,
-    navController: NavHostController
+    navController: NavHostController,
+    actionNavigateToTicketInformationScreen:() -> Unit
 ) {
 
     Scaffold(
@@ -47,7 +47,10 @@ fun TicketsScreen(
             modifier = Modifier.fillMaxSize()
         ) {
 
-            TicketsScreenLowerSection(ticketsScreenViewModel = ticketsScreenViewModel)
+            TicketsScreenLowerSection(
+                ticketsScreenViewModel = ticketsScreenViewModel,
+                actionNavigateToTicketInformationScreen = actionNavigateToTicketInformationScreen
+            )
             
         }
     }

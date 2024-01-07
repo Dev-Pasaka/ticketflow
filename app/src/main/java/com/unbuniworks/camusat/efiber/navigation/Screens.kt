@@ -14,5 +14,8 @@ sealed class Screen(val route:String){
     data object Requests: Screen("requests_screen")
     data object More: Screen("more_screen")
 
+    //Other screens
+    data object TicketInformation: Screen("ticket_information_screen")
+
 
 }

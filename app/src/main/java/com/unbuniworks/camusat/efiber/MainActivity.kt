@@ -1,7 +1,10 @@
 package com.unbuniworks.camusat.efiber
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
+import android.window.OnBackInvokedDispatcher
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -39,7 +42,31 @@ class MainActivity : ComponentActivity() {
                 NavGraph(navController = navController)
 
             }
+
         }
+    }
+
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        showExitConfirmationDialog()
+    }
+
+    private fun showExitConfirmationDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Exit App")
+        builder.setMessage("Are you sure you want to exit?")
+        builder.setPositiveButton("Yes") { _, _ ->
+            // Exit the app
+            finishAffinity()
+            super.onBackPressed()
+        }
+        builder.setNegativeButton("Cancel") { dialogInterface, _ ->
+            // Dismiss the dialog (do nothing)
+            dialogInterface.dismiss()
+        }
+
+        val dialog = builder.create()
+        dialog.show()
     }
 }
 

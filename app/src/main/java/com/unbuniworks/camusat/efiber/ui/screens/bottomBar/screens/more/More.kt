@@ -15,11 +15,14 @@ import com.unbuniworks.camusat.efiber.R
 import com.unbuniworks.camusat.efiber.navigation.BottomNavigationViewModel
 import com.unbuniworks.camusat.efiber.ui.commonComponents.BottomAppBar
 import com.unbuniworks.camusat.efiber.ui.commonComponents.TopAppBar
+import com.unbuniworks.camusat.efiber.ui.screens.bottomBar.screens.more.components.MoreScreenBodySection
+import com.unbuniworks.camusat.efiber.ui.screens.bottomBar.screens.more.components.MoreScreenUpperSection
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MoreScreen(
     bottomNavigationViewModel: BottomNavigationViewModel,
+    moreScreenViewModel: MoreScreenViewModel,
     navController: NavHostController
 ){
 
@@ -39,12 +42,12 @@ fun MoreScreen(
 
     ) {
         Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.Start,
             modifier = Modifier.fillMaxSize()
         ) {
-            Text(text = "More", color = colorResource(id = R.color.button_color))
-
+            MoreScreenUpperSection(moreScreenViewModel = moreScreenViewModel)
+            MoreScreenBodySection(moreScreenViewModel = moreScreenViewModel)
         }
     }
 }
