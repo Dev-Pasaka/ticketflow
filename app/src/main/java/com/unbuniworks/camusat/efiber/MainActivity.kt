@@ -25,6 +25,8 @@ import com.unbuniworks.camusat.efiber.ui.theme.CamusatTheme
 
 class MainActivity : ComponentActivity() {
     private lateinit var navController: NavHostController
+    private var backClickCount = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -46,9 +48,20 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    @SuppressLint("MissingSuperCall")
     override fun onBackPressed() {
-        showExitConfirmationDialog()
+        if (backClickCount == 1) {
+            // If it's the second back click within a certain time, show exit confirmation dialog
+            showExitConfirmationDialog()
+            resetBackClickCount()
+        } else {
+            // Increment back click count and schedule reset
+            backClickCount++
+
+        }
+    }
+
+    private fun resetBackClickCount() {
+        backClickCount = 0
     }
 
     private fun showExitConfirmationDialog() {
