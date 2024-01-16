@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,16 +25,19 @@ fun LoginScreenLowerSection(){
     ){
         Text(
             text = "Powered by ",
-            color = Color.DarkGray
+            color = Color.DarkGray,
+            style = MaterialTheme.typography.bodyLarge,
         )
         Text(
             text = "Ubuni",
             color = Color.Black,
-            fontWeight = FontWeight.Bold
-        )
+            fontWeight = FontWeight.Bold,
+            style = MaterialTheme.typography.bodyLarge,
+            )
         Text(
             text = "Works",
-            color = Color.DarkGray
-        )
+            color = Color.DarkGray,
+            style = MaterialTheme.typography.bodyLarge,
+            )
     }
 }

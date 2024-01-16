@@ -1,7 +1,6 @@
 package com.unbuniworks.camusat.efiber.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -10,19 +9,23 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.unbuniworks.camusat.efiber.ui.screens.auth.LoginScreenViewModel
 import com.unbuniworks.camusat.efiber.ui.screens.auth.LoginsScreen
-import com.unbuniworks.camusat.efiber.ui.screens.bottomBar.screens.home.HomeScreen
+import com.unbuniworks.camusat.efiber.ui.screens.bottomBar.screens.material.Material
+import com.unbuniworks.camusat.efiber.ui.screens.bottomBar.screens.material.MaterialScreenViewModel
 import com.unbuniworks.camusat.efiber.ui.screens.bottomBar.screens.more.MoreScreen
 import com.unbuniworks.camusat.efiber.ui.screens.bottomBar.screens.more.MoreScreenViewModel
-import com.unbuniworks.camusat.efiber.ui.screens.bottomBar.screens.projects.ProjectsScreen
-import com.unbuniworks.camusat.efiber.ui.screens.bottomBar.screens.requests.RequestsScreen
+import com.unbuniworks.camusat.efiber.ui.screens.bottomBar.screens.profile.ProfileScreen
+import com.unbuniworks.camusat.efiber.ui.screens.bottomBar.screens.schedule.Schedule
 import com.unbuniworks.camusat.efiber.ui.screens.bottomBar.screens.tickets.TicketsScreen
 import com.unbuniworks.camusat.efiber.ui.screens.bottomBar.screens.tickets.TicketsScreenViewModel
+import com.unbuniworks.camusat.efiber.ui.screens.bottomBar.screens.notifications.NotificationsScreen
+import com.unbuniworks.camusat.efiber.ui.screens.bottomBar.screens.notifications.NotificationsViewModel
+import com.unbuniworks.camusat.efiber.ui.screens.bottomBar.screens.profile.ProfileScreenViewModel
+import com.unbuniworks.camusat.efiber.ui.screens.bottomBar.screens.schedule.ScheduleScreenViewModel
 import com.unbuniworks.camusat.efiber.ui.screens.selecteModule.SelectModule
 import com.unbuniworks.camusat.efiber.ui.screens.selecteModule.SelectModuleViewModel
 import com.unbuniworks.camusat.efiber.ui.screens.splashScreen.SplashScreen
 import com.unbuniworks.camusat.efiber.ui.screens.ticketInformation.TicketInformationScreen
 import com.unbuniworks.camusat.efiber.ui.screens.ticketInformation.TicketInformationViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
@@ -65,15 +68,9 @@ fun NavGraph(navController: NavHostController) {
             }
         }
 
-        navigation(startDestination = Screen.Home.route, route = "bottom_navigation"){
+        navigation(startDestination = Screen.Tickets.route, route = "bottom_navigation"){
 
 
-            composable(route = Screen.Home.route){
-                HomeScreen(bottomNavigationViewModel = bottomNavigationViewModel, navController = navController)
-            }
-            composable(route = Screen.Projects.route){
-                ProjectsScreen(bottomNavigationViewModel = bottomNavigationViewModel, navController = navController)
-            }
             composable(route = Screen.Tickets.route){
                 val ticketsScreenViewModel = viewModel<TicketsScreenViewModel>()
                 TicketsScreen(
@@ -82,10 +79,18 @@ fun NavGraph(navController: NavHostController) {
                     navController = navController
                 ){
                     navController.navigate(route = "ticket_information")
-                }
+                }            }
+            composable(route = Screen.Schedule.route){
+                val scheduleScreenViewModel = viewModel<ScheduleScreenViewModel>()
+                Schedule(bottomNavigationViewModel = bottomNavigationViewModel, scheduleScreenViewModel = scheduleScreenViewModel, navController = navController)
             }
-            composable(route = Screen.Requests.route){
-                RequestsScreen(bottomNavigationViewModel = bottomNavigationViewModel, navController = navController)
+            composable(route = Screen.Material.route){
+                val materialScreenViewModel = viewModel<MaterialScreenViewModel>()
+                Material(
+                    bottomNavigationViewModel = bottomNavigationViewModel,
+                    navController = navController,
+                    materialScreenViewModel = materialScreenViewModel
+                )
             }
             composable(route = Screen.More.route){
                 val moreScreenViewModel = viewModel<MoreScreenViewModel>()
@@ -104,5 +109,23 @@ fun NavGraph(navController: NavHostController) {
                 TicketInformationScreen(navController = navController, ticketInformationViewModel = ticketInformationViewModel)
             }
         }
+
+        navigation(startDestination = Screen.Notifications.route, route = "notification_screen"){
+            composable(route = Screen.Notifications.route){
+                val notificationsViewModel = viewModel<NotificationsViewModel>()
+
+                NotificationsScreen(navController = navController, notificationsViewModel = notificationsViewModel)
+            }
+        }
+
+        navigation(startDestination = Screen.Profile.route, route = "profile_screen"){
+            composable(route = Screen.Profile.route){
+                val profileScreenViewModel = viewModel<ProfileScreenViewModel>()
+
+                ProfileScreen(navController = navController, profileScreenViewModel = profileScreenViewModel)
+            }
+        }
+
+
     }
 }

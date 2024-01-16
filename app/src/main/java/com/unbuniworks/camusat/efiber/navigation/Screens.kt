@@ -7,15 +7,16 @@ sealed class Screen(val route:String){
     data object SelectModule: Screen("select_module_screen")
 
     //Bottom Navigation Screen
-    data object Container: Screen("container_screen")
-    data object Home: Screen("home_screen")
-    data object Projects: Screen("projects_screen")
-    data object Tickets: Screen("tickets_screen")
-    data object Requests: Screen("requests_screen")
-    data object More: Screen("more_screen")
+    data object Tickets: Screen("tickets")
+    data object Schedule: Screen("schedule")
+    data object Material: Screen("material")
+    data object More: Screen("more")
+
 
     //Other screens
     data object TicketInformation: Screen("ticket_information_screen")
+    data object Notifications: Screen("notifications")
+    data object Profile: Screen("profile")
 
 
 }

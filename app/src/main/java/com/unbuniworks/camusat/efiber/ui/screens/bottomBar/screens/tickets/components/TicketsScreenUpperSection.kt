@@ -25,13 +25,13 @@ fun TicketsScreenUpperSection(){
             .fillMaxWidth()
             .padding(start = 16.dp, end = 16.dp, top = 48.dp)
     ) {
-        
+
+        Spacer(modifier = Modifier.height(16.dp))
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp)
         ) {
             Text(
                 text = "Tickets",
@@ -48,13 +48,13 @@ fun TicketsScreenUpperSection(){
             
         }
 
+        Spacer(modifier = Modifier.height(16.dp))
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp)
         ) {
             Text(
                 text = "Work Orders",

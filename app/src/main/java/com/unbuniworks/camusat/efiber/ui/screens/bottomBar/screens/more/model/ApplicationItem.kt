@@ -4,5 +4,5 @@ import androidx.compose.ui.graphics.vector.ImageVector
 
 data class ApplicationItem(
     val name:String,
-    val icon:ImageVector
+    val icon:Int
 )

@@ -41,7 +41,7 @@ import com.unbuniworks.camusat.efiber.R
 import com.unbuniworks.camusat.efiber.ui.screens.ticketInformation.TicketInformationViewModel
 
 @Composable
-fun InstallationItem(ticketInformationViewModel: TicketInformationViewModel){
+fun InstallationItem(ticketInformationViewModel: TicketInformationViewModel) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -58,9 +58,12 @@ fun InstallationItem(ticketInformationViewModel: TicketInformationViewModel){
             },
             value = ticketInformationViewModel.macId,
             onValueChange = {
-                            ticketInformationViewModel.updateMacId(id = it)
+                ticketInformationViewModel.updateMacId(id = it)
             },
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next, keyboardType = KeyboardType.Text),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next,
+                keyboardType = KeyboardType.Text
+            ),
             keyboardActions = KeyboardActions(
                 onDone = {
                 }
@@ -88,7 +91,10 @@ fun InstallationItem(ticketInformationViewModel: TicketInformationViewModel){
             onValueChange = {
                 ticketInformationViewModel.updateSerialNo(serial = it)
             },
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next, keyboardType = KeyboardType.Text),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next,
+                keyboardType = KeyboardType.Text
+            ),
             keyboardActions = KeyboardActions(
                 onDone = {
                 }
@@ -116,7 +122,10 @@ fun InstallationItem(ticketInformationViewModel: TicketInformationViewModel){
             onValueChange = {
                 ticketInformationViewModel.updateGponId(serial = it)
             },
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next, keyboardType = KeyboardType.Text),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next,
+                keyboardType = KeyboardType.Text
+            ),
             keyboardActions = KeyboardActions(
                 onDone = {
                 }
@@ -133,291 +142,265 @@ fun InstallationItem(ticketInformationViewModel: TicketInformationViewModel){
         )
 
         Spacer(modifier = Modifier.height(8.dp))
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
+        Surface(
+            onClick = { /*TODO*/ },
+            shape = RoundedCornerShape(5.dp),
+            color = Color.Gray,
         ) {
-            Button(
-                colors  = ButtonDefaults.buttonColors(
-                    containerColor = Color.Gray,
-                    contentColor = Color.White
-                ),
-                shape = RoundedCornerShape(5.dp),
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
-                    .fillMaxWidth(0.65f)
-                    .height(60.dp),
-            onClick = { /*TODO*/ }
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp, vertical = 8.dp)
             ) {
+
                 Text(
                     text = "Upload Picture: Router",
                     fontSize = 14.sp
                 )
-            }
-            Spacer(modifier = Modifier.width(5.dp))
-            Image(
-                imageVector = Icons.Outlined.Router,
-                contentDescription ="Image",
-                modifier = Modifier
-                    .width(100.dp)
-                    .height(60.dp)
-            )
 
+                Spacer(modifier = Modifier.width(5.dp))
+                Image(
+                    painter = painterResource(id = R.drawable.image),
+                    contentDescription = "Image",
+                    modifier = Modifier
+                        .width(100.dp)
+                        .height(60.dp)
+                )
+
+            }
         }
 
         Spacer(modifier = Modifier.height(8.dp))
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
+        Surface(
+            onClick = { /*TODO*/ },
+            shape = RoundedCornerShape(5.dp),
+            color = colorResource(id = R.color.light_gray),
         ) {
-            Button(
-                colors  = ButtonDefaults.buttonColors(
-                    containerColor = colorResource(id = R.color.light_gray),
-                    contentColor = Color.DarkGray
-                ),
-                shape = RoundedCornerShape(5.dp),
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
-                    .fillMaxWidth(0.65f)
-                    .height(60.dp),
-                onClick = { /*TODO*/ }
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp, vertical = 8.dp)
             ) {
+
                 Text(
                     text = "Upload Picture: Router Back with ID",
                     fontSize = 14.sp
                 )
-            }
-            Spacer(modifier = Modifier.width(5.dp))
-            Image(
-                imageVector =  Icons.Outlined.CameraAlt,
-                contentDescription ="Image",
-                modifier = Modifier
-                    .width(100.dp)
-                    .height(60.dp)
-            )
 
+                Spacer(modifier = Modifier.width(5.dp))
+                Image(
+                    painter = painterResource(id = R.drawable.photo),
+                    contentDescription = "Image",
+                    modifier = Modifier
+                        .width(100.dp)
+                        .height(60.dp)
+                )
+
+            }
         }
 
         Spacer(modifier = Modifier.height(8.dp))
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            Button(
-                colors  = ButtonDefaults.buttonColors(
-                    containerColor = colorResource(id = R.color.light_gray),
-                    contentColor = Color.DarkGray
 
-                ),
-                shape = RoundedCornerShape(5.dp),
+        Surface(
+            onClick = { /*TODO*/ },
+            shape = RoundedCornerShape(5.dp),
+            color = colorResource(id = R.color.light_gray),
+        ) {
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
-                    .fillMaxWidth(0.65f)
-                    .height(60.dp),
-                onClick = { /*TODO*/ }
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp, vertical = 8.dp)
             ) {
+
                 Text(
                     text = "Upload Image: Signal 1310 dBm",
                     fontSize = 14.sp
                 )
-            }
-            Spacer(modifier = Modifier.width(5.dp))
-            Image(
-                imageVector =  Icons.Outlined.Image,
-                contentDescription ="Image",
-                modifier = Modifier
-                    .width(100.dp)
-                    .height(60.dp)
-            )
 
+                Spacer(modifier = Modifier.width(5.dp))
+                Image(
+                    painter = painterResource(id = R.drawable.image),
+                    contentDescription = "Image",
+                    modifier = Modifier
+                        .width(100.dp)
+                        .height(60.dp)
+                )
+
+            }
         }
 
         Spacer(modifier = Modifier.height(8.dp))
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
+
+        Surface(
+            onClick = { /*TODO*/ },
+            shape = RoundedCornerShape(5.dp),
+            color = colorResource(id = R.color.light_gray),
         ) {
-            Button(
-                colors  = ButtonDefaults.buttonColors(
-                    containerColor = colorResource(id = R.color.light_gray),
-                    contentColor = Color.DarkGray
-                ),
-                shape = RoundedCornerShape(5.dp),
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
-                    .fillMaxWidth(0.65f)
-                    .height(60.dp),
-                onClick = { /*TODO*/ }
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp, vertical = 8.dp)
             ) {
+
                 Text(
                     text = "Upload Image: Signal 1490 dBm",
                     fontSize = 14.sp
                 )
+
+                Spacer(modifier = Modifier.width(5.dp))
+                Image(
+                    painter = painterResource(id = R.drawable.image),
+                    contentDescription = "Image",
+                    modifier = Modifier
+                        .width(100.dp)
+                        .height(60.dp)
+                )
+
             }
-            Spacer(modifier = Modifier.width(5.dp))
-            Image(
-                imageVector =  Icons.Outlined.Image,
-                contentDescription ="Image",
-                modifier = Modifier
-                    .width(100.dp)
-                    .height(60.dp)
-            )
-
         }
-
         Spacer(modifier = Modifier.height(8.dp))
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
+        Surface(
+            onClick = { /*TODO*/ },
+            shape = RoundedCornerShape(5.dp),
+            color = colorResource(id = R.color.light_gray),
         ) {
-            Button(
-                colors  = ButtonDefaults.buttonColors(
-                    containerColor = colorResource(id = R.color.light_gray),
-                    contentColor = Color.DarkGray
 
-                ),
-                shape = RoundedCornerShape(5.dp),
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
-                    .fillMaxWidth(0.65f)
-                    .height(60.dp),
-                onClick = { /*TODO*/ }
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp, vertical = 8.dp)
             ) {
+
                 Text(
                     text = "Upload Image: Customer ID",
                     fontSize = 14.sp
                 )
-            }
-            Spacer(modifier = Modifier.width(5.dp))
-            Image(
-                imageVector =  Icons.Outlined.Image,
-                contentDescription ="Image",
-                modifier = Modifier
-                    .width(100.dp)
-                    .height(60.dp)
-            )
 
+                Spacer(modifier = Modifier.width(5.dp))
+                Image(
+                    painter = painterResource(id = R.drawable.image),
+                    contentDescription = "Image",
+                    modifier = Modifier
+                        .width(100.dp)
+                        .height(60.dp)
+                )
+
+            }
         }
 
         Spacer(modifier = Modifier.height(8.dp))
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            Button(
-                colors  = ButtonDefaults.buttonColors(
-                    containerColor = colorResource(id = R.color.light_gray),
-                    contentColor = Color.DarkGray
 
-                ),
-                shape = RoundedCornerShape(5.dp),
+        Surface(
+            onClick = { /*TODO*/ },
+            shape = RoundedCornerShape(5.dp),
+            color = colorResource(id = R.color.light_gray),
+        ) {
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
-                    .fillMaxWidth(0.65f)
-                    .height(60.dp),
-                onClick = { /*TODO*/ }
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp, vertical = 8.dp)
             ) {
+
                 Text(
                     text = "Upload Picture: Client form",
                     fontSize = 14.sp
                 )
-            }
-            Spacer(modifier = Modifier.width(5.dp))
-            Image(
-                imageVector =  Icons.Outlined.Image,
-                contentDescription ="Image",
-                modifier = Modifier
-                    .width(100.dp)
-                    .height(60.dp)
-            )
 
-        }
-
-        Spacer(modifier = Modifier.height(8.dp))
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            Surface(
-                color = colorResource(id = R.color.light_gray),
-                shape = RoundedCornerShape(5.dp),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(60.dp),
-            ) {
-                Row (
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
+                Spacer(modifier = Modifier.width(5.dp))
+                Image(
+                    painter = painterResource(id = R.drawable.image),
+                    contentDescription = "Image",
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp)
-                ){
-                    Text(
-                        text = "Scan QR: FAT Junction",
-                        fontSize = 14.sp
-                    )
+                        .width(100.dp)
+                        .height(60.dp)
+                )
 
-                    Spacer(modifier = Modifier.width(5.dp))
-                    Image(
-                        imageVector =  Icons.Outlined.QrCode2,
-                        contentDescription ="Image",
-                        modifier = Modifier
-                            .width(100.dp)
-                            .height(60.dp)
-                    )
-                }
             }
-
-
         }
 
 
         Spacer(modifier = Modifier.height(8.dp))
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
+
+        Surface(
+            onClick = { /*TODO*/ },
+            shape = RoundedCornerShape(5.dp),
+            color = colorResource(id = R.color.light_gray),
         ) {
-            Surface(
-                color = colorResource(id = R.color.light_gray),
-                shape = RoundedCornerShape(5.dp),
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(60.dp),
+                    .padding(horizontal = 8.dp, vertical = 8.dp)
             ) {
-                Row (
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
+
+                Text(
+                    text = "Scan QR: FAT Junction",
+                    fontSize = 14.sp
+                )
+
+                Spacer(modifier = Modifier.width(5.dp))
+                Image(
+                    painter = painterResource(id = R.drawable.qr_code),
+                    contentDescription = "Image",
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp)
-                ){
-                    Text(
-                        text = "GPS Co-ordinates: Client site",
-                        fontSize = 14.sp
-                    )
+                        .width(100.dp)
+                        .height(60.dp)
+                )
 
-                    Spacer(modifier = Modifier.width(5.dp))
-                    Image(
-                        imageVector =  Icons.Outlined.SatelliteAlt,
-                        contentDescription ="Image",
-                        modifier = Modifier
-                            .width(100.dp)
-                            .height(60.dp)
-                    )
-                }
             }
+        }
 
 
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Surface(
+            onClick = { /*TODO*/ },
+            shape = RoundedCornerShape(5.dp),
+            color = colorResource(id = R.color.light_gray),
+        ) {
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp, vertical = 8.dp)
+            ) {
+
+                Text(
+                    text = "GPS Co-ordinates: Client site",
+                    fontSize = 14.sp
+                )
+
+                Spacer(modifier = Modifier.width(5.dp))
+                Image(
+                    painter = painterResource(id = R.drawable.map),
+                    contentDescription = "Image",
+                    modifier = Modifier
+                        .width(100.dp)
+                        .height(60.dp)
+                )
+
+            }
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -439,7 +422,10 @@ fun InstallationItem(ticketInformationViewModel: TicketInformationViewModel){
             onValueChange = {
                 ticketInformationViewModel.updateComments(comment = it)
             },
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next, keyboardType = KeyboardType.Text),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next,
+                keyboardType = KeyboardType.Text
+            ),
             keyboardActions = KeyboardActions(
                 onDone = {
                 }
@@ -470,7 +456,6 @@ fun InstallationItem(ticketInformationViewModel: TicketInformationViewModel){
                 text = "Submit Installation",
             )
         }
-
 
 
     }

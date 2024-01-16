@@ -87,10 +87,19 @@ fun ServiceTypeItem(
 
         }
 
-        if (item == "Schedule Survey" && ticketInformationViewModel.selectedService == item){
+        if (item == "Schedule Installation" && ticketInformationViewModel.selectedService == item){
             ScheduleInstallationItem(ticketInformationViewModel = ticketInformationViewModel)
         }else if(item == "Installation" && ticketInformationViewModel.selectedService == item){
             InstallationItem(ticketInformationViewModel = ticketInformationViewModel)
         }
+        else if(item == "Speed Test" && ticketInformationViewModel.selectedService == item){
+            SpeedTest(ticketInformationViewModel = ticketInformationViewModel)
+        }
+        else if (item == "Material" && ticketInformationViewModel.selectedService == item){
+            MaterialItem(ticketInformationViewModel = ticketInformationViewModel)
+        }
+        else if (item == "Problem" && ticketInformationViewModel.selectedService == item){
+            ProblemItem(ticketInformationViewModel = ticketInformationViewModel)
+    }
     }
 }

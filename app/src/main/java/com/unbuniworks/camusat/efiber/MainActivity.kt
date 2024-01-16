@@ -49,6 +49,7 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onBackPressed() {
+        super.onBackPressed()
         if (backClickCount == 1) {
             // If it's the second back click within a certain time, show exit confirmation dialog
             showExitConfirmationDialog()

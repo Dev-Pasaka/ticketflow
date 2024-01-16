@@ -33,7 +33,7 @@ fun TicketsScreen(
             )
         },
         topBar = {
-            TopAppBar()
+            TopAppBar(navController = navController)
 
         },
         modifier = Modifier.fillMaxSize(),

@@ -47,7 +47,7 @@ fun TicketInformationScreen(navController: NavHostController, ticketInformationV
     }
     Scaffold(
         topBar = {
-            TopAppBar()
+            TopAppBar(navController = navController)
 
         },
         containerColor = colorResource(id = R.color.background),

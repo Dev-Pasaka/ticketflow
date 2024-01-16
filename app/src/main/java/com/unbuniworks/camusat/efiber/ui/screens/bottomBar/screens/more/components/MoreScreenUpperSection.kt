@@ -48,52 +48,6 @@ fun MoreScreenUpperSection(moreScreenViewModel: MoreScreenViewModel) {
             fontSize = 18.sp,
             color = colorResource(id = R.color.button_color)
         )
-        Spacer(modifier = Modifier.height(8.dp))
-        OutlinedTextField(
-            singleLine = true,
-            placeholder = {
-                Text(
-                    text = "Search",
-                    color = Color.DarkGray,
-                )
-            },
-            value = moreScreenViewModel.searchQuery,
-            onValueChange = {
-                moreScreenViewModel.updateSearchQuery(query = it)
-            },
-            trailingIcon = {
-                IconButton(
-                    onClick = {
-
-                    }
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.search_icon),
-                        contentDescription = "Select Date",
-                        tint = colorResource(id = R.color.button_color),
-                        modifier = Modifier.size(20.dp)
-                    )
-                }
-            },
-            keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Done,
-                keyboardType = KeyboardType.Text
-            ),
-            keyboardActions = KeyboardActions(
-                onDone = {
-                    keyBoardController?.hide()
-                }
-            ),
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = Color.Transparent,
-                unfocusedContainerColor = Color.Transparent,
-                focusedTextColor = Color.DarkGray,
-                unfocusedTextColor = Color.DarkGray,
-                cursorColor = Color.DarkGray,
-                focusedIndicatorColor = colorResource(id = R.color.button_color),
-            ),
-            shape = RoundedCornerShape(8.dp),
-            modifier = Modifier.fillMaxWidth(),
-        )
+        Spacer(modifier = Modifier.height(5.dp))
     }
 }

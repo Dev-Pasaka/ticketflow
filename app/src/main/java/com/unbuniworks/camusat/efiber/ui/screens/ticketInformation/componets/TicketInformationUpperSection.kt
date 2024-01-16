@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -38,14 +39,18 @@ fun TicketInformationUpperSection(goBack:() -> Unit) {
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp, top = 48.dp)
+            .padding(start = 2.dp, end = 16.dp, top = 48.dp)
     ){
 
-            Surface(
+        Row (
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .padding(horizontal = 0.dp, vertical = 16.dp)
+        ){
+            IconButton(
 
                 onClick = goBack,
-                color = colorResource(id = R.color.background),
-                shape = CircleShape
             ) {
                 Icon(
                     imageVector = Icons.Outlined.ArrowBackIosNew,
@@ -55,14 +60,6 @@ fun TicketInformationUpperSection(goBack:() -> Unit) {
 
                 )
             }
-
-
-        Row (
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .padding(horizontal = 0.dp, vertical = 16.dp)
-        ){
 
             Row (
                 verticalAlignment = Alignment.CenterVertically,
@@ -87,19 +84,18 @@ fun TicketInformationUpperSection(goBack:() -> Unit) {
         }
         Spacer(modifier = Modifier.width(16.dp))
 
-        OutlinedButton(
+        Button(
             onClick = { /*TODO*/ },
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color.White,
-                contentColor = colorResource(id = R.color.ticket_orange),
+                containerColor = colorResource(id = R.color.ticket_green),
+                contentColor = Color.White,
             ),
-            border = BorderStroke(width = 1.dp, color = colorResource(id = R.color.ticket_orange)),
-            shape = RoundedCornerShape(5.dp),
-
+            modifier = Modifier.height(30.dp)
             ) {
 
             Text(
-                text = "Scheduled",
+                text = "Open",
+                fontSize = 10.sp
             )
 
         }

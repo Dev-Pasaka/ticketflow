@@ -12,6 +12,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.unbuniworks.camusat.efiber.R
 import com.unbuniworks.camusat.efiber.ui.screens.bottomBar.screens.more.model.ApplicationItem
 
 class MoreScreenViewModel():ViewModel() {
@@ -21,29 +22,23 @@ class MoreScreenViewModel():ViewModel() {
 
     var originalListOfApplicationItems = listOf(
         ApplicationItem(
-            name = "W/O Schedule",
-            icon = Icons.Outlined.CalendarMonth
+            name = "Clock-In",
+            icon = R.drawable.clock_outline
         ),
-        ApplicationItem(
-            name = "Material Stock",
-            icon = Icons.Outlined.Inventory
-        ),
-        ApplicationItem(
-            name = "Audit",
-            icon = Icons.Outlined.ScreenSearchDesktop
-        ),
+
         ApplicationItem(
             name = "User Manual",
-            icon = Icons.Outlined.Book,
+            icon = R.drawable.manual,
         ),
         ApplicationItem(
             name = "Help",
-            icon = Icons.Outlined.HelpOutline
+            icon = R.drawable.help
         ),
         ApplicationItem(
             name = "Settings",
-            icon = Icons.Outlined.Settings
-        )
+            icon = R.drawable.settings
+        ),
+
     )
 
     var listOfApplicationItems = mutableStateListOf<ApplicationItem>()

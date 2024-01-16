@@ -10,11 +10,10 @@ import com.unbuniworks.camusat.efiber.ui.screens.bottomBar.model.BottomBarDestin
 class BottomNavigationViewModel():ViewModel() {
 
     val bottomBarDestinations  = listOf(
-        BottomBarDestinations(title = "Home", icon = R.drawable.home_icon, route = Screen.Home.route),
-        BottomBarDestinations(title = "Projects", icon = R.drawable.project_icon, route = Screen.Projects.route),
-        BottomBarDestinations(title = "Tickets", icon = R.drawable.ticket_icon, route = Screen.Tickets.route),
-        BottomBarDestinations(title = "Request", icon = R.drawable.baseline_signal_cellular_alt_24, route = Screen.Requests.route),
-        BottomBarDestinations(title = "More", icon = R.drawable.more_icon, route = Screen.More.route),
+        BottomBarDestinations(title = "Tickets", icon = R.drawable.tickets, route = Screen.Tickets.route),
+        BottomBarDestinations(title = "Schedule", icon = R.drawable.schedule, route = Screen.Schedule.route),
+        BottomBarDestinations(title = "Material", icon = R.drawable.materials, route = Screen.Material.route),
+        BottomBarDestinations(title = "More", icon = R.drawable.more, route = Screen.More.route),
     )
     var selectedDestination by mutableStateOf(bottomBarDestinations.first())
         private set

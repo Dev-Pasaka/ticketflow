@@ -3,8 +3,11 @@ package com.unbuniworks.camusat.efiber.ui.screens.bottomBar.screens.tickets.comp
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,42 +28,83 @@ fun WorkOrderItem(
     actionNavigateToTicketInformationScreen: () -> Unit
 ) {
     val item = ticketsScreenViewModel.workOrder[index]
+    val containerColor = if (index == 0){
+        R.color.ticket_green
+    }else if (index == 1){
+        R.color.ticket_green
+    }else if (index == 2){
+        R.color.ticket_orange
+    }else if(index == 3){
+        R.color.ticket_maroon
+    }else{
+        R.color.ticket_maroon
+    }
     Surface(
         onClick = actionNavigateToTicketInformationScreen,
-        color = colorResource(id = ticketsScreenViewModel.colors[index]),
+        color = Color.White,
         shape = RoundedCornerShape(5.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .padding(horizontal = 16.dp, vertical = 2.dp),
     ) {
         
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start,
+            horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 16.dp)
+                .padding(horizontal = 16.dp, vertical = 5.dp)
         ) {
-            Text(
-                text ="${index+1}. ",
-                color = Color.DarkGray,
-                fontSize = 14.sp
-            )
-            Text(
-                text = item.id,
-                color = Color.DarkGray,
-                fontSize = 14.sp
-            )
-            Text(
-                text =" - ",
-                color = Color.DarkGray,
-                fontSize = 14.sp
-            )
-            Text(
-                text = item.name,
-                color = Color.DarkGray,
-                fontSize = 14.sp
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Start,
+            ) {
+                Text(
+                    text = "${index + 1}. ",
+                    color = Color.DarkGray,
+                    fontSize = 14.sp
+                )
+                Text(
+                    text = item.id,
+                    color = Color.DarkGray,
+                    fontSize = 14.sp
+                )
+                Text(
+                    text = " - ",
+                    color = Color.DarkGray,
+                    fontSize = 14.sp
+                )
+                Text(
+                    text = item.name,
+                    color = Color.DarkGray,
+                    fontSize = 14.sp
+                )
+
+            }
+
+            Button(
+                onClick = actionNavigateToTicketInformationScreen,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(id = containerColor),
+                    contentColor = Color.White
+                ),
+                modifier = Modifier.height(30.dp)
+            ) {
+                Text(
+                    text = if (index == 0){
+                        "Open"
+                    }else if (index == 1){
+                        "Open"
+                    }else if (index == 2){
+                        "Scheduled"
+                    }else if(index == 3){
+                       "Problem"
+                    }else{
+                       "Problem"
+                    },
+                    fontSize = 11.sp
+                )
+            }
         }
         
     }

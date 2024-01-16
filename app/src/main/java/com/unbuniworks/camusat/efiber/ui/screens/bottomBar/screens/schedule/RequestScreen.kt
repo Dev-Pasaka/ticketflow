@@ -1,4 +1,4 @@
-package com.unbuniworks.camusat.efiber.ui.screens.bottomBar.screens.home
+package com.unbuniworks.camusat.efiber.ui.screens.bottomBar.screens.schedule
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
@@ -15,10 +15,17 @@ import com.unbuniworks.camusat.efiber.R
 import com.unbuniworks.camusat.efiber.navigation.BottomNavigationViewModel
 import com.unbuniworks.camusat.efiber.ui.commonComponents.BottomAppBar
 import com.unbuniworks.camusat.efiber.ui.commonComponents.TopAppBar
+import com.unbuniworks.camusat.efiber.ui.screens.bottomBar.screens.schedule.components.ScheduleItemBody
+import com.unbuniworks.camusat.efiber.ui.screens.bottomBar.screens.schedule.components.ScheduleScreenUpperSection
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun HomeScreen(bottomNavigationViewModel: BottomNavigationViewModel, navController:NavHostController) {
+fun Schedule(
+    bottomNavigationViewModel: BottomNavigationViewModel,
+    scheduleScreenViewModel: ScheduleScreenViewModel,
+    navController: NavHostController
+){
+
     Scaffold(
         bottomBar = {
             BottomAppBar(
@@ -27,25 +34,18 @@ fun HomeScreen(bottomNavigationViewModel: BottomNavigationViewModel, navControll
             )
         },
         topBar = {
-            TopAppBar()
+            TopAppBar(navController = navController)
 
         },
         modifier = Modifier.fillMaxSize(),
         containerColor = colorResource(id = R.color.background)
 
-        ) {
-
-
+    ) {
         Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()
         ) {
-            Text(text = "Home", color = colorResource(id = R.color.button_color))
-
-
-
+            ScheduleScreenUpperSection(scheduleScreenViewModel = scheduleScreenViewModel)
+            ScheduleItemBody(scheduleScreenViewModel = scheduleScreenViewModel)
         }
-
     }
 }

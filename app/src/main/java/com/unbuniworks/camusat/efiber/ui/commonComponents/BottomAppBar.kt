@@ -46,7 +46,6 @@ fun BottomAppBar(bottomNavigationViewModel: BottomNavigationViewModel, navContro
         modifier = Modifier
             .fillMaxWidth()
             .height(100.dp)
-            .padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
 
         Row(
@@ -90,7 +89,7 @@ fun BottomAppBar(bottomNavigationViewModel: BottomNavigationViewModel, navContro
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center,
                             modifier = Modifier
-                                .padding(5.dp)
+                                .padding(horizontal = 8.dp, vertical = 8.dp)
                         ) {
 
                             if (bottomNavigationViewModel.bottomBarDestinations[it].title == "Request") {
@@ -98,7 +97,7 @@ fun BottomAppBar(bottomNavigationViewModel: BottomNavigationViewModel, navContro
                                     imageVector = Icons.Outlined.SignalCellularAlt,
                                     contentDescription = bottomNavigationViewModel.bottomBarDestinations[it].title,
                                     tint = colorResource(id = R.color.button_color),
-                                    modifier = Modifier.size(20.dp)
+                                    modifier = Modifier.size(30.dp)
                                 )
 
                             } else {
@@ -109,7 +108,7 @@ fun BottomAppBar(bottomNavigationViewModel: BottomNavigationViewModel, navContro
                                     modifier = if (
                                         bottomNavigationViewModel.selectedDestination.title
                                         == bottomNavigationViewModel.bottomBarDestinations[it].title
-                                    ) Modifier.size(22.dp) else Modifier.size(20.dp)
+                                    ) Modifier.size(32.dp) else Modifier.size(30.dp)
 
                                 )
                             }

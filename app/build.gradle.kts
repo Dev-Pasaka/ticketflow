@@ -90,3 +90,10 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended-android:1.6.0-beta03")
 
 }
+
+
+android {
+    lint {
+        baseline = file("lint-baseline.xml")
+    }
+}
