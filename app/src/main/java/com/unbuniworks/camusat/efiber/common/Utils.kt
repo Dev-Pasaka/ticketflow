@@ -1,6 +1,14 @@
 package com.unbuniworks.camusat.efiber.common
 
+import android.os.Build
+import android.text.format.DateUtils.getDayOfWeekString
+import androidx.annotation.RequiresApi
 import androidx.compose.ui.graphics.Color
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Calendar
+import java.util.Locale
 
 
 object Utils {
@@ -24,5 +32,14 @@ object Utils {
         }
         return cleanedColorString
     }
+
+    fun getCurrentFormattedDayOfWeek(): String {
+        val calendar = Calendar.getInstance()
+        val dateFormat = SimpleDateFormat("EEEE /dd/MM/yyyy", Locale.getDefault())
+        val formattedDate = dateFormat.format(calendar.time)
+        return formattedDate
+    }
+
+
 
 }

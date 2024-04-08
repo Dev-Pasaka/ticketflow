@@ -1,6 +1,7 @@
 package com.unbuniworks.camusat.efiber.data.remote.dto.workOrderDto
 
 
+import com.unbuniworks.camusat.efiber.data.remote.dto.workOrdersDto.TypeName
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -11,5 +12,5 @@ data class Project(
     @SerialName("name")
     val name: String,
     @SerialName("type")
-    val type: Type
+    val type: List<TypeName>
 )

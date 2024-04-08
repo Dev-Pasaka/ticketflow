@@ -1,6 +1,10 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.dynamicComponents
 
+import android.net.Uri
 import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -26,94 +30,110 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.net.toUri
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.unbuniworks.camusat.efiber.R
+import com.unbuniworks.camusat.efiber.data.remote.dto.workOrderDto.Feature
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.TicketInformationViewModel
 
 @Composable
 fun CustomImageUpload(
     index: Int,
+    feature: Feature,
     navController: NavHostController,
     ticketInformationViewModel: TicketInformationViewModel,
 ) {
-    var selectedImageIndex:Int? by remember {
+    var selectedImageIndex: Int? by remember {
         mutableStateOf(null)
     }
 
-        Surface(
-            onClick = {
-                ticketInformationViewModel.openOrCloseImageDialogBox()
-                selectedImageIndex = 0
-            },
-            shape = RoundedCornerShape(5.dp),
-            color = colorResource(id = R.color.light_gray),
-            modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 2.dp),
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp, vertical = 8.dp)
-            ) {
-                Text(
-                    text = "",
-                    fontSize = 14.sp
-                )
-                Spacer(modifier = Modifier.width(5.dp))
+    val pickMedia =
+        rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
 
-
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "",
-                        fontSize = 12.sp
-                    )
-                    Spacer(modifier = Modifier.width(5.dp))
-                    Image(
-                        painter = painterResource(id = R.drawable.image),
-                        contentDescription = "Image",
-                        contentScale = ContentScale.FillBounds,
-                        modifier = Modifier
-                            .width(70.dp)
-                            .height(60.dp)
-                            .padding(2.dp)
-                            .clip(RoundedCornerShape(5.dp))
-                            .clickable(
-                            ) {
-
-                            }
-                    )
-
-                }
-            }
-
-
-            if (ticketInformationViewModel.isImageViewDialogOpen) {
-                ViewImage(
-                    index = index,
-                    imageIndex = 0,
-                    ticketInformationViewModel = ticketInformationViewModel,
-                    navController = navController
-                )
+            // photo picker.
+            if (uri != null) {
+                ticketInformationViewModel.selectImage(uri = uri, index = index)
+            } else {
+                Log.d("PhotoPicker", "No media selected")
             }
         }
-    }
-   /* if (ticketInformationViewModel.isImageDialogOpen) {
 
-            UploadOrTakePhotoDialog(
-                index = index,
-                imageIndex = it,
-                navController = navController,
-                ticketInformationViewModel = ticketInformationViewModel
+    Surface(
+        onClick = {
+                  ticketInformationViewModel.openOrCloseTakePhotoOrUploadImage()
+        },
+        shape = RoundedCornerShape(5.dp),
+        color = colorResource(id = R.color.light_gray),
+        modifier = Modifier
+            .padding(horizontal = 16.dp, vertical = 2.dp),
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp, vertical = 8.dp)
+        ) {
+
+            Text(
+                text = "Select/Take photo",
+                fontSize = 14.sp
+            )
+            Spacer(modifier = Modifier.width(5.dp))
+
+            Image(
+                painter = if (
+                    feature.value?.toUri() == null
+                    || feature.value?.toUri() == Uri.EMPTY
+                ) painterResource(id = R.drawable.image) else rememberAsyncImagePainter(model = feature.value?.toUri()),
+                contentDescription = "Image",
+                contentScale = ContentScale.FillBounds,
+                modifier = Modifier
+                    .width(70.dp)
+                    .height(60.dp)
+                    .padding(2.dp)
+                    .clip(RoundedCornerShape(5.dp))
+                    .clickable(
+                    ) {
+                        if (
+                            feature.value?.toUri() == null
+                            || feature.value?.toUri() == Uri.EMPTY
+                            ) {
+                            pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                        } else {
+                            ticketInformationViewModel.openOrCloseViewImageBottomSheet()
+                        }
+
+                    }
             )
 
+
+        }
+
+
+        if (ticketInformationViewModel.isViewImageBottomSheetOpen) {
+            ViewImage(
+                index = index,
+                feature = feature,
+                ticketInformationViewModel = ticketInformationViewModel,
+                navController = navController
+            )
+        }
+    }
+
+    if (ticketInformationViewModel.isTakePhotoOrUploadImageDialogOpen) {
+
+        UploadOrTakePhotoDialog(
+            index = index,
+            navController = navController,
+            ticketInformationViewModel = ticketInformationViewModel
+        )
+
         Log.e("Index", "Index=$index  imageIndex = $selectedImageIndex" )
-    }*/
+    }
+
+}
 
 
 

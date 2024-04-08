@@ -26,22 +26,20 @@ import kotlinx.coroutines.launch
 
 class LoginUseCase(
     private val repository:UserRepository = UserRepositoryImpl(),
-    private val sharedPreferenceRepository: SharedPreferenceRepository = SharedPreferenceRepositoryImpl(),
-    private val activity: Activity
+    private val sharedPreferenceRepository: SharedPreferenceRepository = SharedPreferenceRepositoryImpl()
 ) {
     @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
-    fun login(userCredentials: UserCredentials):Flow<Resource<User>> = flow {
+    fun login(userCredentials: UserCredentials, activity: Activity):Flow<Resource<User>> = flow {
         try {
             emit(Resource.Loading(message = "Loading"))
             val response = repository.login(userCredentials)
+            sharedPreferenceRepository.setString(key= Constants.token, value = response.accessToken, activity)
+            sharedPreferenceRepository.setString(key= Constants.userId, value  = response.userDto?.id, activity)
             val user = response.toUser()
             if (response.status){
+                sharedPreferenceRepository.setString(key = Constants.isLoggedIn, "true", activity)
+                sharedPreferenceRepository.setString(key = Constants.email, userCredentials.email, activity)
                 emit(Resource.Success(data = user, message = "Request was successful"))
-                sharedPreferenceRepository.setString(
-                    key = Constants.token,
-                    value = response.accessToken,
-                    activity = activity
-                )
             }else{
                 emit(Resource.Error( "Login failed"))
             }
@@ -57,6 +55,11 @@ class LoginUseCase(
         catch (e:NullPointerException){
             e.localizedMessage?.let { Log.e("LoginStatus", it.toString()) }
             emit(Resource.Error( "Wrong email or password"))
+        }
+        catch (e:Exception){
+            e.localizedMessage?.let { Log.e("LoginStatus", it.toString()) }
+            emit(Resource.Error( "AN expected error occurred"))
+
         }
     }
 }

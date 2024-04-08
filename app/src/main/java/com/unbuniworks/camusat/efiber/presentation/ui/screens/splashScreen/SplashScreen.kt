@@ -1,5 +1,6 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.screens.splashScreen
 
+import android.app.Activity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -24,9 +25,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.unbuniworks.camusat.efiber.R
 import kotlinx.coroutines.delay
@@ -35,6 +38,9 @@ import kotlinx.coroutines.launch
 @Composable
 fun SplashScreen(navController: NavHostController) {
     val scope = rememberCoroutineScope()
+    val activity = LocalContext.current as Activity
+
+    val splashScreenViewModel = viewModel<SplashScreenViewModel>()
 
 
     var startAnimation by remember {
@@ -51,9 +57,14 @@ fun SplashScreen(navController: NavHostController) {
     LaunchedEffect(key1 = true) {
         startAnimation = true
         delay(3000)
-        navController.navigate("auth"){
-            navController.popBackStack()
+        if (splashScreenViewModel.isTokenValid(activity = activity)){
+            navController.navigate("bottom_navigation")
+        }else{
+            navController.navigate("auth"){
+                navController.popBackStack()
+            }
         }
+
     }
 
     Surface(

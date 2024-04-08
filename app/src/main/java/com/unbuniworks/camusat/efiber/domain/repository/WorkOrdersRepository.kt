@@ -5,6 +5,6 @@ import com.unbuniworks.camusat.efiber.data.remote.dto.workOrderDto.WorkOrderDto
 import com.unbuniworks.camusat.efiber.data.remote.dto.workOrdersDto.WorkOrdersDtoItem
 
 interface WorkOrdersRepository {
-    suspend fun getWorkOrders(activity:Activity):List<WorkOrdersDtoItem>
+    suspend fun getWorkOrders():List<WorkOrdersDtoItem>
     suspend fun getWorkOrder(workOrderId:String,activity:Activity):WorkOrderDto
 }

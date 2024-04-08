@@ -17,21 +17,17 @@ import io.ktor.http.HttpHeaders
 
 class WorkOrdersRepositoryImpl(
     private val api:HttpClient = HttpClient,
-    private val sharedPreferenceRepository: SharedPreferenceRepository = SharedPreferenceRepositoryImpl(),
-
 ):WorkOrdersRepository {
 
-    override suspend fun getWorkOrders(activity:Activity): List<WorkOrdersDtoItem>{
-        val token = sharedPreferenceRepository.getString(key = Constants.token, activity = activity)
+    override suspend fun getWorkOrders(): List<WorkOrdersDtoItem>{
 
         return api.client.get("${api.baseUrl}workorders/scheduled"){
-            header(HttpHeaders.Authorization, "Bearer $token")
+            header(HttpHeaders.Authorization, "Bearer ")
         }.body<List<WorkOrdersDtoItem>>()
 
     }
 
     override suspend fun getWorkOrder(workOrderId: String, activity:Activity): WorkOrderDto {
-        val token = sharedPreferenceRepository.getString(key = Constants.token, activity = activity)
         return api.client.get("${api.baseUrl}workorders/workorder/$workOrderId"){
             header(HttpHeaders.Authorization, "Bearer ")
         }.body<WorkOrderDto>()

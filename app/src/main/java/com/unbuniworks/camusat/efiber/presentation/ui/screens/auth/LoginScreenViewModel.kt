@@ -1,5 +1,6 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.screens.auth
 
+import android.app.Activity
 import android.content.Context
 import android.os.Build
 import android.util.Log
@@ -12,6 +13,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.unbuniworks.camusat.efiber.common.Resource
+import com.unbuniworks.camusat.efiber.data.local.sharedPreference.SharedPreferenceRepository
+import com.unbuniworks.camusat.efiber.data.local.sharedPreference.SharedPreferenceRepositoryImpl
 import com.unbuniworks.camusat.efiber.data.remote.model.UserCredentials
 import com.unbuniworks.camusat.efiber.domain.usecase.LoginUseCase
 import com.unbuniworks.camusat.efiber.presentation.navigation.Screen
@@ -19,7 +22,8 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class LoginScreenViewModel(
-    private val loginUseCase: LoginUseCase
+    private val loginUseCase: LoginUseCase,
+    val sharedPreferenceRepository: SharedPreferenceRepository = SharedPreferenceRepositoryImpl()
 
 ) : ViewModel() {
     var email by mutableStateOf("")
@@ -54,16 +58,17 @@ class LoginScreenViewModel(
 
 
     @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
-    fun login(navController:NavHostController){
+    fun login(navController:NavHostController, activity:Activity){
         loginUseCase.login(
             userCredentials = UserCredentials(
                 email = email,
                 password = password
-            )
+            ),
+            activity = activity
         ).onEach {result ->
             loginState = when(result){
                 is Resource.Success ->{
-                    Log.e("LoginStatus", "Message: ${result.message} Result:${result.data}")
+                   Log.e("LoginStatus", "Message: ${result.message} Result:${result.data}")
                     navController.navigate(route = Screen.SelectModule.route) {
                         navController.popBackStack()
                     }

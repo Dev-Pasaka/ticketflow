@@ -1,72 +1,53 @@
 package com.unbuniworks.camusat.efiber.data.remote.dto.workOrderDto
 
 
-import com.unbuniworks.camusat.efiber.data.remote.dto.workOrdersDto.WorkOrderTask
 import com.unbuniworks.camusat.efiber.domain.model.WorkOrderDetails
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class WorkOrderDto(
-    @SerialName("actionDate")
     val actionDate: String?,
-    @SerialName("channel")
     val channel: String,
-    @SerialName("createdAt")
     val createdAt: String,
-    @SerialName("data")
     val `data`: List<Data>,
-    @SerialName("deletedAt")
     val deletedAt: String?,
-    @SerialName("emailConfigurationsId")
     val emailConfigurationsId: String,
-    @SerialName("emailsIncomingId")
     val emailsIncomingId: String,
-    @SerialName("id")
     val id: String,
-    @SerialName("mainId")
     val mainId: String,
-    @SerialName("manager")
-    val manager: Manager?,
-    @SerialName("managerId")
-    val managerId: String?,
+    val manager: Manager,
+    val managerId: String,
     @SerialName("Project")
-    val project: Project,
-    @SerialName("projectId")
-    val projectId: String,
-    @SerialName("rawData")
+    val project: Project?,
+    val projectId: String?,
     val rawData: String,
-    @SerialName("scheduledEndAt")
-    val scheduledEndAt: String?,
-    @SerialName("scheduledStartAt")
-    val scheduledStartAt: String?,
-    @SerialName("status")
+    val scheduledEndAt: String,
+    val scheduledStartAt: String,
     val status: String,
-    @SerialName("statusColour")
     val statusColour: String,
-    @SerialName("team")
-    val team: Team,
-    @SerialName("teamId")
-    val teamId: String,
-    @SerialName("updatedAt")
-    val updatedAt: String?,
-    @SerialName("workOrderTasks")
-    val workOrderTasks: List<WorkOrderTask>?,
-    @SerialName("workOrderTeamStatus")
-    val workOrderTeamStatus: String?
+    val team: Team?,
+    val teamId: String?,
+    val updatedAt: String,
+    val workOrderTasks: List<WorkOrderTask>,
+    val workOrderTeamStatus: String,
+    val ticketDetails:List<TicketDetail>
 )
 
-fun WorkOrderDto.toWorkOrder():WorkOrderDetails{
+fun WorkOrderDto.toWorkOrderDetails():WorkOrderDetails{
+
     return WorkOrderDetails(
         id = id,
-        name = project.name,
+        name = project?.name ?: "",
         ticketNo = mainId,
-        type = project.type.name,
-        address = "",
-        client = "",
-        contact = "0712345678",
-        equipment = "",
+        type = ticketDetails.firstOrNull { it.key == "Plan" }?.value ?: "",
+        address = ticketDetails.firstOrNull { it.key == "Address" }?.value ?: "",
+        client = ticketDetails.firstOrNull { it.key == "Client" }?.value ?: "",
+        contact = ticketDetails.firstOrNull { it.key == "Contact Technique" }?.value ?: "",
+        equipment =  ticketDetails.firstOrNull { it.key == "Equipement(s)" }?.value ?: "",
         status = status,
-        statusColor = statusColour
+        statusColor = statusColour,
+        workOrderTasks = workOrderTasks
     )
+
 }

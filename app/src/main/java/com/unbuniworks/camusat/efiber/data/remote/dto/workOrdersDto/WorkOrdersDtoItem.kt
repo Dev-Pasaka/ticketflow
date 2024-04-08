@@ -30,9 +30,9 @@ data class WorkOrdersDtoItem(
     @SerialName("managerId")
     val managerId: String,
     @SerialName("Project")
-    val project: Project,
+    val project: Project?,
     @SerialName("projectId")
-    val projectId: String,
+    val projectId: String?,
     @SerialName("rawData")
     val rawData: String,
     @SerialName("scheduledEndAt")
@@ -44,13 +44,13 @@ data class WorkOrdersDtoItem(
     @SerialName("statusColour")
     val statusColour: String,
     @SerialName("team")
-    val team: Team,
+    val team: Team?,
     @SerialName("teamId")
-    val teamId: String,
+    val teamId: String?,
     @SerialName("updatedAt")
     val updatedAt: String,
     @SerialName("workOrderTasks")
-    val workOrderTasks: List<WorkOrderTask>?,
+    val workOrdersTasks: List<WorkOrdersTask>?,
     @SerialName("workOrderTeamStatus")
     val workOrderTeamStatus: String? = null // Nullable field
 )
@@ -62,7 +62,8 @@ fun WorkOrdersDtoItem.toWorkOrder(): WorkOrder {
         ticketid = mainId,
         name = listOf("Casablanca", "2BIT","Quiver","Alchemist").random(), // Assuming you want to use mainId as the name
         status = status,
-        statusColor = statusColour
+        statusColor = statusColour,
+        workOrdersTasks = workOrdersTasks,
     )
 }
 

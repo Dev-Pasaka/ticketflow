@@ -55,8 +55,6 @@ fun PhotoBottomSheetContent(
                 contentDescription = null,
                 modifier = Modifier.clip(RoundedCornerShape(10.dp))
                     .clickable {
-
-                        ticketInformationViewModel.openOrCloseImageDialogBox()
                         navController.popBackStack()
                     }
             )

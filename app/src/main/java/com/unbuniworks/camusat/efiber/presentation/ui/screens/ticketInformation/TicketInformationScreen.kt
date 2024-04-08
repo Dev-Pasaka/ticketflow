@@ -5,8 +5,12 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -16,22 +20,25 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.unbuniworks.camusat.efiber.R
 import com.unbuniworks.camusat.efiber.presentation.ui.commonComponents.TopAppBar
-import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.componets.TicketInformationLowerSection
-import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.componets.TicketInformationMiddleScreen
-import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.componets.TicketInformationUpperSection
+import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.dynamicComponents.TicketInformationMiddleScreen
+import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.dynamicComponents.TicketInformationUpperSection
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import com.unbuniworks.camusat.efiber.domain.model.WorkOrder
+import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.dynamicComponents.TicketInformationLowerSection
+
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun TicketInformationScreen(navController: NavHostController, ticketInformationViewModel: TicketInformationViewModel, orderId:String) {
+fun TicketInformationScreen(navController: NavHostController, ticketInformationViewModel: TicketInformationViewModel, workOrder: String) {
     var startAnimation by remember {
         mutableStateOf(false)
     }
@@ -53,7 +60,7 @@ fun TicketInformationScreen(navController: NavHostController, ticketInformationV
 
     LaunchedEffect(key1 = Unit){
         scope.launch {
-            ticketInformationViewModel.getWorkOrder(orderId)
+            ticketInformationViewModel.getWorkOrder(workOrder)
         }
     }
 
@@ -72,7 +79,31 @@ fun TicketInformationScreen(navController: NavHostController, ticketInformationV
                 navController.popBackStack()
             }
             TicketInformationMiddleScreen(ticketInformationViewModel = ticketInformationViewModel, lazyListState = scrollState)
-            TicketInformationLowerSection(navController, ticketInformationViewModel = ticketInformationViewModel, scrollState = scrollState)
+            TicketInformationLowerSection(
+                ticketInformationViewModel = ticketInformationViewModel,
+                navController = navController
+            )
+        }
+
+
+        if (ticketInformationViewModel.workOrderDetailState.isLoading){
+            Dialog(
+                onDismissRequest = { /*TODO*/ }
+            ) {
+
+                Surface(
+                    color = Color.White,
+                    shape = RoundedCornerShape(4.dp)
+                ) {
+                    CircularProgressIndicator(
+                        color = colorResource(id = R.color.button_color),
+                        strokeWidth = 3.dp,
+                        strokeCap = StrokeCap.Butt,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
+
+            }
         }
     }
 }

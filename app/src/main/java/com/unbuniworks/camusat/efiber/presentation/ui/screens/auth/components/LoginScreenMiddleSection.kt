@@ -1,5 +1,6 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.screens.auth.components
 
+import android.app.Activity
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -17,24 +18,24 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Visibility
+import androidx.compose.material.icons.outlined.VisibilityOff
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
@@ -43,9 +44,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction.Companion.Done
 import androidx.compose.ui.text.input.ImeAction.Companion.Next
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.unbuniworks.camusat.efiber.R
+import com.unbuniworks.camusat.efiber.common.Constants
 import com.unbuniworks.camusat.efiber.presentation.ui.commonComponents.CustomCircularProgressBar
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.auth.LoginScreenViewModel
 import kotlinx.coroutines.delay
@@ -88,6 +92,15 @@ fun Login(loginScreenViewModel: LoginScreenViewModel, actionNavigateToSelectModu
     var startAnimation by remember {
         mutableStateOf(false)
     }
+
+    var isPasswordVisible by rememberSaveable {
+        mutableStateOf(false)
+    }
+
+    var email:String? by remember{
+        mutableStateOf(null)
+    }
+    var activity  = LocalContext.current as Activity
     val offsetX by animateFloatAsState(
         targetValue = if (startAnimation) 0f else with(LocalDensity.current) { -50.dp.toPx() },
         animationSpec = tween(durationMillis = 1000), label = ""
@@ -97,10 +110,19 @@ fun Login(loginScreenViewModel: LoginScreenViewModel, actionNavigateToSelectModu
 
     LaunchedEffect(key1 = true) {
         scope.launch {
+
             startAnimation = true
             delay(1000)
         }
     }
+    LaunchedEffect(key1 = Unit ){
+        email = loginScreenViewModel.sharedPreferenceRepository.getString(
+            key = Constants.email,
+            activity =activity
+        )
+        loginScreenViewModel.updateEmail(emailString =  email ?: "")
+    }
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -123,7 +145,7 @@ fun Login(loginScreenViewModel: LoginScreenViewModel, actionNavigateToSelectModu
             },
             value = loginScreenViewModel.email,
             onValueChange = {
-                loginScreenViewModel.updateEmail(emailString = it)
+                loginScreenViewModel.updateEmail(emailString =  it)
             },
             keyboardOptions = KeyboardOptions(imeAction = Next, keyboardType = KeyboardType.Text),
             keyboardActions = KeyboardActions(
@@ -131,6 +153,7 @@ fun Login(loginScreenViewModel: LoginScreenViewModel, actionNavigateToSelectModu
 
                 }
             ),
+
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Color.Transparent,
                 unfocusedContainerColor = Color.Transparent,
@@ -163,6 +186,23 @@ fun Login(loginScreenViewModel: LoginScreenViewModel, actionNavigateToSelectModu
                     actionNavigateToSelectModule()
                 }
             ),
+
+            visualTransformation = if (isPasswordVisible) VisualTransformation.None else
+                PasswordVisualTransformation(),
+            trailingIcon = {
+                when (isPasswordVisible) {
+                    true -> IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
+                        Icon(imageVector = Icons.Outlined.VisibilityOff, contentDescription = "Show password")
+                    }
+
+                    else -> {
+                        IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
+                            Icon(imageVector = Icons.Outlined.Visibility, contentDescription = "Hide password")
+                        }
+                    }
+                }
+            },
+
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Color.Transparent,
                 unfocusedContainerColor = Color.Transparent,
@@ -178,8 +218,13 @@ fun Login(loginScreenViewModel: LoginScreenViewModel, actionNavigateToSelectModu
 
         when (loginScreenViewModel.loginState.isLoading) {
             true -> {
-                CustomCircularProgressBar(progress = 0.7f, modifier = Modifier.size(25.dp))
+                CircularProgressIndicator(
+                    color = colorResource(id = R.color.button_color),
+                    strokeWidth = 3.dp,
+                    strokeCap = StrokeCap.Butt
+                )
             }
+
             else -> {
                 Button(
                     onClick = actionNavigateToSelectModule,

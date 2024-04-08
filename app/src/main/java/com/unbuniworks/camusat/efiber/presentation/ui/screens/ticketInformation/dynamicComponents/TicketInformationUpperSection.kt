@@ -1,7 +1,5 @@
-package com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.componets
+package com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.dynamicComponents
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,17 +8,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowBackIosNew
-import androidx.compose.material.icons.outlined.ArrowForwardIos
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -76,7 +69,7 @@ fun TicketInformationUpperSection(ticketInformationViewModel: TicketInformationV
 
                     )
                 Text(
-                    text = ticketInformationViewModel.workOrderState.data?.ticketNo ?: "",
+                    text = ticketInformationViewModel.workOrderDetailState.data?.ticketNo ?: "",
                     fontSize = 18.sp,
                     color = colorResource(id = R.color.button_color),
                     )
@@ -90,7 +83,7 @@ fun TicketInformationUpperSection(ticketInformationViewModel: TicketInformationV
             onClick = { /*TODO*/ },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Utils.getColor(
-                    ticketInformationViewModel.workOrderState.data?.statusColor ?: "#ffffff"
+                    ticketInformationViewModel.workOrderDetailState.data?.statusColor ?: "#ffffff"
                 ),
                 contentColor = Color.Black,
             ),
@@ -98,7 +91,7 @@ fun TicketInformationUpperSection(ticketInformationViewModel: TicketInformationV
             ) {
 
             Text(
-                text = ticketInformationViewModel.workOrderState.data?.status ?: "",
+                text = ticketInformationViewModel.workOrderDetailState.data?.status ?: "",
                 fontSize = 10.sp
             )
 

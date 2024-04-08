@@ -18,27 +18,35 @@ class TicketsScreenViewModel(
     init {
         getWorkOrder()
     }
+
+    var isRefreshing by mutableStateOf(false)
+        private set
     var workOrderState by mutableStateOf(WorkOrderState())
         private set
+    fun refresh(){
+        getWorkOrder()
+    }
 
 
     private fun getWorkOrder(){
         useCase.getWorkOrders().onEach { result ->
             workOrderState = when(result){
                 is Resource.Success ->{
+                    isRefreshing = false
                     WorkOrderState(data = result.data ?: emptyList())
                 }
                 is Resource.Error ->{
+                    isRefreshing = false
                     WorkOrderState(error = result.message.toString())
-
                 }
                 is Resource.Loading ->{
-                    WorkOrderState(isLoading = true)
-
+                    isRefreshing  = true
+                    WorkOrderState(isLoading = true, data =result.data ?: emptyList(), error = result.message ?: "")
                 }
             }
         }.launchIn(viewModelScope)
     }
+
 
     fun getColor(colorString: String): Color {
         val cleanedColorString = cleanAndValidateColorString(colorString)

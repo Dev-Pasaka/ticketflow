@@ -3,6 +3,7 @@ package com.unbuniworks.camusat.efiber.presentation.navigation
 import android.app.Activity
 import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.annotation.RequiresExtension
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -39,10 +40,9 @@ import com.unbuniworks.camusat.efiber.presentation.ui.screens.selecteModule.Sele
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.splashScreen.SplashScreen
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.TicketInformationScreen
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.TicketInformationViewModel
-import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.dynamicComponents.MapsAndLocation
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 
+
+@RequiresApi(Build.VERSION_CODES.O)
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @Composable
 fun NavGraph(navController: NavHostController) {
@@ -50,19 +50,9 @@ fun NavGraph(navController: NavHostController) {
     val activity = LocalContext.current as Activity
 
     val bottomNavigationViewModel = viewModel<BottomNavigationViewModel>()
-    val ticketInformationViewModel = viewModel<TicketInformationViewModel>(
-        factory = object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return TicketInformationViewModel(
-                    context = context,
-                    userWorkOrdersUseCase = WorkOrdersUseCase(activity = activity),
-                ) as T
-            }
-        }
-    )
+
     val scope = rememberCoroutineScope()
     NavHost(navController = navController, startDestination = Screen.SplashScreen.route) {
-
 
         composable(route = Screen.SplashScreen.route) {
             SplashScreen(navController = navController)
@@ -78,14 +68,14 @@ fun NavGraph(navController: NavHostController) {
                     factory = object : ViewModelProvider.Factory {
                         override fun <T : ViewModel> create(modelClass: Class<T>): T {
                             return LoginScreenViewModel(
-                                loginUseCase = LoginUseCase(activity = activity)
+                                loginUseCase = LoginUseCase()
                             ) as T
                         }
                     }
                 )
 
                 LoginsScreen(loginScreenViewModel = loginScreenViewModel) {
-                    loginScreenViewModel.login(navController)
+                    loginScreenViewModel.login(navController, activity)
 
                     }
                 }
@@ -108,7 +98,7 @@ fun NavGraph(navController: NavHostController) {
                         factory = object : ViewModelProvider.Factory {
                             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                                 return TicketsScreenViewModel(
-                                    useCase = WorkOrdersUseCase(activity = activity)
+                                    useCase = WorkOrdersUseCase()
                                 ) as T
                             }
                         }
@@ -159,31 +149,41 @@ fun NavGraph(navController: NavHostController) {
                 route = "ticket_information"
             ) {
                 composable(route = Screen.TicketInformation.route) {
-                    val orderId = navController.previousBackStackEntry?.arguments?.getString("workOrderId")
-                    Log.e("workOrderId", orderId.toString())
+                    val workOrderId = navController.previousBackStackEntry?.arguments?.getString("workOrderId") ?: ""
 
-                    Log.e("navData", orderId.toString())
+                    val ticketInformationViewModel = viewModel<TicketInformationViewModel>(
+                        factory = object : ViewModelProvider.Factory {
+                            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                                return TicketInformationViewModel(
+                                    orderId = workOrderId
+                                ) as T
+                            }
+                        }
+                    )
+
+                    Log.e("workOrderId", workOrderId)
+
                     TicketInformationScreen(
                         navController = navController,
                         ticketInformationViewModel = ticketInformationViewModel,
-                        orderId = orderId ?: ""
+                        workOrder = workOrderId
                     )
                 }
                 composable(route = Screen.TakePhoto.route) {
-                    Camera(
+                    /*Camera(
                         index = ticketInformationViewModel.selectedImageAndIndex?.first ?: 0,
                         imageIndex = ticketInformationViewModel.selectedImageAndIndex?.second ?: 0,
                         navController = navController,
                         ticketInformationViewModel = ticketInformationViewModel
-                    )
+                    )*/
                 }
                 composable(route = Screen.Maps.route) { backStackEntry ->
                     val index = backStackEntry.arguments?.getString("index")
-                    MapsAndLocation(
+                   /* MapsAndLocation(
                         navController = navController,
                         index = index ?: "0",
                         ticketInformationViewModel = ticketInformationViewModel
-                    )
+                    )*/
                 }
             }
 

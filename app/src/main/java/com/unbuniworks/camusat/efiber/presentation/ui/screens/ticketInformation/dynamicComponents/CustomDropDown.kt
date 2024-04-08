@@ -23,19 +23,23 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.unbuniworks.camusat.efiber.R
+import com.unbuniworks.camusat.efiber.data.remote.dto.workOrderDto.Feature
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.TicketInformationViewModel
 
 @Composable
 fun CustomDropDown(
+    feature: Feature,
     index: Int,
     navController: NavHostController,
     ticketInformationViewModel: TicketInformationViewModel,
+    status: String,
 ) {
 
-
-    var selectedItem:String? by remember {
-        mutableStateOf(null)
+    var isDropdownOpen by remember {
+        mutableStateOf(false)
     }
+
+
     Column(
         modifier = Modifier
             .padding(horizontal = 16.dp, vertical = 2.dp)
@@ -46,14 +50,14 @@ fun CustomDropDown(
             readOnly = true,
             placeholder = {
                 Text(
-                    text = "",
+                    text = feature.name,
                     color = Color.DarkGray,
                 )
             },
             trailingIcon = {
                 IconButton(
                     onClick = {
-                        ticketInformationViewModel.openOrCloseDropDown(index)
+                        isDropdownOpen = true
                     }
                 ) {
                     Icon(
@@ -63,7 +67,7 @@ fun CustomDropDown(
                     )
                 }
             },
-            value = selectedItem ?: "",
+            value = feature.value ?: "",
             onValueChange = {
 
             },
@@ -80,24 +84,29 @@ fun CustomDropDown(
                 .fillMaxWidth(),
         )
 
-        DropdownMenu(
-            expanded = (ticketInformationViewModel.openOrCloseDropDown.first == index && ticketInformationViewModel.openOrCloseDropDown.second),
-            onDismissRequest = {
-                ticketInformationViewModel.openOrCloseDropDown(index)
-            },
-            modifier = Modifier
-                .fillMaxWidth(0.8f)
+        if (isDropdownOpen) {
+            DropdownMenu(
+                expanded = status != "complete",
+                onDismissRequest = {
+                    isDropdownOpen = false
+                },
+                modifier = Modifier
+                    .fillMaxWidth(0.8f)
 
-        ) {
+            ) {
 
-                    DropdownMenuItem(
-                        text = {
-                            Text(text = "")
-                        },
-                        onClick = {
-
-                        }
-                    )
-                }
+               feature.options.forEach {
+                   DropdownMenuItem(
+                       text = {
+                           Text(text = it)
+                       },
+                       onClick = {
+                           ticketInformationViewModel.selectDropdownComponent(index, text = it)
+                           isDropdownOpen = false
+                       }
+                   )
+               }
+            }
+        }
     }
 }

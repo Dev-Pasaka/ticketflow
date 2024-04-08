@@ -22,21 +22,8 @@ class MoreScreenViewModel():ViewModel() {
 
     var originalListOfApplicationItems = listOf(
         ApplicationItem(
-            name = "Clock-In",
-            icon = R.drawable.clock_outline
-        ),
-
-        ApplicationItem(
-            name = "User Manual",
-            icon = R.drawable.manual,
-        ),
-        ApplicationItem(
             name = "Help",
             icon = R.drawable.help
-        ),
-        ApplicationItem(
-            name = "Settings",
-            icon = R.drawable.settings
         ),
 
     )

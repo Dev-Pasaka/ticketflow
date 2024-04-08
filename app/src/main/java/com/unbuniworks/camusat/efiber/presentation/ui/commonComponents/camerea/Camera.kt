@@ -121,10 +121,9 @@ fun Camera(
         ) {
 
             IconButton(
-                enabled = !ticketInformationViewModel.isImageProcessing,
+                enabled = false,
                 onClick = {
                     scope.launch {
-                        ticketInformationViewModel.openOrCloseImageProcessingDialogBox()
                         val bitmap = takePhoto(
                             context = context,
                             controller = controller,
@@ -132,7 +131,6 @@ fun Camera(
                         )
                         bitmap?.let {
 
-                            ticketInformationViewModel.openOrCloseImageProcessingDialogBox()
                             navController.popBackStack()
                         }
                     }
@@ -151,7 +149,7 @@ fun Camera(
 
         }
     }
-    if (ticketInformationViewModel.isImageProcessing){
+    if (false){
         ProcessingPhoto(ticketInformationViewModel = ticketInformationViewModel)
     }
 }

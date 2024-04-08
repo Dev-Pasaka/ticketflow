@@ -37,6 +37,6 @@ data class MaterialsDtoItem(
 fun MaterialsDtoItem.toMaterial():com.unbuniworks.camusat.efiber.domain.model.Material{
     return com.unbuniworks.camusat.efiber.domain.model.Material(
         name  = material.materialName,
-        qty = material.quantityRemaining
+        qty = quantityRemaining
     )
 }

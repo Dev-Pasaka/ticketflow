@@ -41,10 +41,9 @@ fun SelectDateAndTime(
             .fillMaxHeight(0.25f)
     ) {
         val datePickerState =
-            rememberDatePickerState(initialSelectedDateMillis = ticketInformationViewModel.selectedDate)
+            rememberDatePickerState(initialSelectedDateMillis = null, initialDisplayedMonthMillis = null)
         DatePickerDialog(
             onDismissRequest = {
-                ticketInformationViewModel.openOrCloseCalender()
             },
             confirmButton = {
                val date =  (
@@ -74,7 +73,7 @@ fun TimePicker(
 ){
     val state = rememberTimePickerState()
     Dialog(
-        onDismissRequest = {ticketInformationViewModel.openOrCloseTimePicker() },
+        onDismissRequest = {},
         properties = DialogProperties(
             dismissOnBackPress = true,
             dismissOnClickOutside = true

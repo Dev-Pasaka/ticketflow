@@ -1,5 +1,6 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.commonComponents
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,28 +16,33 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.unbuniworks.camusat.efiber.R
+import com.unbuniworks.camusat.efiber.common.Constants
+import com.unbuniworks.camusat.efiber.data.local.sharedPreference.SharedPreferenceRepository
+import com.unbuniworks.camusat.efiber.data.local.sharedPreference.SharedPreferenceRepositoryImpl
 import com.unbuniworks.camusat.efiber.presentation.navigation.Screen
+import kotlinx.coroutines.launch
 
 @Composable
-fun TopAppBar(navController: NavHostController) {
+fun TopAppBar(navController: NavHostController, sharedPreferenceRepository: SharedPreferenceRepository = SharedPreferenceRepositoryImpl()) {
 
     var isProfileDropDown by remember {
         mutableStateOf(false)
     }
+    val scope = rememberCoroutineScope()
+    val activity = LocalContext.current as Activity
+
     Column(
         horizontalAlignment = Alignment.End,
         verticalArrangement = Arrangement.Center
@@ -99,9 +105,13 @@ fun TopAppBar(navController: NavHostController) {
                     }
                 },
                 actionLogOut = {
-                    navController.navigate("auth") {
-                        popUpTo("auth") { inclusive = false }
+                    scope.launch {
+                        sharedPreferenceRepository.setString(key = Constants.isLoggedIn, value = "false", activity = activity)
+                        navController.navigate("auth") {
+                            popUpTo("auth") { inclusive = false }
+                        }
                     }
+
                 }
             )
         }
@@ -124,8 +134,9 @@ fun ProfileDialog(
     ) {
         DropdownMenu(
             onDismissRequest = actionCloseDialog,
+            offset = DpOffset(x = 250.dp, y = 0.dp),
             expanded = isExpanded,
-            modifier = Modifier.background(color = colorResource(id = R.color.light_gray))
+            modifier = Modifier.background(color = Color.White)
         ) {
             DropdownMenuItem(
                 text = {

@@ -1,34 +1,33 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationManager
+import android.os.Bundle
+import android.os.Looper
+import android.util.Log
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationListener
+import com.google.android.gms.location.LocationRequest
 
-//class LocationManager(private val context: Context) {
-//
-//    private val fusedLocationClient: FusedLocationProviderClient =
-//        LocationServices.getFusedLocationProviderClient(context)
-//
-//    private val locationRequest: LocationRequest = LocationRequest.create().apply {
-//        priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-//        interval = 1000 // Update interval in milliseconds
-//    }
-//
-//    @SuppressLint("MissingPermission")
-//    fun startLocationUpdates(locationCallback: (Location) -> Unit) {
-//        val callback = object : LocationCallback() {
-//            override fun onLocationResult(result: LocationResult?) {
-//                result?.lastLocation?.let {
-//                    // Handle live location update
-//                    locationCallback.invoke(it)
-//                }
-//            }
-//        }
-//
-//        fusedLocationClient.requestLocationUpdates(locationRequest, callback, null)
-//    }
-//
-//    fun stopLocationUpdates() {
-//        // Stop receiving location updates
-//        fusedLocationClient.removeLocationUpdates(null)
-//    }
-//}
+
+
+class LocationHelper(private val context: Context) {
+
+    private val locationManager: LocationManager? =
+        context.getSystemService(Context.LOCATION_SERVICE) as? LocationManager
+
+    private val locationListener: LocationListener =
+        LocationListener { location ->
+            val latitude = location.latitude
+            val longitude = location.longitude
+            Log.i("test", "Latitude: $latitude ; Longitude: $longitude")
+        }
+
+
+}

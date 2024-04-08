@@ -1,5 +1,7 @@
 package com.unbuniworks.camusat.efiber.domain.model
 
+import com.unbuniworks.camusat.efiber.data.remote.dto.workOrderDto.WorkOrderTask
+
 data class WorkOrderDetails(
     val id:String,
     val name:String,
@@ -10,5 +12,7 @@ data class WorkOrderDetails(
     val contact:String,
     val equipment:String,
     val status:String,
-    val statusColor: String
+    val statusColor: String,
+    val workOrderTasks: List<WorkOrderTask>?
+
 )

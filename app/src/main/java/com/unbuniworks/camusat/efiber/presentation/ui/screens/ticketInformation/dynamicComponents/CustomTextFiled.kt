@@ -19,6 +19,10 @@ import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.
 
 @Composable
 fun CustomTextFiled(
+    status:String,
+    label:String,
+    value:String,
+    onValueChange:(String) ->Unit,
     index:Int,
     ticketInformationViewModel: TicketInformationViewModel
 ) {
@@ -26,24 +30,19 @@ fun CustomTextFiled(
         OutlinedTextField(
             placeholder = {
                 Text(
-                    text =  "",
+                    text =  label,
                     color = Color.DarkGray,
                 )
             },
-            value = "",
-            onValueChange = {
-            },
+            value = value,
+            onValueChange = onValueChange,
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Done,
                 keyboardType = KeyboardType.Text
             ),
             keyboardActions = KeyboardActions(
                 onDone = {
-                    ticketInformationViewModel.updateTextInputFilled(
-                        index = index,
-                        textFilledIndex = 0,
-                        text = ""
-                    )
+
                 }
             ),
             colors = TextFieldDefaults.colors(

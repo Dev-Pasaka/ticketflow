@@ -4,12 +4,20 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavHostController
 import com.unbuniworks.camusat.efiber.R
 import com.unbuniworks.camusat.efiber.presentation.navigation.BottomNavigationViewModel
@@ -47,9 +55,28 @@ fun Material(
 
             modifier = Modifier.fillMaxSize()
         ) {
-            MaterialsScreenUpperSection()
+            MaterialsScreenUpperSection(materialScreenViewModel = materialScreenViewModel)
             MaterialsBodySection(materialScreenViewModel = materialScreenViewModel)
 
+            if (materialScreenViewModel.isRefreshing){
+                Dialog(
+                    onDismissRequest = { /*TODO*/ }
+                ) {
+
+                    Surface(
+                        color = Color.White,
+                        shape = RoundedCornerShape(4.dp)
+                    ) {
+                        CircularProgressIndicator(
+                            color = colorResource(id = R.color.button_color),
+                            strokeWidth = 3.dp,
+                            strokeCap = StrokeCap.Butt,
+                            modifier = Modifier.padding(16.dp)
+                        )
+                    }
+
+                }
+            }
         }
     }
 }

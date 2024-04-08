@@ -1,33 +1,40 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.screens.bottomBar.screens.tickets.components
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavHostController
 import com.unbuniworks.camusat.efiber.R
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.bottomBar.screens.tickets.TicketsScreenViewModel
+import com.unbuniworks.camusat.efiber.presentation.ui.screens.bottomBar.screens.tickets.model.WorkOrder
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TicketsScreenLowerSection(
     ticketsScreenViewModel: TicketsScreenViewModel,
     navController:NavHostController,
 ) {
-    TicketsScreenUpperSection()
-    if(ticketsScreenViewModel.workOrderState.data.isEmpty()){
+    TicketsScreenUpperSection(ticketsScreenViewModel = ticketsScreenViewModel)
+    if(ticketsScreenViewModel.workOrderState.data.isEmpty() && !ticketsScreenViewModel.workOrderState.isLoading){
 
         Column(
             verticalArrangement = Arrangement.Center,
@@ -40,7 +47,8 @@ fun TicketsScreenLowerSection(
                 painter = painterResource(id = R.drawable.icon_new_work_orders),
                 contentDescription ="No ticket",
                 contentScale = ContentScale.Fit,
-                modifier = Modifier.width(200.dp)
+                modifier = Modifier
+                    .width(200.dp)
                     .height(200.dp)
             )
             Text(
@@ -54,13 +62,14 @@ fun TicketsScreenLowerSection(
     }else{
         LazyColumn{
             items(count = ticketsScreenViewModel.workOrderState.data.size){
+                val wordOrderId = ticketsScreenViewModel.workOrderState.data[it].id
                 WorkOrderItem(
                     index = it,
                     ticketsScreenViewModel =ticketsScreenViewModel,
                     actionNavigateToTicketInformationScreen = {
                         navController.currentBackStackEntry?.arguments?.putString(
                             "workOrderId",
-                            ticketsScreenViewModel.workOrderState.data[it].id
+                            wordOrderId
                             )
                         navController.navigate(route = "ticket_information")
                     }

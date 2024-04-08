@@ -1,5 +1,6 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.screens.selecteModule.components
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
@@ -11,13 +12,12 @@ fun SelectModuleBodySection(
     selectModuleViewModel: SelectModuleViewModel,
     actionNavigateToHome:() -> Unit
 ){
-
-    LazyColumn(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
     ){
-        items(count = selectModuleViewModel.listOfModules.size){
-            ModuleItem(index = it, selectModuleViewModel = selectModuleViewModel,  actionNavigateToHome = actionNavigateToHome )
-        }
+        ModuleItem(selectModuleViewModel = selectModuleViewModel,  actionNavigateToHome = actionNavigateToHome )
+
     }
+
 }

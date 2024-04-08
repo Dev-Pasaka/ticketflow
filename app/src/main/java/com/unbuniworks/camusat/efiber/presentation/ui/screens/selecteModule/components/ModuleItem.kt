@@ -21,15 +21,12 @@ import com.unbuniworks.camusat.efiber.presentation.ui.screens.selecteModule.Sele
 
 @Composable
 fun ModuleItem(
-    index: Int,
     selectModuleViewModel: SelectModuleViewModel,
     actionNavigateToHome:() -> Unit
 ){
-    val item = selectModuleViewModel.listOfModules[index]
+    val item = selectModuleViewModel.listOfModules.first()
     Surface(
-        color = if (selectModuleViewModel.selectedModule == item)
-            colorResource(id = R.color.selected_item_color)
-        else  colorResource(id = R.color.unselected_item_color),
+        color = colorResource(id = R.color.unselected_item_color),
         shape = RoundedCornerShape(5.dp),
         modifier = Modifier
             .fillMaxWidth()
@@ -52,9 +49,7 @@ fun ModuleItem(
                 fontWeight = if (selectModuleViewModel.selectedModule == item)
                     FontWeight.Bold
                 else FontWeight.Normal,
-                color = if (selectModuleViewModel.selectedModule == item)
-                    colorResource(id = R.color.button_color)
-                else Color.DarkGray
+                color =  Color.DarkGray
             )
         }
     }

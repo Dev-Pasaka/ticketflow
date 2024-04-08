@@ -1,5 +1,6 @@
 package com.unbuniworks.camusat.efiber.data.remote.httpClient
 
+import com.google.gson.Gson
 import com.unbuniworks.camusat.efiber.common.Constants
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
@@ -17,7 +18,7 @@ object HttpClient {
             json(Json {
                 prettyPrint = true
                 isLenient = true
-                ignoreUnknownKeys = true // Ignore unknown keys in JSON
+               ignoreUnknownKeys = true // Ignore unknown keys in JSON
             })
         }
         defaultRequest {
@@ -26,7 +27,7 @@ object HttpClient {
         }
         engine {
             // Set timeout
-            requestTimeout = 10000 // 5000 milliseconds = 5 seconds
+            requestTimeout = (1000*60)*2 // 5000 milliseconds = 5 seconds
 
         }
     }
