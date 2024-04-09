@@ -7,6 +7,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class WorkOrdersTask(
 
+    @SerialName("createdAt")
+    val createdAt: String?,
     @SerialName("deletedAt")
     val deletedAt: String?,
     @SerialName("id")

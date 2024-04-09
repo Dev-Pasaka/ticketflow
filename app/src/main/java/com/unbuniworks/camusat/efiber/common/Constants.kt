@@ -1,7 +1,10 @@
 package com.unbuniworks.camusat.efiber.common
 
 object Constants {
-    const val baseUrl = "https://efiber-api.camusat.com/"
+    //Live
+    //const val baseUrl = "https://efiber-api.camusat.com/"
+    //Dev
+    const val baseUrl = "https://snail-peaceful-raven.ngrok-free.app/"
     const val token = "jwtToken"
     const val workOrderId  = "workOrderId"
     const val userId = "userId"

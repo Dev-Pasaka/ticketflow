@@ -16,8 +16,8 @@ data class WorkOrderDto(
     val emailsIncomingId: String,
     val id: String,
     val mainId: String,
-    val manager: Manager,
-    val managerId: String,
+    val manager: Manager? = null,
+    val managerId: String? = null,
     @SerialName("Project")
     val project: Project?,
     val projectId: String?,

@@ -40,10 +40,13 @@ suspend fun main(){
     val api:HttpClient = HttpClient
 
     val workOrderId = "eabaaade-f0d4-4419-918d-c8f5312d67b6"
-    println(
+    /*println(
         api.client.get("${api.baseUrl}workorders/workorder/$workOrderId"){
             header(HttpHeaders.Authorization, "Bearer ")
         }.body<WorkOrderDto>()
+    )*/
+    println(
+        WorkOrdersRepositoryImpl().getWorkOrders()
     )
 }
 

@@ -39,9 +39,11 @@ class LoginUseCase(
             if (response.status){
                 sharedPreferenceRepository.setString(key = Constants.isLoggedIn, "true", activity)
                 sharedPreferenceRepository.setString(key = Constants.email, userCredentials.email, activity)
+                sharedPreferenceRepository.setString(key = Constants.userId, response.userDto?.id, activity)
                 emit(Resource.Success(data = user, message = "Request was successful"))
             }else{
-                emit(Resource.Error( "Login failed"))
+                Log.e("DeviceIdResponse", response.toString())
+                emit(Resource.Error( response.message))
             }
         }
         catch (e:IOException){

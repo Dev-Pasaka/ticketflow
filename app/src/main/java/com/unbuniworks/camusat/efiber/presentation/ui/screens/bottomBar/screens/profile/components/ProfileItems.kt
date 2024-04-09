@@ -20,8 +20,7 @@ import com.unbuniworks.camusat.efiber.R
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.bottomBar.screens.profile.ProfileScreenViewModel
 
 @Composable
-fun ProfileItems(index:Int, profileScreenViewModel: ProfileScreenViewModel) {
-    val profile = profileScreenViewModel.profileItems[index]
+fun ProfileItems(profileScreenViewModel: ProfileScreenViewModel) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.Start,
@@ -36,7 +35,7 @@ fun ProfileItems(index:Int, profileScreenViewModel: ProfileScreenViewModel) {
                 .fillMaxWidth()
         ){
             Text(
-                text = profile.title,
+                text = "User Id",
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
                 color = colorResource(id = R.color.button_link_color)
@@ -50,7 +49,184 @@ fun ProfileItems(index:Int, profileScreenViewModel: ProfileScreenViewModel) {
                 .fillMaxWidth()
         ){
             Text(
-                text = profile.body,
+                text = profileScreenViewModel.getUserDataState.data.id,
+                fontSize = 14.sp,
+                color = Color.DarkGray
+            )
+        }
+    }
+
+
+
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.Start,
+        modifier = Modifier
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .fillMaxWidth()
+    ) {
+        Row (
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start,
+            modifier = Modifier
+                .fillMaxWidth()
+        ){
+            Text(
+                text = "Name",
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+                color = colorResource(id = R.color.button_link_color)
+            )
+        }
+        Spacer(modifier = Modifier.height(2.dp))
+        Row (
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start,
+            modifier = Modifier
+                .fillMaxWidth()
+        ){
+            Text(
+                text = profileScreenViewModel.getUserDataState.data.name,
+                fontSize = 14.sp,
+                color = Color.DarkGray
+            )
+        }
+    }
+
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.Start,
+        modifier = Modifier
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .fillMaxWidth()
+    ) {
+        Row (
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start,
+            modifier = Modifier
+                .fillMaxWidth()
+        ){
+            Text(
+                text = "Positon",
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+                color = colorResource(id = R.color.button_link_color)
+            )
+        }
+        Spacer(modifier = Modifier.height(2.dp))
+        Row (
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start,
+            modifier = Modifier
+                .fillMaxWidth()
+        ){
+            Text(
+                text = profileScreenViewModel.getUserDataState.data.position,
+                fontSize = 14.sp,
+                color = Color.DarkGray
+            )
+        }
+    }
+
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.Start,
+        modifier = Modifier
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .fillMaxWidth()
+    ) {
+        Row (
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start,
+            modifier = Modifier
+                .fillMaxWidth()
+        ){
+            Text(
+                text = "Staff ID No.",
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+                color = colorResource(id = R.color.button_link_color)
+            )
+        }
+        Spacer(modifier = Modifier.height(2.dp))
+        Row (
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start,
+            modifier = Modifier
+                .fillMaxWidth()
+        ){
+            Text(
+                text = profileScreenViewModel.getUserDataState.data.staffId ?: "",
+                fontSize = 14.sp,
+                color = Color.DarkGray
+            )
+        }
+    }
+
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.Start,
+        modifier = Modifier
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .fillMaxWidth()
+    ) {
+        Row (
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start,
+            modifier = Modifier
+                .fillMaxWidth()
+        ){
+            Text(
+                text = "Team",
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+                color = colorResource(id = R.color.button_link_color)
+            )
+        }
+        Spacer(modifier = Modifier.height(2.dp))
+        Row (
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start,
+            modifier = Modifier
+                .fillMaxWidth()
+        ){
+            Text(
+                text = profileScreenViewModel.getUserDataState.data.team,
+                fontSize = 14.sp,
+                color = Color.DarkGray
+            )
+        }
+    }
+
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.Start,
+        modifier = Modifier
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .fillMaxWidth()
+    ) {
+        Row (
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start,
+            modifier = Modifier
+                .fillMaxWidth()
+        ){
+            Text(
+                text = "Build No.",
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+                color = colorResource(id = R.color.button_link_color)
+            )
+        }
+        Spacer(modifier = Modifier.height(2.dp))
+        Row (
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start,
+            modifier = Modifier
+                .fillMaxWidth()
+        ){
+            Text(
+                text = profileScreenViewModel.getUserDataState.data.buildNumber,
                 fontSize = 14.sp,
                 color = Color.DarkGray
             )

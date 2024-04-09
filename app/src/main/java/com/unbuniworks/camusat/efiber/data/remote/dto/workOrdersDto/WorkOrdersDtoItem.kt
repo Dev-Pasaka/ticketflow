@@ -1,6 +1,7 @@
 package com.unbuniworks.camusat.efiber.data.remote.dto.workOrdersDto
 
 
+import com.unbuniworks.camusat.efiber.domain.model.ScheduledWorkOrders
 import com.unbuniworks.camusat.efiber.domain.model.WorkOrder
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -26,9 +27,9 @@ data class WorkOrdersDtoItem(
     @SerialName("mainId")
     val mainId: String,
     @SerialName("manager")
-    val manager: Manager,
+    val manager: Manager?,
     @SerialName("managerId")
-    val managerId: String,
+    val managerId: String?,
     @SerialName("Project")
     val project: Project?,
     @SerialName("projectId")
@@ -60,11 +61,22 @@ fun WorkOrdersDtoItem.toWorkOrder(): WorkOrder {
     return WorkOrder(
         id = id,
         ticketid = mainId,
-        name = listOf("Casablanca", "2BIT","Quiver","Alchemist").random(), // Assuming you want to use mainId as the name
+        name = "", // Assuming you want to use mainId as the name
         status = status,
         statusColor = statusColour,
         workOrdersTasks = workOrdersTasks,
     )
+}
+
+fun WorkOrdersDtoItem.toScheduledWorkOrder(index:Int): ScheduledWorkOrders{
+
+    return ScheduledWorkOrders(
+        id= mainId,
+        scheduledStartAt = scheduledStartAt ?: "",
+        name = workOrdersTasks?.get(index)?.name ?: ""
+    )
+
+
 }
 
 

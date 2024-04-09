@@ -14,11 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.unbuniworks.camusat.efiber.common.Utils
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.bottomBar.screens.schedule.ScheduleScreenViewModel
 
 @Composable
 fun ScheduleItem(index:Int, scheduleScreenViewModel: ScheduleScreenViewModel){
-    val title = scheduleScreenViewModel.scheduledItems[index]
+    val title = scheduleScreenViewModel.getScheduledWorkOrderState.data[index]
     ElevatedCard(
         colors = CardDefaults.cardColors(
             contentColor = Color.DarkGray,
@@ -38,8 +39,11 @@ fun ScheduleItem(index:Int, scheduleScreenViewModel: ScheduleScreenViewModel){
                 .padding(horizontal = 16.dp, vertical = 16.dp)
         ) {
             Text(
-                text = "${index+1}. ${title.scheduleNumber} - ${title.title}",
-                fontSize = 14.sp,
+                text = """
+                    ${index+1}. ${title.id} - (${title.name})
+                    Scheduled on: ${Utils.convertDateStringToDate(title.scheduledStartAt)}
+                """.trimIndent() ,
+                fontSize = 12.sp,
 
                 )
         }

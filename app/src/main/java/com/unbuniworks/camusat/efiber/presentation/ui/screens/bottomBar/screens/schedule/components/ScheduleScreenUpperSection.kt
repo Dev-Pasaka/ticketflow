@@ -47,7 +47,7 @@ fun ScheduleScreenUpperSection(
             .fillMaxWidth()
     ) {
         Text(
-            text = "Schedule",
+            text = "Scheduled WorkOrders",
             color = colorResource(id = R.color.button_color),
             fontSize = 18.sp
         )
@@ -59,27 +59,9 @@ fun ScheduleScreenUpperSection(
                     color = Color.DarkGray,
                 )
             },
-            value = scheduleScreenViewModel.formatDate(),
+            value = scheduleScreenViewModel.search,
             onValueChange = {
                             scheduleScreenViewModel.updateSearch(searchValue = it)
-            },
-            leadingIcon = {
-                IconButton(onClick = { /*TODO*/ }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.search_icon),
-                        contentDescription = "search"
-                    )
-                }
-            },
-            trailingIcon = {
-                IconButton(onClick = {
-                    scheduleScreenViewModel.openOrCloseDatePicker()
-                }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.calendar),
-                        contentDescription = "search"
-                    )
-                }
             },
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next,
@@ -100,38 +82,5 @@ fun ScheduleScreenUpperSection(
             ),
             modifier = Modifier.fillMaxWidth(),
         )
-    }
-    if (scheduleScreenViewModel.isDatePickerOpen){
-        Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth()
-                .fillMaxHeight(0.25f)
-        ) {
-            val datePickerState =
-                rememberDatePickerState(initialSelectedDateMillis = scheduleScreenViewModel.selectedDate)
-            DatePickerDialog(
-                onDismissRequest = {
-                    scheduleScreenViewModel.openOrCloseDatePicker()
-                },
-                confirmButton = {
-                    scheduleScreenViewModel.updateSelectedDate(
-                        date = datePickerState.selectedDateMillis ?: 0L
-                    )
-
-                }
-            ) {
-                DatePicker(
-                    state = datePickerState,
-                    colors = DatePickerDefaults.colors(
-                        selectedDayContainerColor = colorResource(id = R.color.light_blue),
-                    )
-                )
-            }
-
-
-        }
     }
 }

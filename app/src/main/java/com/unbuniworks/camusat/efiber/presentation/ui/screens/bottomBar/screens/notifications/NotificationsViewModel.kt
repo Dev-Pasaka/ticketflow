@@ -11,11 +11,6 @@ class NotificationsViewModel():ViewModel() {
         private set
 
     val notifications by mutableStateOf(
-        listOf(
-            "QA Approval for Ticket #62379923",
-            "QA Approval for Ticket #98479923",
-            "New Materials Received",
-            "QA Rejected for Ticket #78239121",
-        )
+        emptyList<String>()
     )
 }

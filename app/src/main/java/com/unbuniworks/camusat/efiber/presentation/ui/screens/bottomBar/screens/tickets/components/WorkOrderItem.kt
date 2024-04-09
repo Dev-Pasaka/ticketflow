@@ -57,7 +57,7 @@ fun WorkOrderItem(
                     fontSize = 14.sp
                 )
                 Text(
-                    text = " - ",
+                    text = "  ",
                     color = Color.DarkGray,
                     fontSize = 14.sp
                 )

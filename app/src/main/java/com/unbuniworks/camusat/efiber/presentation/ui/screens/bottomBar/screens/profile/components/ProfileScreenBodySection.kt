@@ -10,11 +10,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun ProfileScreenBodySection(profileScreenViewModel: ProfileScreenViewModel) {
-    LazyColumn(
-      //  modifier = Modifier.height(300.dp)
-    ){
-        items(profileScreenViewModel.profileItems.size){
-            ProfileItems(index = it, profileScreenViewModel = profileScreenViewModel)
-        }
-    }
+
+    ProfileItems(profileScreenViewModel = profileScreenViewModel)
+
 }

@@ -11,15 +11,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Menu
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -35,13 +35,11 @@ import com.unbuniworks.camusat.efiber.presentation.navigation.Screen
 import kotlinx.coroutines.launch
 
 @Composable
-fun TopAppBar(navController: NavHostController, sharedPreferenceRepository: SharedPreferenceRepository = SharedPreferenceRepositoryImpl()) {
+fun TopAppBar(
+    actionOpenNavDrawer: () -> Unit,
+    navController: NavHostController,
+) {
 
-    var isProfileDropDown by remember {
-        mutableStateOf(false)
-    }
-    val scope = rememberCoroutineScope()
-    val activity = LocalContext.current as Activity
 
     Column(
         horizontalAlignment = Alignment.End,
@@ -57,29 +55,27 @@ fun TopAppBar(navController: NavHostController, sharedPreferenceRepository: Shar
                 .padding(horizontal = 16.dp)
         ) {
 
-            //Logo
-            Image(
-                painter = painterResource(id = R.drawable.camusat_logo),
-                contentDescription = "Camusat logo",
-                modifier = Modifier
-                    .width(150.dp)
-                    .height(70.dp)
-            )
+
+            Surface(
+                shape = CircleShape,
+                onClick = actionOpenNavDrawer,
+                color = colorResource(id = R.color.button_color)
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.Menu,
+                    contentDescription = "person Icon",
+                    tint = Color.White,
+                    modifier = Modifier
+                        .size(35.dp)
+                        .padding(8.dp)
+                )
+            }
+
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceEvenly,
             ) {
-                IconButton(onClick = {
-                    isProfileDropDown = true
-                }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.person_icon),
-                        contentDescription = "person Icon",
-                        tint = Color.DarkGray,
-                        modifier = Modifier.size(25.dp)
-                    )
-                }
                 IconButton(onClick = {
                     navController.navigate(Screen.Notifications.route) {
                         navController.popBackStack()
@@ -95,69 +91,7 @@ fun TopAppBar(navController: NavHostController, sharedPreferenceRepository: Shar
                 }
             }
         }
-        if (isProfileDropDown) {
-            ProfileDialog(
-                isExpanded = isProfileDropDown,
-                actionCloseDialog = { isProfileDropDown = false },
-                actionProfile = {
-                    navController.navigate(Screen.Profile.route) {
-                        navController.popBackStack()
-                    }
-                },
-                actionLogOut = {
-                    scope.launch {
-                        sharedPreferenceRepository.setString(key = Constants.isLoggedIn, value = "false", activity = activity)
-                        navController.navigate("auth") {
-                            popUpTo("auth") { inclusive = false }
-                        }
-                    }
 
-                }
-            )
-        }
     }
 
-}
-
-@Composable
-fun ProfileDialog(
-    isExpanded:Boolean,
-    actionCloseDialog:()->Unit,
-    actionProfile:() -> Unit,
-    actionLogOut:() -> Unit
-){
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.End,
-        modifier = Modifier
-            .fillMaxWidth()
-    ) {
-        DropdownMenu(
-            onDismissRequest = actionCloseDialog,
-            offset = DpOffset(x = 250.dp, y = 0.dp),
-            expanded = isExpanded,
-            modifier = Modifier.background(color = Color.White)
-        ) {
-            DropdownMenuItem(
-                text = {
-                    Text(
-                        text = "Profile",
-                        color = Color.DarkGray,
-                        fontSize = 14.sp
-                    )
-                },
-                onClick = actionProfile
-            )
-            DropdownMenuItem(
-                text = {
-                    Text(
-                        text = "LogOut",
-                        color = Color.DarkGray,
-                        fontSize = 14.sp
-                    )
-                },
-                onClick = actionLogOut
-            )
-        }
-    }
 }

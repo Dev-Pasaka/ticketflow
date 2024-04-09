@@ -56,13 +56,17 @@ class LoginScreenViewModel(
         isLoginSelected = newState
     }
 
-
+    //UKQ1.230917.001
+    //23021RAAEG_UKQ1.230917.001
     @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
     fun login(navController:NavHostController, activity:Activity){
+        val deviceId = "${Build.MODEL}_${Build.ID}"
+        Log.e("DeviceId", deviceId)
         loginUseCase.login(
             userCredentials = UserCredentials(
                 email = email,
-                password = password
+                password = password,
+                deviceId = deviceId
             ),
             activity = activity
         ).onEach {result ->

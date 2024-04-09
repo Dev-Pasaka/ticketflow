@@ -15,7 +15,7 @@ data class LoginDto(
     @SerialName("message")
     val message:String,
     @SerialName("user")
-    val userDto: UserDto?
+    val userDto: UserDto? = null
 )
 fun LoginDto.toUser():User{
     return User(
