@@ -47,7 +47,8 @@ fun WorkOrderDto.toWorkOrderDetails():WorkOrderDetails{
         equipment =  ticketDetails.firstOrNull { it.key == "Equipement(s)" }?.value ?: "",
         status = status,
         statusColor = statusColour,
-        workOrderTasks = workOrderTasks
+        workOrderTasks = workOrderTasks,
+        dueDate = scheduledEndAt
     )
 
 }

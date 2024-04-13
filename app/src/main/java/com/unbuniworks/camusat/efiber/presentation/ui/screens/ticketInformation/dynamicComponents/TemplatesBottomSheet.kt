@@ -111,6 +111,7 @@ fun TemplatesBottomSheet(
                             status = status,
                             feature = feature,
                             index = index,
+                            key = "$index",
                             ticketInformationViewModel = ticketInformationViewModel
                         )
                         Spacer(modifier = Modifier.height(8.dp))
@@ -123,6 +124,7 @@ fun TemplatesBottomSheet(
                         CustomTimeInput(
                             feature = feature,
                             index = index,
+                            key = "$index",
                             ticketInformationViewModel = ticketInformationViewModel
                         )
                         Spacer(modifier = Modifier.height(8.dp))
@@ -133,6 +135,7 @@ fun TemplatesBottomSheet(
                         CustomImageUpload(
                             feature = feature,
                             index = index,
+                            key = "$index",
                             navController = navController,
                             ticketInformationViewModel = ticketInformationViewModel
                         )
@@ -143,7 +146,8 @@ fun TemplatesBottomSheet(
                         Location(
                             index = index,
                             feature = feature,
-                            ticketInformationViewModel = ticketInformationViewModel
+                            ticketInformationViewModel = ticketInformationViewModel,
+                            navController = navController
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                     }
@@ -168,7 +172,6 @@ fun TemplatesBottomSheet(
                }
             }else {
 
-                Spacer(modifier = Modifier.height(16.dp))
                 CustomButton(
                     status = status,
                     buttonName = buttonName,
@@ -192,6 +195,8 @@ fun TemplatesBottomSheet(
                     onCancel = { ticketInformationViewModel.openOrCloseCancelAlertDialog() }
                 )
             }
+            Spacer(modifier = Modifier.height(40.dp))
+
         }
     }
 }

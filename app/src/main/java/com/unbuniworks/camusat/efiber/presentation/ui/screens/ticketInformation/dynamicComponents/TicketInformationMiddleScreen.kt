@@ -24,6 +24,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.unbuniworks.camusat.efiber.R
+import com.unbuniworks.camusat.efiber.common.Utils
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.TicketInformationEvents
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.TicketInformationViewModel
 
@@ -45,6 +46,17 @@ fun TicketInformationMiddleScreen(
             .padding(horizontal = 16.dp)
             .fillMaxWidth(),
     ) {
+
+        if (ticketInformationViewModel.workOrderDetailState.data?.dueDate != null){
+            Text(
+                text = "Scheduled for ${Utils.formatIsoDateTime(dateTimeString = ticketInformationViewModel.workOrderDetailState.data?.dueDate ?: "")}",
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+                color = colorResource(id = R.color.button_color),
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,

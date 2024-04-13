@@ -1,50 +1,42 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.screens.bottomBar.screens.tickets
 
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.unbuniworks.camusat.efiber.common.Resource
+import com.unbuniworks.camusat.efiber.domain.model.WorkOrder
 import com.unbuniworks.camusat.efiber.domain.usecase.WorkOrdersUseCase
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.launch
 
 class TicketsScreenViewModel(
     private val useCase: WorkOrdersUseCase
-):ViewModel() {
+) : ViewModel() {
 
     init {
-        getWorkOrder()
+        refresh()
     }
 
+
+    var workOrderState:MutableList<WorkOrder>? by mutableStateOf(null)
+        private set
     var isRefreshing by mutableStateOf(false)
-        private set
-    var workOrderState by mutableStateOf(WorkOrderState())
-        private set
-    fun refresh(){
+
+    fun refresh() {
         getWorkOrder()
     }
 
-
-    private fun getWorkOrder(){
-        useCase.getWorkOrders().onEach { result ->
-            workOrderState = when(result){
-                is Resource.Success ->{
-                    isRefreshing = false
-                    WorkOrderState(data = result.data ?: emptyList())
-                }
-                is Resource.Error ->{
-                    isRefreshing = false
-                    WorkOrderState(error = result.message.toString())
-                }
-                is Resource.Loading ->{
-                    isRefreshing  = true
-                    WorkOrderState(isLoading = true, data =result.data ?: emptyList(), error = result.message ?: "")
-                }
-            }
-        }.launchIn(viewModelScope)
+    private fun getWorkOrder() {
+        viewModelScope.launch {
+            val result = useCase.getWorkOrders() // Perform work
+            workOrderState = result.toMutableList()
+        }
     }
 
 

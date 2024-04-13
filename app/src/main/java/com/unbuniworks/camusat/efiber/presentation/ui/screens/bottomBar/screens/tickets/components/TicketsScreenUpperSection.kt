@@ -34,7 +34,7 @@ fun TicketsScreenUpperSection(ticketsScreenViewModel: TicketsScreenViewModel){
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp, top = 48.dp)
+            .padding(start = 16.dp, end = 16.dp, top = 58.dp)
     ) {
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -79,11 +79,11 @@ fun TicketsScreenUpperSection(ticketsScreenViewModel: TicketsScreenViewModel){
                     ticketsScreenViewModel.refresh()
                 },
                 colors = IconButtonDefaults.iconButtonColors(
-                    containerColor = colorResource(id = R.color.button_color),
+                    containerColor = colorResource(id = R.color.light_blue),
                     contentColor = Color.White,
                 ),
                 modifier = Modifier
-                    .padding(horizontal = 16.dp)
+
 
             ) {
                 Icon(imageVector = Icons.Default.Refresh, contentDescription = "Refresh")

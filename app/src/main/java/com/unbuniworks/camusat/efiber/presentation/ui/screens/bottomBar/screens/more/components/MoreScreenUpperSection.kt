@@ -40,7 +40,7 @@ fun MoreScreenUpperSection(moreScreenViewModel: MoreScreenViewModel) {
         horizontalAlignment = Alignment.Start,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp, top = 68.dp)
+            .padding(start = 16.dp, end = 16.dp, top = 78.dp)
     ) {
         Text(
             text = "More Applications",

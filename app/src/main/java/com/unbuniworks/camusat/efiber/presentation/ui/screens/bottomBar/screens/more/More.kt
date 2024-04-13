@@ -29,52 +29,45 @@ fun MoreScreen(
     bottomNavigationViewModel: BottomNavigationViewModel,
     moreScreenViewModel: MoreScreenViewModel,
     navController: NavHostController
-){
+) {
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        gesturesEnabled = true,
-        drawerContent = {
-            NavDrawerContent(navController = navController)
-        }
-    ) {
 
 
-        Scaffold(
-            bottomBar = {
-                BottomAppBar(
-                    bottomNavigationViewModel = bottomNavigationViewModel,
-                    navController = navController
-                )
-            },
-            topBar = {
-                TopAppBar(
-                    navController = navController,
-                    actionOpenNavDrawer = {
-                        scope.launch {
-                            drawerState.apply {
-                                if (isClosed) open() else close()
-                            }
+    Scaffold(
+        bottomBar = {
+            BottomAppBar(
+                bottomNavigationViewModel = bottomNavigationViewModel,
+                navController = navController
+            )
+        },
+        topBar = {
+            TopAppBar(
+                navController = navController,
+                actionOpenNavDrawer = {
+                    scope.launch {
+                        drawerState.apply {
+                            if (isClosed) open() else close()
                         }
                     }
-                )
+                }
+            )
 
-            },
-            modifier = Modifier.fillMaxSize(),
-            containerColor = colorResource(id = R.color.background)
+        },
+        modifier = Modifier.fillMaxSize(),
+        containerColor = colorResource(id = R.color.background)
 
+    ) {
+        Column(
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.Start,
+            modifier = Modifier.fillMaxSize()
         ) {
-            Column(
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.Start,
-                modifier = Modifier.fillMaxSize()
-            ) {
-                MoreScreenUpperSection(moreScreenViewModel = moreScreenViewModel)
-                MoreScreenBodySection(moreScreenViewModel = moreScreenViewModel)
-            }
+            MoreScreenUpperSection(moreScreenViewModel = moreScreenViewModel)
+            MoreScreenBodySection(moreScreenViewModel = moreScreenViewModel)
         }
     }
+
 }

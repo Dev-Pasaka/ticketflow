@@ -21,7 +21,7 @@ fun GetUserDto.toUser():UserData{
         name = "${user.name} ${user.surname}",
         position = user.position.name,
         staffId = user.staffId,
-        team = user.team.name,
+        team = user.dispatchTeam?.name ?: "",
     )
 
 }

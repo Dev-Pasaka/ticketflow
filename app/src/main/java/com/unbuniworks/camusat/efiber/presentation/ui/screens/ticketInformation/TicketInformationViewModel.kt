@@ -38,6 +38,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
+import java.net.URL
 import java.text.SimpleDateFormat
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -71,6 +72,24 @@ class TicketInformationViewModel(
     private var _currentFeaturesList: MutableStateFlow<List<Feature>> =
         MutableStateFlow(emptyList())
     val currentFeaturesList: StateFlow<List<Feature>> = _currentFeaturesList
+
+
+
+
+    var currentDate by mutableStateOf("")
+        private set
+
+    var currentTime by mutableStateOf("")
+        private set
+    var currentImage by mutableStateOf("")
+        private set
+    var currentTakenPhoto  by mutableStateOf("")
+        private set
+
+    fun selectDate(key:String){ currentDate = key }
+    fun selectTime(key:String){ currentTime = key }
+    fun selectImage(key:String){ currentImage = key }
+    fun takePhoto(key:String){currentTakenPhoto = key}
 
 
     var originalCurrentFeatureList = mutableStateListOf<Feature>()
@@ -125,7 +144,8 @@ class TicketInformationViewModel(
         isViewImageBottomSheetOpen = !isViewImageBottomSheetOpen
     }
 
-    fun openOrCloseTakePhotoOrUploadImage() {
+    fun openOrCloseTakePhotoOrUploadImage(key: String) {
+        currentTakenPhoto = key
         isTakePhotoOrUploadImageDialogOpen = !isTakePhotoOrUploadImageDialogOpen
     }
 
@@ -375,6 +395,9 @@ class TicketInformationViewModel(
             // If an error occurs, invoke the failure callback with the exception
         }
     }
+
+
+
 
     init {
         getWorkOrder(orderId)

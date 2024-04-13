@@ -14,24 +14,32 @@ class GetScheduledWorkOrdersUseCase(
 ) {
     suspend operator fun invoke(): Resource<List<ScheduledWorkOrders>> =
         try {
-            val result = workOrdersRepository.getWorkOrders().mapIndexed { index, item ->
-                item.toScheduledWorkOrder(index = index)
+            val result = workOrdersRepository.getWorkOrders()
+            if (result.isNotEmpty()){
+                val scheduledWorkOrders = result.mapIndexed { index, item ->
+                    item.toScheduledWorkOrder(index = index)
+                }
+                Log.e("ScheduledResult", result.toString())
+                Resource.Success(data = scheduledWorkOrders, message = "Successful")
+            }else{
+                Log.e("ScheduledResult", result.toString())
+                Resource.Success(data = emptyList(), message = "Successful")
             }
-            Resource.Success(data = result, message = "Successful")
+
         } catch (e:IOException){
-            e.localizedMessage?.let { Log.e("LoginStatus", it) }
+            e.localizedMessage?.let { Log.e("ScheduledResult", it) }
             Resource.Error( "Couldn't reach server check your internet connection")
         }
         catch (e: JsonConvertException){
-            e.localizedMessage?.let { Log.e("LoginStatus", it) }
-            Resource.Error( "Email or Password can't be empty")
+            e.localizedMessage?.let { Log.e("ScheduledResult", it) }
+            Resource.Error( "Failed to purse json")
         }
         catch (e:NullPointerException){
-            e.localizedMessage?.let { Log.e("LoginStatus", it) }
+            e.localizedMessage?.let { Log.e("ScheduledResult", it) }
             Resource.Error( "Wrong email or password")
         }
         catch (e:Exception){
-            e.localizedMessage?.let { Log.e("LoginStatus", it) }
+            e.localizedMessage?.let { Log.e("ScheduledResult", it) }
             Resource.Error( "An expected error occurred")
         }
 }

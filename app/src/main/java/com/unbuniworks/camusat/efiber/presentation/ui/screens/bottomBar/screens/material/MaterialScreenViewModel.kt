@@ -17,45 +17,30 @@ import com.unbuniworks.camusat.efiber.presentation.ui.screens.bottomBar.screens.
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 class MaterialScreenViewModel(
     private val useCase: MaterialsUseCase = MaterialsUseCase(),
-):ViewModel() {
+) : ViewModel() {
 
     init {
         getMaterials()
     }
-    var materialsState:MaterialsState? by mutableStateOf(null)
+
+    var materialsState: List<Material> ? by mutableStateOf(null)
         private set
 
     var isRefreshing by mutableStateOf(false)
         private set
 
-    fun refresh(){
+    fun refresh() {
         getMaterials()
     }
 
     private fun getMaterials() {
-        useCase.getMaterials().onEach { result ->
-            materialsState = when (result) {
-                is Resource.Success -> {
-                    isRefreshing = false
-                    Log.e("Material", result.data.toString())
-                    MaterialsState(data = result.data ?: emptyList(), error = result.message.toString(),)
-                }
-                is Resource.Error -> {
-                    isRefreshing = false
-                    Log.e("Material", result.data.toString())
-                    MaterialsState(error = result.message.toString(), data = result.data ?: emptyList())
-                }
-                is Resource.Loading -> {
-                    isRefreshing = true
-                    Log.e("Material", result.data.toString())
-                    MaterialsState(isLoading = true, data = result.data ?: emptyList())
-                }
-            }
-        }.launchIn(viewModelScope)
+        viewModelScope.launch {
+            val result = useCase.getMaterials()
+            materialsState = result
+        }
     }
-
-
 }

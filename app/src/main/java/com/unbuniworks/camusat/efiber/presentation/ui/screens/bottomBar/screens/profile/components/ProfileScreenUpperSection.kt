@@ -1,10 +1,6 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.screens.bottomBar.screens.profile.components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowBackIosNew
 import androidx.compose.material3.Icon
@@ -30,7 +26,7 @@ fun ProfileScreenUpperSection(navController:NavHostController) {
         horizontalArrangement = Arrangement.Start,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 2.dp, end = 16.dp, top = 16.dp)
+            .padding(start = 2.dp, end = 16.dp, top = 26.dp)
     ){
 
         Row (
@@ -45,7 +41,9 @@ fun ProfileScreenUpperSection(navController:NavHostController) {
                     imageVector = Icons.Outlined.ArrowBackIosNew,
                     contentDescription = "go back",
                     tint = colorResource(id = R.color.button_color),
-                    modifier = Modifier.size(20.dp)
+                    modifier = Modifier
+                        .offset(x = (-10).dp)
+                        .size(20.dp)
                 )
             }
             Text(

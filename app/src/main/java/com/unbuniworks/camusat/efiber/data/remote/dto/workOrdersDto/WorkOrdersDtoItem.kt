@@ -38,7 +38,7 @@ data class WorkOrdersDtoItem(
     val rawData: String,
     @SerialName("scheduledEndAt")
     val scheduledEndAt: String,
-    @SerialName("scheduledStartAt")
+    @SerialName("dueDate")
     val scheduledStartAt: String? = null,
     @SerialName("status")
     val status: String,
@@ -71,8 +71,9 @@ fun WorkOrdersDtoItem.toWorkOrder(): WorkOrder {
 fun WorkOrdersDtoItem.toScheduledWorkOrder(index:Int): ScheduledWorkOrders{
 
     return ScheduledWorkOrders(
-        id= mainId,
-        scheduledStartAt = scheduledStartAt ?: "",
+        id = id,
+        ticketId= mainId,
+        dueDate = scheduledEndAt,
         name = workOrdersTasks?.get(index)?.name ?: ""
     )
 

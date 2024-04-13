@@ -1,11 +1,13 @@
 package com.unbuniworks.camusat.efiber.data.repository
 
 import android.app.Activity
+import androidx.compose.runtime.DisposableEffect
 import com.unbuniworks.camusat.efiber.common.Constants
 import com.unbuniworks.camusat.efiber.data.local.sharedPreference.SharedPreferenceRepository
 import com.unbuniworks.camusat.efiber.data.local.sharedPreference.SharedPreferenceRepositoryImpl
 import com.unbuniworks.camusat.efiber.data.remote.dto.workOrderDto.WorkOrderDto
 import com.unbuniworks.camusat.efiber.data.remote.dto.workOrdersDto.WorkOrdersDtoItem
+import com.unbuniworks.camusat.efiber.data.remote.dto.workOrdersDto.toScheduledWorkOrder
 import com.unbuniworks.camusat.efiber.domain.repository.WorkOrdersRepository
 import com.unbuniworks.camusat.efiber.data.remote.httpClient.HttpClient
 import io.ktor.client.call.body
@@ -13,15 +15,17 @@ import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.url
 import io.ktor.http.HttpHeaders
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 
 class WorkOrdersRepositoryImpl(
     private val api:HttpClient = HttpClient,
 ):WorkOrdersRepository {
 
-    override suspend fun getWorkOrders(): List<WorkOrdersDtoItem>{
+    override suspend fun getWorkOrders(): List<WorkOrdersDtoItem> = withContext(Dispatchers.IO ){
 
-        return api.client.get("${api.baseUrl}workorders/scheduled"){
+        return@withContext api.client.get("${api.baseUrl}workorders/scheduled"){
             header(HttpHeaders.Authorization, "Bearer ")
         }.body<List<WorkOrdersDtoItem>>()
 
@@ -46,7 +50,9 @@ suspend fun main(){
         }.body<WorkOrderDto>()
     )*/
     println(
-        WorkOrdersRepositoryImpl().getWorkOrders()
+        WorkOrdersRepositoryImpl().getWorkOrders().mapIndexed { index, item ->
+            item.toScheduledWorkOrder(index = index)
+        }
     )
 }
 

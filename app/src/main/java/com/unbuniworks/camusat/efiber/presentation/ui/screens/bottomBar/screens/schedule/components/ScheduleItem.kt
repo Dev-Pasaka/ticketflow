@@ -1,52 +1,83 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.screens.bottomBar.screens.schedule.components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.unbuniworks.camusat.efiber.R
 import com.unbuniworks.camusat.efiber.common.Utils
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.bottomBar.screens.schedule.ScheduleScreenViewModel
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun ScheduleItem(index:Int, scheduleScreenViewModel: ScheduleScreenViewModel){
+fun ScheduleItem(index:Int, scheduleScreenViewModel: ScheduleScreenViewModel, navController:NavHostController){
     val title = scheduleScreenViewModel.getScheduledWorkOrderState.data[index]
-    ElevatedCard(
-        colors = CardDefaults.cardColors(
-            contentColor = Color.DarkGray,
-            containerColor = Color.White
-        ),
-        shape = RoundedCornerShape(5.dp),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-    ) {
-
+    Column {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start,
+            horizontalArrangement = Arrangement.Center,
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 16.dp)
+                .padding(horizontal = 16.dp, vertical = 8.dp)
         ) {
             Text(
-                text = """
-                    ${index+1}. ${title.id} - (${title.name})
-                    Scheduled on: ${Utils.convertDateStringToDate(title.scheduledStartAt)}
-                """.trimIndent() ,
-                fontSize = 12.sp,
-
-                )
+                text = Utils.categorizeDate(
+                    title.dueDate
+                ),
+               // fontWeight = FontWeight.Bold,
+                color = colorResource(id = R.color.button_color)
+            )
         }
+        Surface(
+            onClick = {
+                navController.currentBackStackEntry?.arguments?.putString(
+                    "workOrderId",
+                    title.id
+                )
+                navController.navigate(route = "ticket_information")
+            },
+            color = Color.Transparent
+        ) {
 
+            ElevatedCard(
+                colors = CardDefaults.cardColors(
+                    contentColor = Color.DarkGray,
+                    containerColor = Color.White
+                ),
+                shape = RoundedCornerShape(5.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+            ) {
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 16.dp)
+                ) {
+                    Text(
+                        text = "${index + 1}. ${title.ticketId} - (${title.name})",
+                        fontSize = 12.sp,
+
+                        )
+                }
+
+            }
+        }
     }
 }

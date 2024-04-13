@@ -4,7 +4,6 @@ import com.unbuniworks.camusat.efiber.domain.model.WorkOrder
 
 
 data class WorkOrderState(
-    val isLoading:Boolean = false,
-    val data:List<WorkOrder> = emptyList(),
+    val data:List<WorkOrder>? = null,
     val error:String = ""
 )

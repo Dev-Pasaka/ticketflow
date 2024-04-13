@@ -1,6 +1,8 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.screens.bottomBar.screens.schedule
 
 import android.annotation.SuppressLint
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,56 +25,50 @@ import com.unbuniworks.camusat.efiber.presentation.ui.screens.bottomBar.screens.
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.bottomBar.screens.schedule.components.ScheduleScreenUpperSection
 import kotlinx.coroutines.launch
 
+@RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun Schedule(
     bottomNavigationViewModel: BottomNavigationViewModel,
     scheduleScreenViewModel: ScheduleScreenViewModel,
     navController: NavHostController
-){
+) {
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        gesturesEnabled = true,
-        drawerContent = {
-            NavDrawerContent(navController = navController)
-        }
-    ) {
 
 
-        Scaffold(
-            bottomBar = {
-                BottomAppBar(
-                    bottomNavigationViewModel = bottomNavigationViewModel,
-                    navController = navController
-                )
-            },
-            topBar = {
-                TopAppBar(
-                    navController = navController,
-                    actionOpenNavDrawer = {
-                        scope.launch {
-                            drawerState.apply {
-                                if (isClosed) open() else close()
-                            }
+    Scaffold(
+        bottomBar = {
+            BottomAppBar(
+                bottomNavigationViewModel = bottomNavigationViewModel,
+                navController = navController
+            )
+        },
+        topBar = {
+            TopAppBar(
+                navController = navController,
+                actionOpenNavDrawer = {
+                    scope.launch {
+                        drawerState.apply {
+                            if (isClosed) open() else close()
                         }
                     }
-                )
+                }
+            )
 
-            },
-            modifier = Modifier.fillMaxSize(),
-            containerColor = colorResource(id = R.color.background)
+        },
+        modifier = Modifier.fillMaxSize(),
+        containerColor = colorResource(id = R.color.background)
 
+    ) {
+        Column(
+            modifier = Modifier.fillMaxSize()
         ) {
-            Column(
-                modifier = Modifier.fillMaxSize()
-            ) {
-                ScheduleScreenUpperSection(scheduleScreenViewModel = scheduleScreenViewModel)
-                ScheduleItemBody(scheduleScreenViewModel = scheduleScreenViewModel)
-            }
+            ScheduleScreenUpperSection(scheduleScreenViewModel = scheduleScreenViewModel)
+            ScheduleItemBody(scheduleScreenViewModel = scheduleScreenViewModel, navController = navController)
         }
     }
+
 }

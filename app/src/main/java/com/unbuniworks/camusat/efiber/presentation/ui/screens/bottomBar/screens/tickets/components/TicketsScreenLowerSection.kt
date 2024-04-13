@@ -34,7 +34,7 @@ fun TicketsScreenLowerSection(
     navController:NavHostController,
 ) {
     TicketsScreenUpperSection(ticketsScreenViewModel = ticketsScreenViewModel)
-    if(ticketsScreenViewModel.workOrderState.data.isEmpty() && !ticketsScreenViewModel.workOrderState.isLoading){
+    if(ticketsScreenViewModel.workOrderState?.isEmpty() == true){
 
         Column(
             verticalArrangement = Arrangement.Center,
@@ -61,8 +61,8 @@ fun TicketsScreenLowerSection(
 
     }else{
         LazyColumn{
-            items(count = ticketsScreenViewModel.workOrderState.data.size){
-                val wordOrderId = ticketsScreenViewModel.workOrderState.data[it].id
+            items(count = ticketsScreenViewModel.workOrderState?.size ?: 0){
+                val wordOrderId = ticketsScreenViewModel.workOrderState?.get(it)?.id
                 WorkOrderItem(
                     index = it,
                     ticketsScreenViewModel =ticketsScreenViewModel,

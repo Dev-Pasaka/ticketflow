@@ -53,6 +53,7 @@ fun UploadOrTakePhotoDialog(
             // photo picker.
             if (uri != null) {
                 ticketInformationViewModel.selectImage(uri = uri, index = index)
+                ticketInformationViewModel.openOrCloseTakePhotoOrUploadImage(key = "$index")
             } else {
                 Log.d("PhotoPicker", "No media selected")
             }
@@ -72,6 +73,7 @@ fun UploadOrTakePhotoDialog(
                         )
                         Log.e("Uri", uri.toString())
                         ticketInformationViewModel.selectImage(index = index, uri = uri)
+                        ticketInformationViewModel.openOrCloseTakePhotoOrUploadImage(key = "$index")
                     }
                 }
             }
@@ -84,7 +86,7 @@ fun UploadOrTakePhotoDialog(
 
 
     Dialog(
-        onDismissRequest = { ticketInformationViewModel.openOrCloseTakePhotoOrUploadImage() },
+        onDismissRequest = { ticketInformationViewModel.openOrCloseTakePhotoOrUploadImage(key = "$index") },
         properties = DialogProperties(
             dismissOnBackPress = true,
             dismissOnClickOutside = true

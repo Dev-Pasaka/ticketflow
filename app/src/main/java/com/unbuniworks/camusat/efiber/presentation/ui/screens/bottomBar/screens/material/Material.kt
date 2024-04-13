@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavHostController
 import com.unbuniworks.camusat.efiber.R
 import com.unbuniworks.camusat.efiber.presentation.navigation.BottomNavigationViewModel
@@ -33,69 +34,63 @@ fun Material(
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        gesturesEnabled = true,
-        drawerContent = {
-            ModalDrawerSheet {
-                NavDrawerContent(navController = navController)
-            }
-        }
+
+
+    Scaffold(
+        bottomBar = {
+            BottomAppBar(
+                bottomNavigationViewModel = bottomNavigationViewModel,
+                navController = navController
+            )
+        },
+        topBar = {
+            TopAppBar(
+                navController = navController,
+                actionOpenNavDrawer = {
+                    scope.launch {
+                        drawerState.apply {
+                            if (isClosed) open() else close()
+                        }
+                    }
+                }
+            )
+
+        },
+        modifier = Modifier.fillMaxSize(),
+        containerColor = colorResource(id = R.color.background)
+
     ) {
 
+        Column(
 
-        Scaffold(
-            bottomBar = {
-                BottomAppBar(
-                    bottomNavigationViewModel = bottomNavigationViewModel,
-                    navController = navController
-                )
-            },
-            topBar = {
-                TopAppBar(
-                    navController = navController,
-                    actionOpenNavDrawer = {
-                        scope.launch {
-                            drawerState.apply {
-                                if (isClosed) open() else close()
-                            }
-                        }
-                    }
-                )
-
-            },
-            modifier = Modifier.fillMaxSize(),
-            containerColor = colorResource(id = R.color.background)
-
+            modifier = Modifier.fillMaxSize()
         ) {
+            MaterialsScreenUpperSection(materialScreenViewModel = materialScreenViewModel)
+            MaterialsBodySection(materialScreenViewModel = materialScreenViewModel)
 
-            Column(
+            if (materialScreenViewModel.materialsState == null) {
+                Dialog(
+                    onDismissRequest = { /*TODO*/ },
+                    properties = DialogProperties(
+                        dismissOnBackPress = true
+                    )
+                ) {
 
-                modifier = Modifier.fillMaxSize()
-            ) {
-                MaterialsScreenUpperSection(materialScreenViewModel = materialScreenViewModel)
-                MaterialsBodySection(materialScreenViewModel = materialScreenViewModel)
-
-                if (materialScreenViewModel.isRefreshing) {
-                    Dialog(
-                        onDismissRequest = { /*TODO*/ }
+                    Surface(
+                        color = Color.White,
+                        shape = RoundedCornerShape(4.dp)
                     ) {
-
-                        Surface(
-                            color = Color.White,
-                            shape = RoundedCornerShape(4.dp)
-                        ) {
-                            CircularProgressIndicator(
-                                color = colorResource(id = R.color.button_color),
-                                strokeWidth = 3.dp,
-                                strokeCap = StrokeCap.Butt,
-                                modifier = Modifier.padding(16.dp)
-                            )
-                        }
-
+                        CircularProgressIndicator(
+                            color = colorResource(id = R.color.button_color),
+                            strokeWidth = 3.dp,
+                            strokeCap = StrokeCap.Butt,
+                            modifier = Modifier.padding(16.dp)
+                        )
                     }
+
                 }
             }
         }
     }
+
 }

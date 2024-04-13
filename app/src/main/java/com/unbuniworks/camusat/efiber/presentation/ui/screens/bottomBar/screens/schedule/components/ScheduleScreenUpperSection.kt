@@ -1,31 +1,18 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.screens.bottomBar.screens.schedule.components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.DatePicker
-import androidx.compose.material3.DatePickerDefaults
-import androidx.compose.material3.DatePickerDialog
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.rememberDatePickerState
-import androidx.compose.material3.rememberTimePickerState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -43,14 +30,36 @@ fun ScheduleScreenUpperSection(
 
     Column(
         modifier = Modifier
-            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp, top = 60.dp)
+            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp, top = 70.dp)
             .fillMaxWidth()
     ) {
-        Text(
-            text = "Scheduled WorkOrders",
-            color = colorResource(id = R.color.button_color),
-            fontSize = 18.sp
-        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            Text(
+                text = "Scheduled Workorders",
+                color = colorResource(id = R.color.button_color),
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 18.sp
+            )
+            IconButton(
+                onClick = {
+                          scheduleScreenViewModel.refresh()
+                },
+                colors = IconButtonDefaults.iconButtonColors(
+                    containerColor = colorResource(id = R.color.light_blue),
+                    contentColor = Color.White,
+                ),
+                modifier = Modifier
+
+
+            ) {
+                Icon(imageVector = Icons.Default.Refresh, contentDescription = "Refresh")
+            }
+        }
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
             placeholder = {

@@ -37,11 +37,11 @@ import kotlinx.coroutines.launch
 @Composable
 fun ProfileScreen(navController: NavHostController, profileScreenViewModel: ProfileScreenViewModel) {
     val context = LocalContext.current
-    LaunchedEffect(key1 = Unit){
+    LaunchedEffect(key1 = Unit) {
         profileScreenViewModel.getUser(context = context)
     }
 
-    if (profileScreenViewModel.getUserDataState.isLoading){
+    if (profileScreenViewModel.getUserDataState.isLoading) {
         Dialog(
             onDismissRequest = { /*TODO*/ }
         ) {
@@ -64,55 +64,45 @@ fun ProfileScreen(navController: NavHostController, profileScreenViewModel: Prof
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        gesturesEnabled = true,
-        drawerContent = {
-            NavDrawerContent(navController = navController)
-        }
-    ) {
-
-
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    navController = navController,
-                    actionOpenNavDrawer = {
-                        scope.launch {
-                            drawerState.apply {
-                                if (isClosed) open() else close()
-                            }
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                navController = navController,
+                actionOpenNavDrawer = {
+                    scope.launch {
+                        drawerState.apply {
+                            if (isClosed) open() else close()
                         }
                     }
-                )
-            },
-            modifier = Modifier.fillMaxSize(),
-            containerColor = colorResource(id = R.color.background)
-        )
-        {
-            Column {
-                Spacer(modifier = Modifier.height(48.dp))
-                ProfileScreenUpperSection(navController = navController)
-                ProfileScreenBodySection(profileScreenViewModel = profileScreenViewModel)
-                Button(
-                    enabled = false,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = colorResource(id = R.color.light_blue),
-                        contentColor = Color.DarkGray
-                    ),
-                    shape = RoundedCornerShape(5.dp),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 16.dp),
-                    onClick = { /*TODO*/ }
-                ) {
-
-                    Text(
-                        text = "Safety Passport",
-                        fontSize = 14.sp,
-                        color = Color.DarkGray
-                    )
                 }
+            )
+        },
+        modifier = Modifier.fillMaxSize(),
+        containerColor = colorResource(id = R.color.background)
+    )
+    {
+        Column {
+            Spacer(modifier = Modifier.height(48.dp))
+            ProfileScreenUpperSection(navController = navController)
+            ProfileScreenBodySection(profileScreenViewModel = profileScreenViewModel)
+            Button(
+                enabled = false,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(id = R.color.light_blue),
+                    contentColor = Color.LightGray
+                ),
+                shape = RoundedCornerShape(5.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 16.dp),
+                onClick = { /*TODO*/ }
+            ) {
+
+                Text(
+                    text = "Safety Passport",
+                    fontSize = 14.sp,
+                    color = Color.Gray
+                )
             }
         }
     }

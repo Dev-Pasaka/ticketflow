@@ -27,14 +27,17 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 
 class WorkOrderRepositoryImpl(
-    private val api:HttpClient = HttpClient
-):WorkOrderRepository {
-    override suspend fun getWorkOrder(workOrderId:String)
-    : WorkOrderDto  = api.client.get(
+    private val api: HttpClient = HttpClient
+) : WorkOrderRepository {
+    override suspend fun getWorkOrder(workOrderId: String)
+            : WorkOrderDto = api.client.get(
         urlString = "${api.baseUrl}workorders/workorder/$workOrderId"
     ).body<WorkOrderDto>()
 
-    override suspend fun postWorkOrderTask(postWorkOrderTaskDto: PostWorkOrderTaskDto, activity: Activity): PostWorkOrderResponseDto {
+    override suspend fun postWorkOrderTask(
+        postWorkOrderTaskDto: PostWorkOrderTaskDto,
+        activity: Activity
+    ): PostWorkOrderResponseDto {
         val jsonFeatures = Json.encodeToString<List<Feature>>(postWorkOrderTaskDto.features)
 
 
@@ -49,11 +52,11 @@ class WorkOrderRepositoryImpl(
                     val inputStream = it.value?.toUri()
                         ?.let { it1 -> activity.contentResolver.openInputStream(it1) }
 
-                    if(inputStream != null){
-                    val bitmap = BitmapFactory.decodeStream(inputStream)
-                    val stream = ByteArrayOutputStream()
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-                    val bitmapByteArray = stream.toByteArray()
+                    if (inputStream != null) {
+                        val bitmap = BitmapFactory.decodeStream(inputStream)
+                        val stream = ByteArrayOutputStream()
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                        val bitmapByteArray = stream.toByteArray()
 
 
                         append(it.name, bitmapByteArray, Headers.build {
@@ -70,7 +73,7 @@ class WorkOrderRepositoryImpl(
 
 }
 
-suspend fun main(){
+suspend fun main() {
     println(
         WorkOrderRepositoryImpl().getWorkOrder("69afe0b5-316a-4d6c-afab-d7773b3dfbfc")
     )

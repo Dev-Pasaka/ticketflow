@@ -3,14 +3,7 @@ package com.unbuniworks.camusat.efiber.presentation.ui.commonComponents
 import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Menu
@@ -26,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.PopupProperties
 import androidx.navigation.NavHostController
 import com.unbuniworks.camusat.efiber.R
 import com.unbuniworks.camusat.efiber.common.Constants
@@ -39,42 +33,40 @@ fun TopAppBar(
     actionOpenNavDrawer: () -> Unit,
     navController: NavHostController,
 ) {
+    val sharedPreferenceRepositoryImpl = SharedPreferenceRepositoryImpl()
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
 
-
+    var isDropDownOpen by remember {
+        mutableStateOf(false)
+    }
     Column(
         horizontalAlignment = Alignment.End,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
+        //   modifier = Modifier.padding(bottom = 16.dp)
     ) {
-
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp)
+                .padding(vertical = 16.dp, horizontal = 16.dp)
         ) {
 
 
-            Surface(
-                shape = CircleShape,
-                onClick = actionOpenNavDrawer,
-                color = colorResource(id = R.color.button_color)
-            ) {
-                Icon(
-                    imageVector = Icons.Outlined.Menu,
-                    contentDescription = "person Icon",
-                    tint = Color.White,
-                    modifier = Modifier
-                        .size(35.dp)
-                        .padding(8.dp)
-                )
-            }
-
+            Image(
+                painter = painterResource(id = R.drawable.camusat_logo),
+                contentDescription = "person Icon",
+                modifier = Modifier
+                    .fillMaxWidth(0.6f)
+                    .offset(x = (-30).dp)
+                    .height(35.dp)
+            )
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceEvenly,
+                horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 IconButton(onClick = {
                     navController.navigate(Screen.Notifications.route) {
@@ -89,9 +81,56 @@ fun TopAppBar(
 
                     )
                 }
+
+                Spacer(modifier = Modifier.width(5.dp))
+
+                IconButton(
+                    onClick = { isDropDownOpen = !isDropDownOpen }
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.person_icon),
+                        contentDescription = "person Icon",
+                        tint = Color.DarkGray,
+                        modifier = Modifier
+                            .size(55.dp)
+                            .padding(8.dp)
+                    )
+                }
             }
         }
 
+        DropdownMenu(
+            expanded = isDropDownOpen, onDismissRequest = { isDropDownOpen = !isDropDownOpen },
+            offset = DpOffset(x = 280.dp, y = (-20).dp),
+            modifier = Modifier.background(Color.White),
+        ) {
+            DropdownMenuItem(
+                text = { Text(text = "Profile") },
+                onClick = {
+                    navController.navigate(Screen.Profile.route) {
+                        navController.popBackStack()
+                    }
+                    isDropDownOpen = !isDropDownOpen
+                }
+            )
+            DropdownMenuItem(
+                text = { Text(text = "Logout") },
+                onClick = {
+                    scope.launch {
+                        isDropDownOpen = !isDropDownOpen
+                        sharedPreferenceRepositoryImpl.setString(
+                            key = Constants.isLoggedIn,
+                            value = "false",
+                            activity = context as Activity
+                        )
+                        navController.navigate("auth") {
+                            popUpTo("auth") { inclusive = false }
+                        }
+                    }
+                }
+            )
+        }
     }
-
 }
+
+

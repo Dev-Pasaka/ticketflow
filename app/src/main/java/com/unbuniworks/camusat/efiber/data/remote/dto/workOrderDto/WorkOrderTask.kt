@@ -27,5 +27,8 @@ data class WorkOrderTask(
     @SerialName("updatedAt")
     val updatedAt: String,
     @SerialName("workOrderId")
-    val workOrderId: String
+    val workOrderId: String,
+    val isSpecialFeature:Boolean,
+    val featureName:String?,
+
 )

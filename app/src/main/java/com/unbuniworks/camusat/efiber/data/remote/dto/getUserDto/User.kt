@@ -18,6 +18,6 @@ data class User(
     val staffId: String?,
     @SerialName("surname")
     val surname: String,
-    @SerialName("team")
-    val team: Team
+    @SerialName("dispatchTeam")
+    val dispatchTeam: DispatchTeam?
 )

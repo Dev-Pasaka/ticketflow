@@ -1,9 +1,7 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.screens.bottomBar.screens.material.components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
@@ -13,7 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -23,55 +23,78 @@ import com.unbuniworks.camusat.efiber.presentation.ui.screens.bottomBar.screens.
 
 @Composable
 fun MaterialsBodySection(materialScreenViewModel: MaterialScreenViewModel) {
+    if (materialScreenViewModel.materialsState?.isEmpty() == true){
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxWidth(),
+        ) {
 
-    LazyColumn{
-
-
-        items(count = materialScreenViewModel.materialsState?.data?.size ?: 0){
-            val material = materialScreenViewModel.materialsState?.data?.get(it)
-
-            ElevatedCard(
-                colors = CardDefaults.cardColors(
-                    contentColor = Color.DarkGray,
-                    containerColor = Color.White
-                ),
-                shape = RoundedCornerShape(5.dp),
+            Spacer(modifier = Modifier.height(48.dp))
+            Image(
+                painter = painterResource(id = R.drawable.icon_new_work_orders),
+                contentDescription ="No ticket",
+                contentScale = ContentScale.Fit,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp)
-            ) {
+                    .width(200.dp)
+                    .height(200.dp)
+            )
+            Text(
+                text = "No materials available",
+                color = colorResource(id = R.color.button_color),
+                fontSize = 14.sp
+            )
 
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
+        }
+    }else {
+
+        LazyColumn {
+            items(count = materialScreenViewModel.materialsState?.size ?: 0) {
+                val material = materialScreenViewModel.materialsState?.get(it)
+
+                ElevatedCard(
+                    colors = CardDefaults.cardColors(
+                        contentColor = Color.DarkGray,
+                        containerColor = Color.White
+                    ),
+                    shape = RoundedCornerShape(5.dp),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 16.dp)
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
                 ) {
 
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 16.dp)
                     ) {
-                        Text(
-                            text = "${it+1}     ",
-                            fontSize = 14.sp,
-                        )
 
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                        ) {
+                            Text(
+                                text = "${it + 1}     ",
+                                fontSize = 14.sp,
+                            )
+
+                            Text(
+                                text = material?.name ?: "",
+                                color = Color.DarkGray,
+                                fontSize = 14.sp
+                            )
+                        }
                         Text(
-                            text = material?.name ?: "",
-                            color = Color.DarkGray,
-                            fontSize = 14.sp
+                            text = material?.qty ?: "",
+                            fontSize = 14.sp,
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp,)
                         )
                     }
-                    Text(
-                        text = material?.qty ?: "",
-                        fontSize = 14.sp,
-                        modifier = Modifier
-                            .padding(horizontal = 16.dp,)
-                    )
-                }
 
+                }
             }
         }
     }

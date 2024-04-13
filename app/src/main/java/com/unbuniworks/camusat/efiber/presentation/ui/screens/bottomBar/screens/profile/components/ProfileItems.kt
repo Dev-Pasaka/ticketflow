@@ -107,7 +107,7 @@ fun ProfileItems(profileScreenViewModel: ProfileScreenViewModel) {
                 .fillMaxWidth()
         ){
             Text(
-                text = "Positon",
+                text = "Position",
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
                 color = colorResource(id = R.color.button_link_color)
@@ -177,7 +177,7 @@ fun ProfileItems(profileScreenViewModel: ProfileScreenViewModel) {
                 .fillMaxWidth()
         ){
             Text(
-                text = "Team",
+                text = "Dispatch Team",
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
                 color = colorResource(id = R.color.button_link_color)

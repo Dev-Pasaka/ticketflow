@@ -30,7 +30,7 @@ fun MaterialsScreenUpperSection(materialScreenViewModel: MaterialScreenViewModel
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
-                .padding(start = 16.dp, end = 16.dp, top = 60.dp, bottom = 8.dp)
+                .padding(start = 16.dp, end = 16.dp, top = 70.dp, bottom = 8.dp)
                 .fillMaxWidth()
         ) {
             Text(
@@ -40,22 +40,6 @@ fun MaterialsScreenUpperSection(materialScreenViewModel: MaterialScreenViewModel
                 fontSize = 18.sp
             )
 
-
-            TextButton(
-                onClick = { /*TODO*/ },
-                colors = ButtonDefaults.textButtonColors(
-                    contentColor = colorResource(id = R.color.button_color),
-                )
-            ) {
-
-                Text(
-                    text = "Request Materials",
-                    fontSize = 14.sp,
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
-                )
-
-            }
 
             IconButton(
                 onClick = {

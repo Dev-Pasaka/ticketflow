@@ -26,7 +26,7 @@ fun ModuleItem(
 ){
     val item = selectModuleViewModel.listOfModules.first()
     Surface(
-        color = colorResource(id = R.color.unselected_item_color),
+        color = colorResource(id = R.color.light_blue),
         shape = RoundedCornerShape(5.dp),
         modifier = Modifier
             .fillMaxWidth()

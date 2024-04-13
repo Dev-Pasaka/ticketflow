@@ -31,7 +31,7 @@ fun NotificationsScreenUpperSection(navController:NavHostController, notificatio
         horizontalArrangement = Arrangement.Start,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 2.dp,end = 16.dp,  top = 48.dp)
+            .padding(start = 2.dp,end = 16.dp,  top = 58.dp)
     ){
         Row (
             verticalAlignment = Alignment.CenterVertically,

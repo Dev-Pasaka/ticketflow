@@ -40,6 +40,7 @@ import com.unbuniworks.camusat.efiber.presentation.ui.screens.selecteModule.Sele
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.splashScreen.SplashScreen
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.TicketInformationScreen
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.TicketInformationViewModel
+import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.dynamicComponents.Maps
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -177,13 +178,10 @@ fun NavGraph(navController: NavHostController) {
                         ticketInformationViewModel = ticketInformationViewModel
                     )*/
                 }
-                composable(route = Screen.Maps.route) { backStackEntry ->
-                    val index = backStackEntry.arguments?.getString("index")
-                   /* MapsAndLocation(
-                        navController = navController,
-                        index = index ?: "0",
-                        ticketInformationViewModel = ticketInformationViewModel
-                    )*/
+                composable(route = Screen.Maps.route) {
+                    val coordinates = navController.previousBackStackEntry?.arguments?.getString("coordinates") ?: ""
+                    Log.e("Coordinates", coordinates)
+                    Maps(navController = navController, coordinates = coordinates)
                 }
             }
 
@@ -210,6 +208,9 @@ fun NavGraph(navController: NavHostController) {
                     )
                 }
             }
+
+
+
 
 
         }

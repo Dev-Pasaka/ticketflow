@@ -41,6 +41,7 @@ fun CustomTimeInput(
     index:Int,
     feature: Feature,
     ticketInformationViewModel: TicketInformationViewModel,
+    key:String
 ) {
     val timePicker = rememberTimePickerState(is24Hour = true)
 
@@ -64,6 +65,7 @@ fun CustomTimeInput(
             IconButton(
                 onClick = {
                     ticketInformationViewModel.openOrCloseTimePicker()
+                    ticketInformationViewModel.selectTime(key = key)
                 }
             ) {
                 Icon(
@@ -97,7 +99,7 @@ fun CustomTimeInput(
 
     )
 
-    if (ticketInformationViewModel.isTimePickerOpen) {
+    if (ticketInformationViewModel.isTimePickerOpen && ticketInformationViewModel.currentTime == key) {
         Dialog(
             onDismissRequest = {
                 ticketInformationViewModel.updateTimeComponent(

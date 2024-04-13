@@ -49,7 +49,7 @@ fun Template(
                 .padding(start = 16.dp)
         ) {
             Text(
-                text = "$templatePosition. $templateName  ($status)",
+                text = "$templatePosition. $templateName",
                 color = textColor,
                 fontSize = 14.sp
             )

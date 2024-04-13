@@ -41,6 +41,7 @@ fun DateInput(
     index: Int,
     ticketInformationViewModel: TicketInformationViewModel,
     status: String,
+    key:String
 ) {
     var selectedIndex by remember {
         mutableStateOf(0)
@@ -68,6 +69,8 @@ fun DateInput(
             IconButton(
                 onClick = {
                     ticketInformationViewModel.openOrCloseDatePicker()
+                    ticketInformationViewModel.selectDate(key = key)
+
                 }
             ) {
                 Icon(
@@ -100,7 +103,7 @@ fun DateInput(
             .height(50.dp)
     )
 
-    if (ticketInformationViewModel.isDatePickerOpen) {
+    if (ticketInformationViewModel.isDatePickerOpen && ticketInformationViewModel.currentDate == key) {
         Dialog(
             onDismissRequest = {
                 ticketInformationViewModel.updateDateComponent(

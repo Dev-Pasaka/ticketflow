@@ -1,7 +1,6 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.dynamicComponents
 
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
@@ -30,41 +29,54 @@ fun CustomNumberInput(
     ticketInformationViewModel: TicketInformationViewModel
 ) {
 
-    OutlinedTextField(
-        placeholder = {
+    val placeHolderText = if (feature.availableQuantity == null) feature.name else
+        "Available Qty: ${feature.availableQuantity}"
+    Column {
+
+        if (feature.availableQuantity != null){
             Text(
                 text = feature.name,
                 color = Color.DarkGray,
-            )
-        },
-        value = feature.value ?: "",
-        onValueChange = {
-            ticketInformationViewModel.updateNumberComponent(
-                index = index,
-                text = it,
-                inputType = feature.inputType
-            )
-        },
-        keyboardOptions = KeyboardOptions(
-            imeAction = ImeAction.Done,
-            keyboardType = KeyboardType.Number
-        ),
-        keyboardActions = KeyboardActions(
-            onDone = {
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 2.dp)
 
-            }
-        ),
-        colors = TextFieldDefaults.colors(
-            focusedContainerColor = Color.Transparent,
-            unfocusedContainerColor = Color.Transparent,
-            focusedTextColor = Color.DarkGray,
-            unfocusedTextColor = Color.DarkGray,
-            cursorColor = Color.DarkGray,
-            focusedIndicatorColor = colorResource(id = R.color.button_color),
-        ),
-        modifier = Modifier
-            .padding(horizontal = 16.dp, vertical = 2.dp)
-            .fillMaxWidth(),
-    )
+            )
+        }
+        OutlinedTextField(
+            placeholder = {
+                Text(
+                    text = placeHolderText,
+                    color = Color.DarkGray,
+                )
+            },
+            value = feature.value ?: "",
+            onValueChange = {
+                ticketInformationViewModel.updateNumberComponent(
+                    index = index,
+                    text = it,
+                    inputType = feature.inputType
+                )
+            },
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Done,
+                keyboardType = KeyboardType.Number
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = {
+
+                }
+            ),
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = Color.Transparent,
+                unfocusedContainerColor = Color.Transparent,
+                focusedTextColor = Color.DarkGray,
+                unfocusedTextColor = Color.DarkGray,
+                cursorColor = Color.DarkGray,
+                focusedIndicatorColor = colorResource(id = R.color.button_color),
+            ),
+            modifier = Modifier
+                .padding(horizontal = 16.dp, vertical = 2.dp)
+                .fillMaxWidth(),
+        )
+    }
 
 }

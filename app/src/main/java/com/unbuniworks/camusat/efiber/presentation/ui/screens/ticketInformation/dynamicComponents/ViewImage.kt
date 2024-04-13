@@ -86,7 +86,7 @@ fun ViewImage(
                 }
                 Surface(
                     onClick = {
-                       ticketInformationViewModel.openOrCloseTakePhotoOrUploadImage()
+                       ticketInformationViewModel.openOrCloseTakePhotoOrUploadImage(key = "$index")
                     },
                     color = Color.Transparent
                 ) {

@@ -38,75 +38,62 @@ fun TicketsScreen(
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        gesturesEnabled = true,
-        drawerContent = {
-            NavDrawerContent(navController = navController)
-        }
-    ) {
 
-        Scaffold(
-            bottomBar = {
-                BottomAppBar(
-                    bottomNavigationViewModel = bottomNavigationViewModel,
-                    navController = navController
-                )
-            },
-            topBar = {
-                TopAppBar(
-                    navController = navController,
-                    actionOpenNavDrawer = {
-                        scope.launch {
-                            drawerState.apply {
-                                if (isClosed) open() else close()
-                            }
+    Scaffold(
+        bottomBar = {
+            BottomAppBar(
+                bottomNavigationViewModel = bottomNavigationViewModel,
+                navController = navController
+            )
+        },
+        topBar = {
+            TopAppBar(
+                navController = navController,
+                actionOpenNavDrawer = {
+                    scope.launch {
+                        drawerState.apply {
+                            if (isClosed) open() else close()
                         }
                     }
-                )
+                }
+            )
 
-            },
-            modifier = Modifier.fillMaxSize(),
-            containerColor = colorResource(id = R.color.background)
+        },
+        modifier = Modifier.fillMaxSize(),
+        containerColor = colorResource(id = R.color.background)
 
-        ) {
-
-
-            Column(
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxSize()
+    ) {
+        if (ticketsScreenViewModel.workOrderState == null || ticketsScreenViewModel.isRefreshing) {
+            Dialog(
+                onDismissRequest = { }
             ) {
 
-                if (ticketsScreenViewModel.isRefreshing) {
-                    Dialog(
-                        onDismissRequest = { /*TODO*/ }
-                    ) {
-
-                        Surface(
-                            color = Color.White,
-                            shape = RoundedCornerShape(4.dp)
-                        ) {
-                            CircularProgressIndicator(
-                                color = colorResource(id = R.color.button_color),
-                                strokeWidth = 3.dp,
-                                strokeCap = StrokeCap.Butt,
-                                modifier = Modifier.padding(16.dp)
-                            )
-                        }
-
-                    }
-                } else {
-
-                    TicketsScreenLowerSection(
-                        ticketsScreenViewModel = ticketsScreenViewModel,
-                        navController = navController
+                Surface(
+                    color = Color.White,
+                    shape = RoundedCornerShape(4.dp)
+                ) {
+                    CircularProgressIndicator(
+                        color = colorResource(id = R.color.button_color),
+                        strokeWidth = 3.dp,
+                        strokeCap = StrokeCap.Butt,
+                        modifier = Modifier.padding(16.dp)
                     )
                 }
 
-
             }
+        }
 
+
+        Column(
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxSize()
+        ) {
+
+            TicketsScreenLowerSection(
+                ticketsScreenViewModel = ticketsScreenViewModel,
+                navController = navController
+            )
 
         }
     }

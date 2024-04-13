@@ -13,6 +13,7 @@ data class WorkOrderDetails(
     val equipment:String,
     val status:String,
     val statusColor: String,
+    val dueDate:String?,
     val workOrderTasks: List<WorkOrderTask>?
 
 )

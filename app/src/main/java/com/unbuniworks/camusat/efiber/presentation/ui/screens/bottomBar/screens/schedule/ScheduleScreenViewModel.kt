@@ -8,8 +8,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.unbuniworks.camusat.efiber.common.Resource
 import com.unbuniworks.camusat.efiber.domain.usecase.GetScheduledWorkOrdersUseCase
-import com.unbuniworks.camusat.efiber.presentation.ui.screens.bottomBar.screens.schedule.components.ScheduleItem
-import com.unbuniworks.camusat.efiber.presentation.ui.screens.bottomBar.screens.schedule.model.Schedule
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -38,6 +36,9 @@ class ScheduleScreenViewModel(
     var getScheduledWorkOrderState by mutableStateOf(GetScheduledWorkOrderState())
         private set
 
+    fun refresh(){
+        getScheduledWorkOrders()
+    }
     private fun getScheduledWorkOrders(){
         viewModelScope.launch {
             getScheduledWorkOrderState = GetScheduledWorkOrderState(isLoading = true)
@@ -60,7 +61,7 @@ class ScheduleScreenViewModel(
     fun updateSearch(searchValue: String) {
         search = searchValue
         getScheduledWorkOrderState = getScheduledWorkOrderState.copy(data = originalState.data.filter {
-            it.id.contains(searchValue, ignoreCase = true) || it.name.contains(searchValue, ignoreCase = true)
+            it.ticketId.contains(searchValue, ignoreCase = true) || it.name.contains(searchValue, ignoreCase = true)
         })
     }
     fun formatDate() :String{

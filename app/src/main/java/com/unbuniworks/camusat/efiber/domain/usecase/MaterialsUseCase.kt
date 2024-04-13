@@ -23,33 +23,18 @@ import kotlinx.coroutines.flow.onStart
 
 class MaterialsUseCase(
     private val repository: MaterialsRepository = MaterialRepositoryImpl()
-){
-    fun getMaterials(): Flow<Resource<List<Material>>> = flow {
-
+) {
+    suspend fun getMaterials(): List<Material> =
         try {
-            //emit(Resource.Loading(message = "Loading", data = emptyList()))
             val response = repository.getMaterials()
             val materials = response.map { it.toMaterial() }
-            emit(Resource.Success(data = materials, message = "Success"))
-        }catch (e:Exception){
+            materials
+        } catch (e: Exception) {
             e.localizedMessage?.let { Log.e("ClientMaterials", it) }
-            emit(Resource.Error( "An expected Error Occurred", emptyList()))
+            emptyList()
         }
-    }
-}
-
-suspend fun main(){
-  MaterialsUseCase().getMaterials().collect{
-      println("Message: ${it.message} Data: ${it.data}")
-  }
-}
-
-fun cryptoPrices():Flow<Double> = flow {
-    while (true){
-        delay(1000)
-        emit((1..1000000).random().toDouble())
-    }
-
 
 }
+
+
 

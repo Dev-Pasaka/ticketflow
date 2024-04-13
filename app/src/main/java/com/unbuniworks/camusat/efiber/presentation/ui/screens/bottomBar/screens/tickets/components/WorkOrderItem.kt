@@ -1,10 +1,6 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.screens.bottomBar.screens.tickets.components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -24,7 +20,7 @@ fun WorkOrderItem(
     ticketsScreenViewModel: TicketsScreenViewModel,
     actionNavigateToTicketInformationScreen: () -> Unit
 ) {
-    val item = ticketsScreenViewModel.workOrderState.data[index]
+    val item = ticketsScreenViewModel.workOrderState?.get(index)
 
     Surface(
         onClick = actionNavigateToTicketInformationScreen,
@@ -62,25 +58,33 @@ fun WorkOrderItem(
                     fontSize = 14.sp
                 )
                 Text(
-                    text = item.name,
+                    text = item?.name ?: "",
                     color = Color.DarkGray,
                     fontSize = 14.sp
                 )
 
             }
 
-            Button(
-                onClick = actionNavigateToTicketInformationScreen,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = ticketsScreenViewModel.getColor(item.statusColor),
-                    contentColor = Color.Black
-                ),
-                modifier = Modifier.height(30.dp)
-            ) {
-                Text(
-                    text = item.status,
-                    fontSize = 11.sp
-                )
+            if (item != null) {
+                Surface(
+                    onClick = actionNavigateToTicketInformationScreen,
+                    color =  ticketsScreenViewModel.getColor(item.statusColor),
+                    shape = RoundedCornerShape(30.dp),
+                    modifier = Modifier.height(30.dp)
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .padding(vertical = 8.dp, horizontal = 16.dp),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        Text(
+                            text = item.status,
+                            fontSize = 11.sp,
+                            color = Color.Black
+                        )
+                    }
+                }
             }
         }
         

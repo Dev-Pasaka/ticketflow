@@ -40,6 +40,7 @@ import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.
 @Composable
 fun CustomImageUpload(
     index: Int,
+    key:String,
     feature: Feature,
     navController: NavHostController,
     ticketInformationViewModel: TicketInformationViewModel,
@@ -61,7 +62,7 @@ fun CustomImageUpload(
 
     Surface(
         onClick = {
-                  ticketInformationViewModel.openOrCloseTakePhotoOrUploadImage()
+                  ticketInformationViewModel.openOrCloseTakePhotoOrUploadImage(key = key)
         },
         shape = RoundedCornerShape(5.dp),
         color = colorResource(id = R.color.light_gray),
@@ -100,8 +101,10 @@ fun CustomImageUpload(
                             feature.value?.toUri() == null
                             || feature.value?.toUri() == Uri.EMPTY
                             ) {
-                            pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                            ticketInformationViewModel.openOrCloseTakePhotoOrUploadImage(key = "$index")
+                            // pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                         } else {
+                            ticketInformationViewModel.selectImage(key = key)
                             ticketInformationViewModel.openOrCloseViewImageBottomSheet()
                         }
 
@@ -112,7 +115,10 @@ fun CustomImageUpload(
         }
 
 
-        if (ticketInformationViewModel.isViewImageBottomSheetOpen) {
+        if (
+            ticketInformationViewModel.isViewImageBottomSheetOpen
+            && ticketInformationViewModel.currentImage == key
+            ) {
             ViewImage(
                 index = index,
                 feature = feature,
@@ -122,7 +128,10 @@ fun CustomImageUpload(
         }
     }
 
-    if (ticketInformationViewModel.isTakePhotoOrUploadImageDialogOpen) {
+    if (
+        ticketInformationViewModel.isTakePhotoOrUploadImageDialogOpen
+        && ticketInformationViewModel.currentTakenPhoto == key
+        ) {
 
         UploadOrTakePhotoDialog(
             index = index,

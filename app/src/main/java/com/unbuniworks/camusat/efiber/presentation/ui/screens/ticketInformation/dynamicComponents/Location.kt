@@ -22,25 +22,49 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.model.LatLng
 import com.unbuniworks.camusat.efiber.R
 import com.unbuniworks.camusat.efiber.data.remote.dto.workOrderDto.Feature
+import com.unbuniworks.camusat.efiber.presentation.navigation.Screen
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.TicketInformationViewModel
 
 @Composable
 fun Location(
     index:Int,
     feature: Feature,
+    navController:NavHostController,
     ticketInformationViewModel: TicketInformationViewModel
 ) {
+
     val context = LocalContext.current
     val fusedLocationProviderClient = remember {
         LocationServices.getFusedLocationProviderClient(context)
     }
+    val coordinates = if(
+    ticketInformationViewModel.currentLocation.latitude > 0.0
+            || ticketInformationViewModel.currentLocation.longitude > 0.0
+    ) """
+                    Coordinates
+                    Lat: ${ticketInformationViewModel.currentLocation.latitude}
+                    Long: ${ticketInformationViewModel.currentLocation.longitude}
+                """.trimIndent()
+    else "Loading coordinates"
+
     ticketInformationViewModel.getCurrentLocation(fusedLocationProviderClient = fusedLocationProviderClient, index= index)
     Surface(
+        enabled = if(
+            ticketInformationViewModel.currentLocation.latitude > 0.0
+            || ticketInformationViewModel.currentLocation.longitude > 0.0
+        )  true else false,
         onClick = {
-
+                  navController.currentBackStackEntry?.arguments?.putString(
+                      "coordinates", Pair(ticketInformationViewModel.currentLocation.latitude,
+                          ticketInformationViewModel.currentLocation.longitude
+                      ).toString()
+                  )
+            navController.navigate(Screen.Maps.route)
         },
         shape = RoundedCornerShape(5.dp),
         color = colorResource(id = R.color.light_gray),
@@ -56,14 +80,13 @@ fun Location(
         ) {
 
             Text(
-                text = """
-                    Coordinates
-                    Lat: ${ticketInformationViewModel.currentLocation.latitude}
-                    Long: ${ticketInformationViewModel.currentLocation.longitude}
-                """.trimIndent(),
+                text = coordinates,
                 fontSize = 14.sp
             )
             Icon(painter = painterResource(id = R.drawable.map), contentDescription ="Location" )
         }
     }
+
+
+
 }

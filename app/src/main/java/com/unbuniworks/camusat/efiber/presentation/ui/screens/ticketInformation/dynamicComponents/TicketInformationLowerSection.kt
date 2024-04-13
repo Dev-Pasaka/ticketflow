@@ -28,11 +28,10 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TicketInformationLowerSection(
-    navController :NavHostController,
+    navController: NavHostController,
     ticketInformationViewModel: TicketInformationViewModel
 ) {
     val currentFeaturesList by ticketInformationViewModel.currentFeaturesList.collectAsState()
-
 
 
     val scope = rememberCoroutineScope()
@@ -48,19 +47,23 @@ fun TicketInformationLowerSection(
     ) {
         LazyColumn {
             items(
-                count = ticketInformationViewModel.workOrderDetailState.data?.workOrderTasks?.size
-                    ?: 0
+                count = ticketInformationViewModel.workOrderDetailState
+                    .data?.workOrderTasks?.size ?: 0
             ) {
                 val template =
-                    ticketInformationViewModel.workOrderDetailState.data?.workOrderTasks?.get(it)
-                val isSelected  =
-                    ticketInformationViewModel.workOrderDetailState.selectedTemplate == template?.name
+                    ticketInformationViewModel.workOrderDetailState
+                        .data?.workOrderTasks?.get(it)
+                val isSelected =
+                    ticketInformationViewModel.workOrderDetailState
+                        .selectedTemplate == template?.name
 
                 Template(
                     status = template?.status ?: "",
                     templateName = template?.name ?: "",
                     isSelected = isSelected,
-                    containerColor = if (isSelected) colorResource(id = R.color.light_blue) else Color.LightGray,
+                    containerColor = if (isSelected)
+                        colorResource(id = R.color.light_blue)
+                    else Color.LightGray,
                     textColor = Color.DarkGray,
                     templatePosition = it + 1,
                     onclick = {
@@ -74,17 +77,12 @@ fun TicketInformationLowerSection(
                                 buttonName = template?.buttonName ?: "",
                                 featureId = template?.id ?: ""
                             )
-                            ticketInformationViewModel.updateStatus(status = template?.status ?: "" )
+                            ticketInformationViewModel.updateStatus(status = template?.status ?: "")
                         }
-
 
 
                     }
                 )
-
-
-
-
             }
 
 
@@ -106,10 +104,10 @@ fun TicketInformationLowerSection(
             )
         }
 
-        if (ticketInformationViewModel.iscancelAlertDialogOpen){
+        if (ticketInformationViewModel.iscancelAlertDialogOpen) {
             ExitDialogBoxNotification(
                 icon = Icons.Default.Cancel,
-                dialogTitle = "Are you sure you want to exit?" ,
+                dialogTitle = "Are you sure you want to exit?",
                 dialogText = "If you cancel before submitting changes will be lost.",
                 onDismissRequest = { ticketInformationViewModel.openOrCloseCancelAlertDialog() },
                 onConfirmation = {

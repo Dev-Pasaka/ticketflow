@@ -46,10 +46,7 @@ fun NavDrawerContent(
             onDismissRequest = { isLogOutDialogOpen = !isLogOutDialogOpen},
             onConfirmation = {
                 scope.launch {
-                    sharedPreferenceRepository.setString(key = Constants.isLoggedIn, value = "false", activity = activity)
-                    navController.navigate("auth") {
-                        popUpTo("auth") { inclusive = false }
-                    }
+
                 }
             }
         )

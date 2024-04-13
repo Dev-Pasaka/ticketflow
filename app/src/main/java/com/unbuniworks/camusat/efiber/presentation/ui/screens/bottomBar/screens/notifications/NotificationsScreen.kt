@@ -25,41 +25,34 @@ fun NotificationsScreen(navController: NavHostController, notificationsViewModel
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        gesturesEnabled = true,
-        drawerContent = {
-            NavDrawerContent(navController = navController)
-        }
-    ) {
 
 
-        Scaffold(
-            bottomBar = {
-            },
-            topBar = {
-                TopAppBar(
-                    navController = navController,
-                    actionOpenNavDrawer = {
-                        scope.launch {
-                            drawerState.apply {
-                                if (isClosed) open() else close()
-                            }
+    Scaffold(
+        bottomBar = {
+        },
+        topBar = {
+            TopAppBar(
+                navController = navController,
+                actionOpenNavDrawer = {
+                    scope.launch {
+                        drawerState.apply {
+                            if (isClosed) open() else close()
                         }
                     }
-                )
+                }
+            )
 
-            },
+        },
+        modifier = Modifier.fillMaxSize(),
+        containerColor = colorResource(id = R.color.background)
+    )
+    {
+        Column(
             modifier = Modifier.fillMaxSize(),
-            containerColor = colorResource(id = R.color.background)
-        )
-        {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-            ) {
-                NotificationsScreenUpperSection(navController = navController, notificationsViewModel)
-                NotificationsBodySections(notificationsViewModel = notificationsViewModel)
-            }
+        ) {
+            NotificationsScreenUpperSection(navController = navController, notificationsViewModel)
+            NotificationsBodySections(notificationsViewModel = notificationsViewModel)
         }
     }
+
 }

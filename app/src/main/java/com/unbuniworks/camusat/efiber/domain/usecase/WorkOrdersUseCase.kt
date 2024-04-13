@@ -18,23 +18,24 @@ class WorkOrdersUseCase(
     private val repository: WorkOrdersRepository = WorkOrdersRepositoryImpl(),
 ) {
 
-    fun getWorkOrders():Flow<Resource<List<WorkOrder>>> = flow {
-        try {
+    suspend fun getWorkOrders():List<WorkOrder>{
+        return try {
             val response = repository.getWorkOrders()
             val workOrder = response.map { it.toWorkOrder() }
-            emit(Resource.Success(message = "Request was successful", data = workOrder))
+            workOrder
+
         }
         catch (e:IOException){
             e.localizedMessage?.let { Log.e("WorkOrdersStatus", it) }
-            emit(Resource.Error( "Couldn't reach server check your internet connection"))
+            emptyList()
         }
         catch (e: JsonConvertException){
             e.localizedMessage?.let { Log.e("WorkOrdersStatus", it) }
-            emit(Resource.Error( "An expected Error Occurred"))
+           emptyList()
         }
         catch (e:Exception){
             e.localizedMessage?.let { Log.e("WorkOrdersStatus", it) }
-            emit(Resource.Error( "An expected Error Occurred"))
+            emptyList()
         }
 
     }
@@ -43,7 +44,5 @@ class WorkOrdersUseCase(
 }
 
 suspend fun main(){
-    WorkOrdersUseCase().getWorkOrders().collect{
-        println("Message: ${it.message} Data: ${it.data}")
-    }
+
 }

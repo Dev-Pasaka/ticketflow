@@ -33,6 +33,7 @@ class LoginUseCase(
         try {
             emit(Resource.Loading(message = "Loading"))
             val response = repository.login(userCredentials)
+            Log.e("User", response.toString())
             sharedPreferenceRepository.setString(key= Constants.token, value = response.accessToken, activity)
             sharedPreferenceRepository.setString(key= Constants.userId, value  = response.userDto?.id, activity)
             val user = response.toUser()

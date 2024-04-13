@@ -17,6 +17,7 @@ class GetUserUseCase(
         val response = repository.getUserDto(userId)
         val user = response.toUser()
         if (response.status.toBoolean()){
+            Log.e("UserId", user.toString())
             Resource.Success(data = user, message = response.message)
         }else{
             Resource.Error(data = user, message = response.message)
