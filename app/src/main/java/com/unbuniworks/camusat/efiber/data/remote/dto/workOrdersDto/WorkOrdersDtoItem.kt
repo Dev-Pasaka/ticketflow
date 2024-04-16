@@ -74,9 +74,8 @@ fun WorkOrdersDtoItem.toScheduledWorkOrder(index:Int): ScheduledWorkOrders{
         id = id,
         ticketId= mainId,
         dueDate = scheduledEndAt,
-        name = workOrdersTasks?.get(index)?.name ?: ""
+        name = workOrdersTasks?.filterIndexed { filteredIndex, _ ->  filteredIndex == index}?.firstOrNull()?.name ?: ""
     )
-
 
 }
 

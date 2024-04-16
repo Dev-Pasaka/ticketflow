@@ -85,11 +85,14 @@ class TicketInformationViewModel(
         private set
     var currentTakenPhoto  by mutableStateOf("")
         private set
+    var currentDropDown by mutableStateOf("")
+        private set
 
     fun selectDate(key:String){ currentDate = key }
     fun selectTime(key:String){ currentTime = key }
     fun selectImage(key:String){ currentImage = key }
     fun takePhoto(key:String){currentTakenPhoto = key}
+    fun selectDropDown(key:String){currentDropDown = key}
 
 
     var originalCurrentFeatureList = mutableStateListOf<Feature>()

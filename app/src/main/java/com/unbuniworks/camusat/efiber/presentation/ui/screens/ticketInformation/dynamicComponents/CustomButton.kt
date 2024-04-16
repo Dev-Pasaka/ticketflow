@@ -47,7 +47,7 @@ fun CustomButton(buttonName: String, action: () -> Unit, onCancel: () -> Unit, s
         }
         Spacer(modifier = Modifier.width(16.dp))
         Button(
-            enabled = status != "complete",
+            enabled = true,
             onClick = {
                 action()
                 Log.e("Submit", status)

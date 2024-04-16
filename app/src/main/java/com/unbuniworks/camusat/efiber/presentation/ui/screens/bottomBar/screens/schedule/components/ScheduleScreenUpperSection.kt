@@ -40,7 +40,7 @@ fun ScheduleScreenUpperSection(
                 .fillMaxWidth()
         ) {
             Text(
-                text = "Scheduled Workorders",
+                text = "Scheduled Work orders",
                 color = colorResource(id = R.color.button_color),
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 18.sp

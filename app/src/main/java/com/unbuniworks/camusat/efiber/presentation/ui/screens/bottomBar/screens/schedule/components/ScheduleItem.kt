@@ -37,6 +37,7 @@ fun ScheduleItem(index:Int, scheduleScreenViewModel: ScheduleScreenViewModel, na
                 text = Utils.categorizeDate(
                     title.dueDate
                 ),
+                fontSize = 12.sp,
                // fontWeight = FontWeight.Bold,
                 color = colorResource(id = R.color.button_color)
             )
@@ -71,7 +72,7 @@ fun ScheduleItem(index:Int, scheduleScreenViewModel: ScheduleScreenViewModel, na
                         .padding(horizontal = 16.dp, vertical = 16.dp)
                 ) {
                     Text(
-                        text = "${index + 1}. ${title.ticketId} - (${title.name})",
+                        text = "${index + 1}. ${title.ticketId}",
                         fontSize = 12.sp,
 
                         )

@@ -56,7 +56,7 @@ fun ScheduleItemBody(scheduleScreenViewModel: ScheduleScreenViewModel, navContro
 
             Spacer(modifier = Modifier.height(48.dp))
             Image(
-                painter = painterResource(id = R.drawable.clock_outline),
+                painter = painterResource(id = R.drawable.no_schedule),
                 contentDescription ="No ticket",
                 contentScale = ContentScale.Fit,
                 modifier = Modifier

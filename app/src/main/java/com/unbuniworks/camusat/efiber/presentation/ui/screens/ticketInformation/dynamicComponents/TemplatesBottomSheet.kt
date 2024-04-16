@@ -99,6 +99,7 @@ fun TemplatesBottomSheet(
                             feature = feature,
                             navController = navController,
                             index = index,
+                            key = "$index",
                             ticketInformationViewModel = ticketInformationViewModel
                         )
                         Spacer(modifier = Modifier.height(8.dp))

@@ -18,7 +18,7 @@ class GetScheduledWorkOrdersUseCase(
             if (result.isNotEmpty()){
                 val scheduledWorkOrders = result.mapIndexed { index, item ->
                     item.toScheduledWorkOrder(index = index)
-                }
+                }.reversed()
                 Log.e("ScheduledResult", result.toString())
                 Resource.Success(data = scheduledWorkOrders, message = "Successful")
             }else{
@@ -42,4 +42,12 @@ class GetScheduledWorkOrdersUseCase(
             e.localizedMessage?.let { Log.e("ScheduledResult", it) }
             Resource.Error( "An expected error occurred")
         }
+}
+
+suspend fun main (){
+    println(
+        WorkOrdersRepositoryImpl().getWorkOrders().mapIndexed { index, item ->
+            item.toScheduledWorkOrder(index = index)
+        }
+    )
 }

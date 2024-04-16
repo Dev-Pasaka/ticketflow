@@ -30,6 +30,7 @@ import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.
 fun CustomDropDown(
     feature: Feature,
     index: Int,
+    key:String,
     navController: NavHostController,
     ticketInformationViewModel: TicketInformationViewModel,
     status: String,
@@ -58,6 +59,7 @@ fun CustomDropDown(
                 IconButton(
                     onClick = {
                         isDropdownOpen = true
+                        ticketInformationViewModel.selectDropDown(key = key)
                     }
                 ) {
                     Icon(
@@ -84,9 +86,9 @@ fun CustomDropDown(
                 .fillMaxWidth(),
         )
 
-        if (isDropdownOpen) {
+        if (isDropdownOpen && ticketInformationViewModel.currentDropDown == key) {
             DropdownMenu(
-                expanded = status != "complete",
+                expanded = true,
                 onDismissRequest = {
                     isDropdownOpen = false
                 },
