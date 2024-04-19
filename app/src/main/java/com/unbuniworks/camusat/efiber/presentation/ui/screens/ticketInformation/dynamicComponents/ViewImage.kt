@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
@@ -32,6 +33,7 @@ import androidx.core.net.toUri
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.unbuniworks.camusat.efiber.R
+import com.unbuniworks.camusat.efiber.common.Constants
 import com.unbuniworks.camusat.efiber.data.remote.dto.workOrderDto.Feature
 import com.unbuniworks.camusat.efiber.presentation.navigation.Screen
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.TicketInformationViewModel
@@ -46,6 +48,8 @@ fun ViewImage(
 ) {
 
     ModalBottomSheet(
+        shape = RectangleShape,
+        containerColor = Color.White,
         onDismissRequest = {
             ticketInformationViewModel.openOrCloseViewImageBottomSheet()
         }
@@ -106,7 +110,10 @@ fun ViewImage(
             }
 
             Image(
-                painter = rememberAsyncImagePainter(feature.value?.toUri()),
+                painter = rememberAsyncImagePainter(
+                    if(feature.value?.contains("workOrderTaskFiles") == true)"${Constants.baseUrl}uploads${feature.value?.toUri()}" else
+                    feature.value?.toUri()
+                ),
                 contentDescription = "Image",
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier

@@ -4,6 +4,7 @@ sealed class Screen(val route:String){
     //Auth Screens
     data object SplashScreen: Screen("splash_screen")
     data object LoginScreen: Screen("login_screen")
+    data object UpdatePassword: Screen("update_password_screen")
     data object SelectModule: Screen("select_module_screen")
 
     //Bottom Navigation Screen

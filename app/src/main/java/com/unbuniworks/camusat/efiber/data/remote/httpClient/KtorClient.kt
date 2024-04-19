@@ -39,7 +39,7 @@ object HttpClient {
 
         engine {
             // Set timeout
-            requestTimeout = (1000 * 60) * 2 // 2 minutes
+            requestTimeout = (60000) * 4 // 2 minutes
             // SSL/TLS settings
 
 

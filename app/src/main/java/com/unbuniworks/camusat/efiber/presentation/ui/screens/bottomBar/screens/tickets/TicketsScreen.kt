@@ -63,37 +63,36 @@ fun TicketsScreen(
         containerColor = colorResource(id = R.color.background)
 
     ) {
-        if (ticketsScreenViewModel.workOrderState == null || ticketsScreenViewModel.isRefreshing) {
-            Dialog(
-                onDismissRequest = { }
-            ) {
-
-                Surface(
-                    color = Color.White,
-                    shape = RoundedCornerShape(4.dp)
-                ) {
-                    CircularProgressIndicator(
-                        color = colorResource(id = R.color.button_color),
-                        strokeWidth = 3.dp,
-                        strokeCap = StrokeCap.Butt,
-                        modifier = Modifier.padding(16.dp)
-                    )
-                }
-
-            }
-        }
-
-
         Column(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()
         ) {
 
-            TicketsScreenLowerSection(
-                ticketsScreenViewModel = ticketsScreenViewModel,
-                navController = navController
-            )
+            if(ticketsScreenViewModel.workOrderState.isLoading){
+                Dialog(
+                    onDismissRequest = { }
+                ) {
+
+                    Surface(
+                        color = Color.White,
+                        shape = RoundedCornerShape(4.dp)
+                    ) {
+                        CircularProgressIndicator(
+                            color = colorResource(id = R.color.button_color),
+                            strokeWidth = 3.dp,
+                            strokeCap = StrokeCap.Butt,
+                            modifier = Modifier.padding(16.dp)
+                        )
+                    }
+
+                }
+            }else {
+                TicketsScreenLowerSection(
+                    ticketsScreenViewModel = ticketsScreenViewModel,
+                    navController = navController
+                )
+            }
 
         }
     }

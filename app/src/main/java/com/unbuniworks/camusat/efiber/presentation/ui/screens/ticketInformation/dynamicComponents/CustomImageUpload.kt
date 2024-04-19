@@ -34,6 +34,7 @@ import androidx.core.net.toUri
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.unbuniworks.camusat.efiber.R
+import com.unbuniworks.camusat.efiber.common.Constants
 import com.unbuniworks.camusat.efiber.data.remote.dto.workOrderDto.Feature
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.TicketInformationViewModel
 
@@ -87,7 +88,9 @@ fun CustomImageUpload(
                 painter = if (
                     feature.value?.toUri() == null
                     || feature.value?.toUri() == Uri.EMPTY
-                ) painterResource(id = R.drawable.image) else rememberAsyncImagePainter(model = feature.value?.toUri()),
+                ) painterResource(id = R.drawable.image) else rememberAsyncImagePainter(
+                    model = if(feature.value?.contains("workOrderTaskFiles") == true)"${Constants.baseUrl}uploads${feature.value?.toUri()}" else
+                    feature.value?.toUri()),
                 contentDescription = "Image",
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier
@@ -102,7 +105,7 @@ fun CustomImageUpload(
                             || feature.value?.toUri() == Uri.EMPTY
                             ) {
                             ticketInformationViewModel.openOrCloseTakePhotoOrUploadImage(key = "$index")
-                            // pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                            //pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                         } else {
                             ticketInformationViewModel.selectImage(key = key)
                             ticketInformationViewModel.openOrCloseViewImageBottomSheet()

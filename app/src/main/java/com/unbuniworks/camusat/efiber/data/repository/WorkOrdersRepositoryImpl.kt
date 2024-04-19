@@ -23,17 +23,15 @@ class WorkOrdersRepositoryImpl(
     private val api:HttpClient = HttpClient,
 ):WorkOrdersRepository {
 
-    override suspend fun getWorkOrders(): List<WorkOrdersDtoItem> = withContext(Dispatchers.IO ){
-
-        return@withContext api.client.get("${api.baseUrl}workorders/scheduled"){
-            header(HttpHeaders.Authorization, "Bearer ")
+    override suspend fun getWorkOrders(token:String): List<WorkOrdersDtoItem> {
+        return api.client.get("${api.baseUrl}workorders/scheduled"){
+            header(HttpHeaders.Authorization, "Bearer $token")
         }.body<List<WorkOrdersDtoItem>>()
-
     }
 
-    override suspend fun getWorkOrder(workOrderId: String, activity:Activity): WorkOrderDto {
+    override suspend fun getWorkOrder(workOrderId: String, activity:Activity, token: String): WorkOrderDto {
         return api.client.get("${api.baseUrl}workorders/workorder/$workOrderId"){
-            header(HttpHeaders.Authorization, "Bearer ")
+            header(HttpHeaders.Authorization, "Bearer $token")
         }.body<WorkOrderDto>()
 
     }
@@ -41,18 +39,11 @@ class WorkOrdersRepositoryImpl(
 }
 
 suspend fun main(){
-    val api:HttpClient = HttpClient
-
-    val workOrderId = "eabaaade-f0d4-4419-918d-c8f5312d67b6"
-    /*println(
-        api.client.get("${api.baseUrl}workorders/workorder/$workOrderId"){
-            header(HttpHeaders.Authorization, "Bearer ")
-        }.body<WorkOrderDto>()
-    )*/
     println(
-        WorkOrdersRepositoryImpl().getWorkOrders().mapIndexed { index, item ->
-            item.toScheduledWorkOrder(index = index)
-        }
+        WorkOrdersRepositoryImpl().getWorkOrders("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZDZkY2QzOC05MDJlLTRkZDgtYjQ4MS1iNjI1MTIzNWFkNjEiLCJlbWFpbCI6InNueWFnd2Fzd2FAZ21haWwuY29tIiwiaWF0IjoxNzEzNDY2Mjc3LCJleHAiOjE3MTM0NjkyNzd9.7LGw284xA5KxPJysvZQI99noa85rxYLng7jbzNS_dSs")
+
     )
 }
+
+
 

@@ -17,7 +17,7 @@ data class Feature(
     @SerialName("value")
     var value: String?,
     @SerialName("availableQuantity")
-    val availableQuantity:Int?,
+    val availableQuantity:Int? = null,
 ){
     fun updateValue(newValue: String?) {
         value = newValue

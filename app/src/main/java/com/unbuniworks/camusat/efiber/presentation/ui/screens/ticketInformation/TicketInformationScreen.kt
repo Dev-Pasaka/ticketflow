@@ -67,21 +67,6 @@ fun TicketInformationScreen(navController: NavHostController, ticketInformationV
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        gesturesEnabled = true,
-        drawerContent = {
-            ModalDrawerSheet {
-                Image(
-                    painter = painterResource(id = R.drawable.camusat_logo),
-                    contentDescription = "person Icon",
-                    modifier = Modifier.fillMaxWidth()
-                )
-                HorizontalDivider()
-            }
-        }
-    ) {
-
 
         Scaffold(
             topBar = {
@@ -136,6 +121,6 @@ fun TicketInformationScreen(navController: NavHostController, ticketInformationV
                 }
             }
         }
-    }
+
 }
 

@@ -2,7 +2,10 @@ package com.unbuniworks.camusat.efiber.domain.usecase
 
 import android.app.Activity
 import android.util.Log
+import com.unbuniworks.camusat.efiber.common.Constants
 import com.unbuniworks.camusat.efiber.common.Resource
+import com.unbuniworks.camusat.efiber.data.local.sharedPreference.SharedPreferenceRepository
+import com.unbuniworks.camusat.efiber.data.local.sharedPreference.SharedPreferenceRepositoryImpl
 import com.unbuniworks.camusat.efiber.data.remote.dto.workOrderDto.toWorkOrderDetails
 import com.unbuniworks.camusat.efiber.data.remote.dto.workOrdersDto.toWorkOrder
 import com.unbuniworks.camusat.efiber.data.repository.WorkOrdersRepositoryImpl
@@ -16,26 +19,24 @@ import kotlinx.coroutines.flow.flow
 
 class WorkOrdersUseCase(
     private val repository: WorkOrdersRepository = WorkOrdersRepositoryImpl(),
+    private val sharedPreferenceRepository: SharedPreferenceRepository = SharedPreferenceRepositoryImpl()
 ) {
 
-    suspend fun getWorkOrders():List<WorkOrder>{
+    suspend fun getWorkOrders(activity: Activity):Resource<List<WorkOrder>>{
         return try {
-            val response = repository.getWorkOrders()
+            val token = sharedPreferenceRepository.getString(Constants.token,activity =activity ) ?: ""
+            val response = repository.getWorkOrders(token = token)
             val workOrder = response.map { it.toWorkOrder() }
-            workOrder
-
+            Resource.Success(data = workOrder, message = "Success")
         }
         catch (e:IOException){
             e.localizedMessage?.let { Log.e("WorkOrdersStatus", it) }
-            emptyList()
-        }
-        catch (e: JsonConvertException){
-            e.localizedMessage?.let { Log.e("WorkOrdersStatus", it) }
-           emptyList()
+            Resource.Error(data = emptyList(),message = "No internet connection")
         }
         catch (e:Exception){
             e.localizedMessage?.let { Log.e("WorkOrdersStatus", it) }
-            emptyList()
+            Resource.Error(data = emptyList(), message = "An expected error occurred")
+
         }
 
     }

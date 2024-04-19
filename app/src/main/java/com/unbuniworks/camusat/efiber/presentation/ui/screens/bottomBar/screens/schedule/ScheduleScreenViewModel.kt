@@ -1,5 +1,6 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.screens.bottomBar.screens.schedule
 
+import android.app.Activity
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -14,7 +15,8 @@ import java.util.Date
 import java.util.Locale
 
 class ScheduleScreenViewModel(
-    private val getScheduledWorkOrdersUseCase:GetScheduledWorkOrdersUseCase = GetScheduledWorkOrdersUseCase()
+    private val getScheduledWorkOrdersUseCase:GetScheduledWorkOrdersUseCase = GetScheduledWorkOrdersUseCase(),
+    private val activity:Activity
 ):ViewModel() {
     var search by mutableStateOf("")
         private set
@@ -42,7 +44,7 @@ class ScheduleScreenViewModel(
     private fun getScheduledWorkOrders(){
         viewModelScope.launch {
             getScheduledWorkOrderState = GetScheduledWorkOrderState(isLoading = true)
-            val result = getScheduledWorkOrdersUseCase.invoke()
+            val result = getScheduledWorkOrdersUseCase.getScheduledWorkOrders(activity = activity)
             when(result){
                 is Resource.Success ->{
                     originalState = GetScheduledWorkOrderState(isLoading = false, data = result.data ?: emptyList())

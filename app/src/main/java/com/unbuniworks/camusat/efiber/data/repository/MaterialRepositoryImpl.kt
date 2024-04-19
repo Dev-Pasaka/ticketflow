@@ -8,17 +8,16 @@ import com.unbuniworks.camusat.efiber.data.remote.dto.materialDto.MaterialsDtoIt
 import com.unbuniworks.camusat.efiber.data.remote.httpClient.HttpClient
 import com.unbuniworks.camusat.efiber.domain.repository.MaterialsRepository
 import io.ktor.client.call.body
-import io.ktor.client.request.get
+import io.ktor.client.request.*
+import io.ktor.http.*
 
 class MaterialRepositoryImpl(
-    private val sharedPreferenceRepository: SharedPreferenceRepository = SharedPreferenceRepositoryImpl(),
     private val api:HttpClient = HttpClient
 ):MaterialsRepository {
-    override suspend fun getMaterials(): List<MaterialsDtoItem> {
-        return api.client.get("${api.baseUrl}clientMaterial").body<List<MaterialsDtoItem>>()
+    override suspend fun getMaterials(token:String): List<MaterialsDtoItem> {
+        return api.client.get("${api.baseUrl}clientMaterial"){
+            header(HttpHeaders.Authorization, "Bearer $token")
+        }.body<List<MaterialsDtoItem>>()
     }
 }
 
-suspend fun main(){
-    println(MaterialRepositoryImpl().getMaterials())
-}

@@ -1,6 +1,12 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.screens.auth.components
 
 import android.app.Activity
+import android.content.Intent
+import android.net.Uri
+import androidx.activity.compose.ManagedActivityResultLauncher
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -261,6 +267,10 @@ fun Login(loginScreenViewModel: LoginScreenViewModel, actionNavigateToSelectModu
 
 @Composable
 fun ForgotPassword(loginScreenViewModel: LoginScreenViewModel) {
+
+
+
+
     val scope = rememberCoroutineScope()
 
     var startAnimation by remember {
@@ -322,22 +332,33 @@ fun ForgotPassword(loginScreenViewModel: LoginScreenViewModel) {
 
 
 
-        Button(
-            onClick = {
-
-            },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = colorResource(id = R.color.button_color),
-                contentColor = Color.White
-            ),
-            shape = RoundedCornerShape(5.dp),
-            modifier = Modifier.fillMaxWidth(0.75f),
-
-            ) {
-            Text(
-                text = "Reset",
+        when(loginScreenViewModel.resetPasswordState.isLoading){
+            true -> CircularProgressIndicator(
+                color = colorResource(id = R.color.button_color),
+                strokeWidth = 3.dp,
+                strokeCap = StrokeCap.Butt
             )
+            else ->{
+                Button(
+                    enabled = loginScreenViewModel.emailReset.isNotBlank(),
+                    onClick = {
+                        loginScreenViewModel.resetPassword()
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = colorResource(id = R.color.button_color),
+                        contentColor = Color.White
+                    ),
+                    shape = RoundedCornerShape(5.dp),
+                    modifier = Modifier.fillMaxWidth(0.75f),
+
+                    ) {
+                    Text(
+                        text = "Reset",
+                    )
+                }
+            }
         }
+
 
     }
     Spacer(modifier = Modifier.height(16.dp))
@@ -352,3 +373,4 @@ fun ForgotPassword(loginScreenViewModel: LoginScreenViewModel) {
         )
     }
 }
+

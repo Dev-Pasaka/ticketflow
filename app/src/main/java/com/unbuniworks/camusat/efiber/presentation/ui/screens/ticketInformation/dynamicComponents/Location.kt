@@ -54,10 +54,11 @@ fun Location(
 
     ticketInformationViewModel.getCurrentLocation(fusedLocationProviderClient = fusedLocationProviderClient, index= index)
     Surface(
-        enabled = if(
+       /* enabled = if(
             ticketInformationViewModel.currentLocation.latitude > 0.0
             || ticketInformationViewModel.currentLocation.longitude > 0.0
-        )  true else false,
+        )  true else false,*/
+        enabled = false,
         onClick = {
                   navController.currentBackStackEntry?.arguments?.putString(
                       "coordinates", Pair(ticketInformationViewModel.currentLocation.latitude,

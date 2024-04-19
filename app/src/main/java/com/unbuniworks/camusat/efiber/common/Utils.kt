@@ -123,6 +123,26 @@ object Utils {
         return String.format("%04d-%02d-%02d  %02d:%02d $amPm", year, month, day, formattedHour, minute)
     }
 
+    fun formatIsoTime(dateTimeString: String): String {
+        // Split the date-time string into its components
+        val parts = dateTimeString.split("[-T:.Z]".toRegex())
+
+        // Extract the components
+        val year = parts[0].toInt()
+        val month = parts[1].toInt()
+        val day = parts[2].toInt()
+        val hour = parts[3].toInt()
+        val minute = parts[4].toInt()
+        val second = parts[5].toInt()
+
+        // Convert the hour to 12-hour clock system and determine AM/PM
+        val formattedHour = if (hour == 0) 12 else if (hour <= 12) hour else hour - 12
+        val amPm = if (hour < 12) "AM" else "PM"
+
+        // Format the date and time components into a user-readable string
+        return String.format("%02d:%02d $amPm", formattedHour, minute)
+    }
+
     fun extractCoordinates(pairString: String): Pair<Double, Double>? {
         // Remove parentheses and split the string by comma
         val parts = pairString.replace("(", "").replace(")", "").split(",")

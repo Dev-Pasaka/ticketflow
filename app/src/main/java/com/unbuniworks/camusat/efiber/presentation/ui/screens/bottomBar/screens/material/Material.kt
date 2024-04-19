@@ -66,9 +66,8 @@ fun Material(
             modifier = Modifier.fillMaxSize()
         ) {
             MaterialsScreenUpperSection(materialScreenViewModel = materialScreenViewModel)
-            MaterialsBodySection(materialScreenViewModel = materialScreenViewModel)
 
-            if (materialScreenViewModel.materialsState == null) {
+            if (materialScreenViewModel.materialsState.isLoading) {
                 Dialog(
                     onDismissRequest = { /*TODO*/ },
                     properties = DialogProperties(
@@ -89,8 +88,9 @@ fun Material(
                     }
 
                 }
+            }else{
+                    MaterialsBodySection(materialScreenViewModel = materialScreenViewModel)
+                }
             }
         }
     }
-
-}

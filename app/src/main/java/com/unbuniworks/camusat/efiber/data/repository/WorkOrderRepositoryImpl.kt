@@ -4,6 +4,7 @@ import android.app.Activity
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.util.Log
 import androidx.core.net.toUri
 import com.unbuniworks.camusat.efiber.data.remote.dto.PostWorkOrderTaskDto
 import com.unbuniworks.camusat.efiber.data.remote.dto.PostWorkOrderResponseDto
@@ -12,11 +13,9 @@ import com.unbuniworks.camusat.efiber.data.remote.dto.workOrderDto.WorkOrderDto
 import com.unbuniworks.camusat.efiber.data.remote.httpClient.HttpClient
 import com.unbuniworks.camusat.efiber.domain.repository.WorkOrderRepository
 import io.ktor.client.call.body
+import io.ktor.client.request.*
 import io.ktor.client.request.forms.formData
 import io.ktor.client.request.forms.submitFormWithBinaryData
-import io.ktor.client.request.get
-import io.ktor.client.request.post
-import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
@@ -29,24 +28,28 @@ import java.io.File
 class WorkOrderRepositoryImpl(
     private val api: HttpClient = HttpClient
 ) : WorkOrderRepository {
-    override suspend fun getWorkOrder(workOrderId: String)
+    override suspend fun getWorkOrder(workOrderId: String, token:String)
             : WorkOrderDto = api.client.get(
         urlString = "${api.baseUrl}workorders/workorder/$workOrderId"
-    ).body<WorkOrderDto>()
+    ){
+        header(HttpHeaders.Authorization, "Bearer $token")
+    }.body<WorkOrderDto>()
 
     override suspend fun postWorkOrderTask(
         postWorkOrderTaskDto: PostWorkOrderTaskDto,
-        activity: Activity
+        activity: Activity,
+        token: String
     ): PostWorkOrderResponseDto {
         val jsonFeatures = Json.encodeToString<List<Feature>>(postWorkOrderTaskDto.features)
 
-
-
-        return api.client.submitFormWithBinaryData(
+        Log.e("feature", jsonFeatures)
+        val result = api.client.submitFormWithBinaryData(
             url = "${api.baseUrl}workorders/submitTask",
             formData = formData {
                 append("workOrderId", postWorkOrderTaskDto.workOrderId)
                 append("taskId", postWorkOrderTaskDto.taskId)
+                append("featureName", postWorkOrderTaskDto.featureName ?: "")
+                append("isSpecialFeature", postWorkOrderTaskDto.isSpecialFeature)
                 postWorkOrderTaskDto.features.filter { it.inputType == "Image" }.forEach {
 
                     val inputStream = it.value?.toUri()
@@ -68,13 +71,23 @@ class WorkOrderRepositoryImpl(
                 append("features", jsonFeatures)
             }
         ).body<PostWorkOrderResponseDto>()
+        Log.e("Test", result.toString())
+        return result
+
 
     }
 
 }
 
 suspend fun main() {
-    println(
-        WorkOrderRepositoryImpl().getWorkOrder("69afe0b5-316a-4d6c-afab-d7773b3dfbfc")
-    )
+
+    val workOrderId = "69afe0b5-316a-4d6c-afab-d7773b3dfbfc"
+
+   println(
+       HttpClient.client.get(
+           urlString = "${HttpClient.baseUrl}workorders/workorder/$workOrderId"
+       ).body<WorkOrderDto>()
+   )
+
+
 }

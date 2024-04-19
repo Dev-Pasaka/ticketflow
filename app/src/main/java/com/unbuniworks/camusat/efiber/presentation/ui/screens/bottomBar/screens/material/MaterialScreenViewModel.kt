@@ -1,5 +1,6 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.screens.bottomBar.screens.material
 
+import android.app.Activity
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -21,17 +22,15 @@ import kotlinx.coroutines.launch
 
 class MaterialScreenViewModel(
     private val useCase: MaterialsUseCase = MaterialsUseCase(),
+    private val activity: Activity
 ) : ViewModel() {
 
-    init {
-        getMaterials()
-    }
 
-    var materialsState: List<Material> ? by mutableStateOf(null)
+
+    var materialsState  by mutableStateOf(MaterialsState())
         private set
 
-    var isRefreshing by mutableStateOf(false)
-        private set
+
 
     fun refresh() {
         getMaterials()
@@ -39,8 +38,14 @@ class MaterialScreenViewModel(
 
     private fun getMaterials() {
         viewModelScope.launch {
-            val result = useCase.getMaterials()
-            materialsState = result
+            materialsState = MaterialsState(isLoading = true)
+            val result = useCase.getMaterials(activity)
+            materialsState = MaterialsState(isLoading = false, data = result)
         }
     }
+
+    init {
+        getMaterials()
+    }
+
 }

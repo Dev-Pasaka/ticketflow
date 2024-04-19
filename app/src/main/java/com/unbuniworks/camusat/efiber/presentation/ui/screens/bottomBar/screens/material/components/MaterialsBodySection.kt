@@ -23,7 +23,7 @@ import com.unbuniworks.camusat.efiber.presentation.ui.screens.bottomBar.screens.
 
 @Composable
 fun MaterialsBodySection(materialScreenViewModel: MaterialScreenViewModel) {
-    if (materialScreenViewModel.materialsState?.isEmpty() == true){
+    if (materialScreenViewModel.materialsState.data.isEmpty()){
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -48,9 +48,12 @@ fun MaterialsBodySection(materialScreenViewModel: MaterialScreenViewModel) {
         }
     }else {
 
-        LazyColumn {
-            items(count = materialScreenViewModel.materialsState?.size ?: 0) {
-                val material = materialScreenViewModel.materialsState?.get(it)
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            items(count = materialScreenViewModel.materialsState.data.size) {
+                val material = materialScreenViewModel.materialsState.data[it]
 
                 ElevatedCard(
                     colors = CardDefaults.cardColors(
@@ -81,13 +84,13 @@ fun MaterialsBodySection(materialScreenViewModel: MaterialScreenViewModel) {
                             )
 
                             Text(
-                                text = material?.name ?: "",
+                                text = material.name,
                                 color = Color.DarkGray,
                                 fontSize = 14.sp
                             )
                         }
                         Text(
-                            text = material?.qty ?: "",
+                            text = material.qty,
                             fontSize = 14.sp,
                             modifier = Modifier
                                 .padding(horizontal = 16.dp,)

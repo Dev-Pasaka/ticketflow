@@ -4,17 +4,19 @@ import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavHostController
 import com.unbuniworks.camusat.efiber.R
 import com.unbuniworks.camusat.efiber.presentation.navigation.BottomNavigationViewModel
@@ -67,7 +69,27 @@ fun Schedule(
             modifier = Modifier.fillMaxSize()
         ) {
             ScheduleScreenUpperSection(scheduleScreenViewModel = scheduleScreenViewModel)
-            ScheduleItemBody(scheduleScreenViewModel = scheduleScreenViewModel, navController = navController)
+            if (scheduleScreenViewModel.getScheduledWorkOrderState.isLoading){
+                Dialog(
+                    onDismissRequest = { /*TODO*/ }
+                ) {
+
+                    Surface(
+                        color = Color.White,
+                        shape = RoundedCornerShape(4.dp)
+                    ) {
+                        CircularProgressIndicator(
+                            color = colorResource(id = R.color.button_color),
+                            strokeWidth = 3.dp,
+                            strokeCap = StrokeCap.Butt,
+                            modifier = Modifier.padding(16.dp)
+                        )
+                    }
+
+                }
+            }else{
+                ScheduleItemBody(scheduleScreenViewModel = scheduleScreenViewModel, navController = navController)
+            }
         }
     }
 

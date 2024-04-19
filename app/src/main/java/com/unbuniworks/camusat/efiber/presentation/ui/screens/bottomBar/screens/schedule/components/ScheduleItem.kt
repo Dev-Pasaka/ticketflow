@@ -24,24 +24,9 @@ import com.unbuniworks.camusat.efiber.presentation.ui.screens.bottomBar.screens.
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun ScheduleItem(index:Int, scheduleScreenViewModel: ScheduleScreenViewModel, navController:NavHostController){
+fun ScheduleItem(index: Int, scheduleScreenViewModel: ScheduleScreenViewModel, navController: NavHostController) {
     val title = scheduleScreenViewModel.getScheduledWorkOrderState.data[index]
     Column {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 8.dp)
-        ) {
-            Text(
-                text = Utils.categorizeDate(
-                    title.dueDate
-                ),
-                fontSize = 12.sp,
-               // fontWeight = FontWeight.Bold,
-                color = colorResource(id = R.color.button_color)
-            )
-        }
         Surface(
             onClick = {
                 navController.currentBackStackEntry?.arguments?.putString(
@@ -66,7 +51,7 @@ fun ScheduleItem(index:Int, scheduleScreenViewModel: ScheduleScreenViewModel, na
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Start,
+                    horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 16.dp)
@@ -76,8 +61,15 @@ fun ScheduleItem(index:Int, scheduleScreenViewModel: ScheduleScreenViewModel, na
                         fontSize = 12.sp,
 
                         )
-                }
 
+                    Text(
+                        text = Utils.formatIsoTime(
+                            title.dueDate
+                        ),
+                        fontSize = 12.sp,
+
+                        )
+                }
             }
         }
     }

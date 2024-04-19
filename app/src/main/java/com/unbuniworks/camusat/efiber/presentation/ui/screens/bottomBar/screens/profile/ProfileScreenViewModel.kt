@@ -31,7 +31,7 @@ class ProfileScreenViewModel(
         viewModelScope.launch {
             val userId= sharedPreferenceRepository.getString(key = Constants.userId, context as Activity) ?: ""
             getUserDataState = GetUserDataState(isLoading = true)
-            when(val result = useCase.getUser(userId)){
+            when(val result = useCase.getUser(userId, activity = context)){
                 is Resource.Loading ->{
 
                 }

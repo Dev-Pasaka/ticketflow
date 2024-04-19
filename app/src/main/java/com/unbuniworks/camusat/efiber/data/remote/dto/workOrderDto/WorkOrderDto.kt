@@ -1,6 +1,7 @@
 package com.unbuniworks.camusat.efiber.data.remote.dto.workOrderDto
 
 
+import com.unbuniworks.camusat.efiber.data.remote.dto.workOrdersDto.ActivityLog
 import com.unbuniworks.camusat.efiber.domain.model.WorkOrderDetails
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -22,16 +23,17 @@ data class WorkOrderDto(
     val project: Project?,
     val projectId: String?,
     val rawData: String,
-    val scheduledEndAt: String,
-    val scheduledStartAt: String,
+    val scheduledEndAt: String?,
+    val scheduledStartAt: String?,
     val status: String,
     val statusColour: String,
     val team: Team?,
     val teamId: String?,
     val updatedAt: String,
     val workOrderTasks: List<WorkOrderTask>,
-    val workOrderTeamStatus: String,
-    val ticketDetails:List<TicketDetail>
+    val workOrderTeamStatus: String?,
+    val ticketDetails:List<TicketDetail>,
+    val workOrderActivityLogs:List<ActivityLog>?
 )
 
 fun WorkOrderDto.toWorkOrderDetails():WorkOrderDetails{
@@ -40,14 +42,10 @@ fun WorkOrderDto.toWorkOrderDetails():WorkOrderDetails{
         id = id,
         name = project?.name ?: "",
         ticketNo = mainId,
-        type = ticketDetails.firstOrNull { it.key == "Plan" }?.value ?: "",
-        address = ticketDetails.firstOrNull { it.key == "Address" }?.value ?: "",
-        client = ticketDetails.firstOrNull { it.key == "Client" }?.value ?: "",
-        contact = ticketDetails.firstOrNull { it.key == "Contact Technique" }?.value ?: "",
-        equipment =  ticketDetails.firstOrNull { it.key == "Equipement(s)" }?.value ?: "",
         status = status,
         statusColor = statusColour,
         workOrderTasks = workOrderTasks,
+        ticketDetails = ticketDetails,
         dueDate = scheduledEndAt
     )
 

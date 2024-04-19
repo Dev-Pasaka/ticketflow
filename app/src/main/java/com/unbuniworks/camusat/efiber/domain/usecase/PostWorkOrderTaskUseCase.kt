@@ -2,7 +2,10 @@ package com.unbuniworks.camusat.efiber.domain.usecase
 
 import android.app.Activity
 import android.util.Log
+import com.unbuniworks.camusat.efiber.common.Constants
 import com.unbuniworks.camusat.efiber.common.Resource
+import com.unbuniworks.camusat.efiber.data.local.sharedPreference.SharedPreferenceRepository
+import com.unbuniworks.camusat.efiber.data.local.sharedPreference.SharedPreferenceRepositoryImpl
 import com.unbuniworks.camusat.efiber.data.remote.dto.PostWorkOrderResponseDto
 import com.unbuniworks.camusat.efiber.data.remote.dto.PostWorkOrderTaskDto
 import com.unbuniworks.camusat.efiber.data.repository.WorkOrderRepositoryImpl
@@ -16,11 +19,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class PostWorkOrderTaskUseCase(
-    private val workOrderRepository: WorkOrderRepository = WorkOrderRepositoryImpl()
+    private val workOrderRepository: WorkOrderRepository = WorkOrderRepositoryImpl(),
+    private val sharedPreferenceRepository: SharedPreferenceRepository = SharedPreferenceRepositoryImpl()
 ) {
     suspend fun postWorkOrdersTask(postWorkOrderTaskDto: PostWorkOrderTaskDto,activity: Activity): PostingWorkOrderResult  {
         return try {
-            val response = workOrderRepository.postWorkOrderTask(postWorkOrderTaskDto, activity = activity)
+            val token = sharedPreferenceRepository.getString(Constants.token, activity) ?: ""
+            val response = workOrderRepository.postWorkOrderTask(postWorkOrderTaskDto, activity = activity,  token)
             if (response.status){
                 PostingWorkOrderResult(status = true, response.message)
             }else{

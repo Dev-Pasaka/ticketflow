@@ -41,25 +41,7 @@ fun ProfileScreen(navController: NavHostController, profileScreenViewModel: Prof
         profileScreenViewModel.getUser(context = context)
     }
 
-    if (profileScreenViewModel.getUserDataState.isLoading) {
-        Dialog(
-            onDismissRequest = { /*TODO*/ }
-        ) {
 
-            Surface(
-                color = Color.White,
-                shape = RoundedCornerShape(4.dp)
-            ) {
-                CircularProgressIndicator(
-                    color = colorResource(id = R.color.button_color),
-                    strokeWidth = 3.dp,
-                    strokeCap = StrokeCap.Butt,
-                    modifier = Modifier.padding(16.dp)
-                )
-            }
-
-        }
-    }
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -83,26 +65,46 @@ fun ProfileScreen(navController: NavHostController, profileScreenViewModel: Prof
     {
         Column {
             Spacer(modifier = Modifier.height(48.dp))
-            ProfileScreenUpperSection(navController = navController)
-            ProfileScreenBodySection(profileScreenViewModel = profileScreenViewModel)
-            Button(
-                enabled = false,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = colorResource(id = R.color.light_blue),
-                    contentColor = Color.LightGray
-                ),
-                shape = RoundedCornerShape(5.dp),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 16.dp),
-                onClick = { /*TODO*/ }
-            ) {
+            ProfileScreenUpperSection(navController = navController, profileScreenViewModel = profileScreenViewModel)
+            if (profileScreenViewModel.getUserDataState.isLoading) {
+                Dialog(
+                    onDismissRequest = { /*TODO*/ }
+                ) {
 
-                Text(
-                    text = "Safety Passport",
-                    fontSize = 14.sp,
-                    color = Color.Gray
-                )
+                    Surface(
+                        color = Color.White,
+                        shape = RoundedCornerShape(4.dp)
+                    ) {
+                        CircularProgressIndicator(
+                            color = colorResource(id = R.color.button_color),
+                            strokeWidth = 3.dp,
+                            strokeCap = StrokeCap.Butt,
+                            modifier = Modifier.padding(16.dp)
+                        )
+                    }
+
+                }
+            }else {
+                ProfileScreenBodySection(profileScreenViewModel = profileScreenViewModel)
+                Button(
+                    enabled = false,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = colorResource(id = R.color.light_blue),
+                        contentColor = Color.LightGray
+                    ),
+                    shape = RoundedCornerShape(5.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 16.dp),
+                    onClick = { /*TODO*/ }
+                ) {
+
+                    Text(
+                        text = "Safety Passport",
+                        fontSize = 14.sp,
+                        color = Color.Gray
+                    )
+                }
             }
         }
     }

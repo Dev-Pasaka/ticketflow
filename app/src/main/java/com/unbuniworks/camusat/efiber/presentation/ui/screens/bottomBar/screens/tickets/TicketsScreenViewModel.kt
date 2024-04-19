@@ -1,5 +1,6 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.screens.bottomBar.screens.tickets
 
+import android.app.Activity
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -16,26 +17,23 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.launch
 
 class TicketsScreenViewModel(
-    private val useCase: WorkOrdersUseCase
+    private val useCase: WorkOrdersUseCase,
+    private val activity: Activity
 ) : ViewModel() {
 
-    init {
-        refresh()
-    }
+
+    // Initialize isRefreshing to false
 
 
-    var workOrderState:MutableList<WorkOrder>? by mutableStateOf(null)
-        private set
-    var isRefreshing by mutableStateOf(false)
+    var workOrderState by mutableStateOf(WorkOrderState())
+
 
     fun refresh() {
-        getWorkOrder()
-    }
-
-    private fun getWorkOrder() {
+        // Set isRefreshing to true before making the network call
         viewModelScope.launch {
-            val result = useCase.getWorkOrders() // Perform work
-            workOrderState = result.toMutableList()
+            workOrderState = WorkOrderState(isLoading = true, data = emptyList())
+            val result = useCase.getWorkOrders(activity)
+            workOrderState = WorkOrderState(isLoading = false, data = result.data ?: emptyList())
         }
     }
 
@@ -60,5 +58,9 @@ class TicketsScreenViewModel(
         return cleanedColorString
     }
 
+
+    init {
+        refresh()
+    }
 
 }

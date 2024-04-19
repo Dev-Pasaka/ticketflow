@@ -1,18 +1,17 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.dynamicComponents
 
 import android.app.Activity
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.SheetState
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -30,6 +29,8 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TemplatesBottomSheet(
+    isSpecialFeature:Boolean,
+    featureName:String,
     status:String,
     workOrderId: String,
     sheetState: SheetState,
@@ -43,10 +44,11 @@ fun TemplatesBottomSheet(
     val scope = rememberCoroutineScope()
     val activity = LocalContext.current as Activity
     val scrollState  = rememberScrollState()
-
+    Log.e("special", "$featureName, $isSpecialFeature")
 
     ModalBottomSheet(
         onDismissRequest = openOrCloseBottomSheet,
+        shape = RectangleShape,
         containerColor = Color.White
     ) {
         Column(
@@ -181,6 +183,8 @@ fun TemplatesBottomSheet(
                             ticketInformationViewModel.event(
                                 TicketInformationEvents.PostWorkOrderTask(
                                     PostWorkOrderTaskDto(
+                                        isSpecialFeature = isSpecialFeature,
+                                        featureName = featureName,
                                         workOrderId = ticketInformationViewModel.workOrderId,
                                         taskId = ticketInformationViewModel.currentFeatureId,
                                         userId = SharedPreferenceRepositoryImpl().getString(

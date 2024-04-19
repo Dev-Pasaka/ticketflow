@@ -20,7 +20,7 @@ fun WorkOrderItem(
     ticketsScreenViewModel: TicketsScreenViewModel,
     actionNavigateToTicketInformationScreen: () -> Unit
 ) {
-    val item = ticketsScreenViewModel.workOrderState?.get(index)
+    val item = ticketsScreenViewModel.workOrderState.data?.get(index)
 
     Surface(
         onClick = actionNavigateToTicketInformationScreen,

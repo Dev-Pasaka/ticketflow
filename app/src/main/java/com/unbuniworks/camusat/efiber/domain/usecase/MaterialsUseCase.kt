@@ -1,7 +1,11 @@
 package com.unbuniworks.camusat.efiber.domain.usecase
 
+import android.app.Activity
 import android.util.Log
+import com.unbuniworks.camusat.efiber.common.Constants
 import com.unbuniworks.camusat.efiber.common.Resource
+import com.unbuniworks.camusat.efiber.data.local.sharedPreference.SharedPreferenceRepository
+import com.unbuniworks.camusat.efiber.data.local.sharedPreference.SharedPreferenceRepositoryImpl
 import com.unbuniworks.camusat.efiber.data.remote.dto.materialDto.MaterialsDtoItem
 import com.unbuniworks.camusat.efiber.data.remote.dto.materialDto.toMaterial
 import com.unbuniworks.camusat.efiber.data.repository.MaterialRepositoryImpl
@@ -22,11 +26,13 @@ import kotlinx.coroutines.flow.onStart
 
 
 class MaterialsUseCase(
-    private val repository: MaterialsRepository = MaterialRepositoryImpl()
+    private val repository: MaterialsRepository = MaterialRepositoryImpl(),
+    private val sharedPreferenceRepository: SharedPreferenceRepository = SharedPreferenceRepositoryImpl()
 ) {
-    suspend fun getMaterials(): List<Material> =
+    suspend fun getMaterials(activity: Activity): List<Material> =
         try {
-            val response = repository.getMaterials()
+            val token = sharedPreferenceRepository.getString(Constants.token, activity)?: ""
+            val response = repository.getMaterials(token)
             val materials = response.map { it.toMaterial() }
             materials
         } catch (e: Exception) {

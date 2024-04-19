@@ -75,7 +75,9 @@ fun TicketInformationLowerSection(
                                 openOrCloseBottomSheet = true,
                                 currentFeatures = template?.features ?: emptyList(),
                                 buttonName = template?.buttonName ?: "",
-                                featureId = template?.id ?: ""
+                                featureId = template?.id ?: "",
+                                isFeature = template?.isSpecialFeature ?: false,
+                                featureNm = template?.featureName ?: ""
                             )
                             ticketInformationViewModel.updateStatus(status = template?.status ?: "")
                         }
@@ -90,6 +92,8 @@ fun TicketInformationLowerSection(
 
         if (ticketInformationViewModel.isBottomSheetOpen) {
             TemplatesBottomSheet(
+                isSpecialFeature = ticketInformationViewModel.isSpecialFeature,
+                featureName = ticketInformationViewModel.featureName,
                 status = ticketInformationViewModel.selectedStatus,
                 sheetState = sheetState,
                 features = currentFeaturesList,

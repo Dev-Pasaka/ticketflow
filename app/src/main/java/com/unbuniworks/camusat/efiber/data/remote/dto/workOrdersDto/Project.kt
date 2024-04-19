@@ -11,5 +11,5 @@ data class Project(
     @SerialName("name")
     val name: String,
     @SerialName("type")
-    val type: List<TypeName>
+    val type: TypeName?
 )

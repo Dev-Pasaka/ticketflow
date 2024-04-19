@@ -1,4 +1,4 @@
-package com.unbuniworks.camusat.efiber.data.remote.dto.loginDto
+    package com.unbuniworks.camusat.efiber.data.remote.dto.loginDto
 
 
 import kotlinx.serialization.SerialName
@@ -14,11 +14,15 @@ data class LoginDto(
     val status: Boolean,
     @SerialName("message")
     val message:String,
+    @SerialName("passwordSet")
+    val passwordSet:String =  "none",
     @SerialName("user")
     val userDto: UserDto? = null
 )
 fun LoginDto.toUser():User{
     return User(
+        status = status,
+        passwordSet = passwordSet,
         email = userDto?.email ?: "",
         firstName = userDto?.firstname ?: "",
         surname = userDto?.surname ?:"",

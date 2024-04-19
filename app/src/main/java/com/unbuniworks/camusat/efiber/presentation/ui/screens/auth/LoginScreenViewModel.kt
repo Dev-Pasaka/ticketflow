@@ -15,16 +15,19 @@ import androidx.navigation.NavHostController
 import com.unbuniworks.camusat.efiber.common.Resource
 import com.unbuniworks.camusat.efiber.data.local.sharedPreference.SharedPreferenceRepository
 import com.unbuniworks.camusat.efiber.data.local.sharedPreference.SharedPreferenceRepositoryImpl
+import com.unbuniworks.camusat.efiber.data.remote.model.ResetPasswordCredentials
 import com.unbuniworks.camusat.efiber.data.remote.model.UserCredentials
 import com.unbuniworks.camusat.efiber.domain.usecase.LoginUseCase
+import com.unbuniworks.camusat.efiber.domain.usecase.ResetPasswordUseCase
 import com.unbuniworks.camusat.efiber.presentation.navigation.Screen
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 class LoginScreenViewModel(
     private val loginUseCase: LoginUseCase,
+    private val resetPasswordUseCase: ResetPasswordUseCase,
     val sharedPreferenceRepository: SharedPreferenceRepository = SharedPreferenceRepositoryImpl()
-
 ) : ViewModel() {
     var email by mutableStateOf("")
         private set
@@ -38,6 +41,11 @@ class LoginScreenViewModel(
 
     var loginState by mutableStateOf(LoginState())
         private set
+
+    var resetPasswordState by mutableStateOf(ResetPasswordState())
+        private set
+
+
 
 
     fun updateEmail(emailString: String) {
@@ -59,7 +67,7 @@ class LoginScreenViewModel(
     //UKQ1.230917.001
     //23021RAAEG_UKQ1.230917.001
     @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
-    fun login(navController:NavHostController, activity:Activity){
+    fun login(navController: NavHostController, activity: Activity) {
         val deviceId = "${Build.MODEL}_${Build.ID}"
         Log.e("DeviceId", deviceId)
         loginUseCase.login(
@@ -69,29 +77,52 @@ class LoginScreenViewModel(
                 deviceId = deviceId
             ),
             activity = activity
-        ).onEach {result ->
-            loginState = when(result){
-                is Resource.Success ->{
-                   Log.e("LoginStatus", "Message: ${result.message} Result:${result.data}")
-                    navController.navigate(route = Screen.SelectModule.route) {
-                        navController.popBackStack()
+        ).onEach { result ->
+            loginState = when (result) {
+                is Resource.Success -> {
+                    Log.e("LoginStatus", "Message: ${result.message} Result:${result.data}")
+                    if(result.data?.passwordSet != "none" && result.data?.status == true){
+                        navController.navigate(route = Screen.UpdatePassword.route) {
+                            navController.popBackStack()
+                        }
+                        LoginState(user = result.data, isSuccessful = true)
+
+                    }else{
+                        navController.navigate(route = Screen.SelectModule.route) {
+                            navController.popBackStack()
+                        }
+                        LoginState(user = result.data, isSuccessful = true)
                     }
-                    LoginState(user = result.data, isSuccessful = true)
 
                 }
 
-                is Resource.Error ->{
+                is Resource.Error -> {
                     Log.e("LoginStatus", "Message: ${result.message} Result:${result.data}")
-                    LoginState(isLoading = false,error = result.message)
+                    LoginState(isLoading = false, error = result.message)
                 }
 
-                is Resource.Loading ->{
+                is Resource.Loading -> {
                     Log.e("LoginStatus", "Message: ${result.message} Result:${result.data}")
-                    LoginState(isSuccessful = false,isLoading = true,)
+                    LoginState(isSuccessful = false, isLoading = true)
                 }
             }
 
         }.launchIn(viewModelScope)
+    }
+
+    fun resetPassword() {
+        viewModelScope.launch {
+            resetPasswordState = resetPasswordState.copy(isLoading = true,)
+            val result = resetPasswordUseCase.resetPassword(
+                ResetPasswordCredentials(
+                    email = emailReset,
+                )
+            )
+            resetPasswordState =
+                resetPasswordState.copy(isLoading = false, isSuccessful = result.status, message = result.message)
+
+        }
+
     }
 
 

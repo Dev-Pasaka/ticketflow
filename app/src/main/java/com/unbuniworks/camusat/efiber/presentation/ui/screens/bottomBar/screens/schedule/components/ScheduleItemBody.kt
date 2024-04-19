@@ -23,30 +23,13 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavHostController
 import com.unbuniworks.camusat.efiber.R
+import com.unbuniworks.camusat.efiber.common.Utils
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.bottomBar.screens.schedule.ScheduleScreenViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ScheduleItemBody(scheduleScreenViewModel: ScheduleScreenViewModel, navController:NavHostController) {
-    if (scheduleScreenViewModel.getScheduledWorkOrderState.isLoading){
-        Dialog(
-            onDismissRequest = { /*TODO*/ }
-        ) {
 
-            Surface(
-                color = Color.White,
-                shape = RoundedCornerShape(4.dp)
-            ) {
-                CircularProgressIndicator(
-                    color = colorResource(id = R.color.button_color),
-                    strokeWidth = 3.dp,
-                    strokeCap = StrokeCap.Butt,
-                    modifier = Modifier.padding(16.dp)
-                )
-            }
-
-        }
-    }
     if (scheduleScreenViewModel.getScheduledWorkOrderState.data.isEmpty()){
         Column(
             verticalArrangement = Arrangement.Center,
@@ -72,14 +55,44 @@ fun ScheduleItemBody(scheduleScreenViewModel: ScheduleScreenViewModel, navContro
         }
     }else {
 
-        LazyColumn {
-            items(scheduleScreenViewModel.getScheduledWorkOrderState.data.size) {
-                ScheduleItem(
-                    index = it,
-                    scheduleScreenViewModel = scheduleScreenViewModel,
-                    navController = navController
-                )
+        LazyColumn(
+            userScrollEnabled = true
+        ) {
+            // Sort the scheduled work orders by due date
+            val sortedWorkOrders = scheduleScreenViewModel.getScheduledWorkOrderState.data.sortedBy { it.dueDate }.reversed()
+
+            // Group the sorted work orders by date
+            val groupedByDate = sortedWorkOrders.groupBy { Utils.categorizeDate(it.dueDate) }
+
+            // Iterate over each date group
+            groupedByDate.forEach { (dateCategory, items) ->
+                // Display the date category
+                item {
+                    Text(
+                        text = dateCategory,
+                        fontSize = 12.sp,
+                        color = colorResource(id = R.color.button_color),
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                    )
+                }
+
+                // Display the ScheduleItems for this date
+                items.forEachIndexed { index, scheduleItem ->
+                    item {
+                        ScheduleItem(
+                            index = index,
+                            scheduleScreenViewModel = scheduleScreenViewModel,
+                            navController = navController,
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
+                }
+            }
+
+            item{
+                Spacer(modifier = Modifier.height(100.dp))
             }
         }
+
     }
 }

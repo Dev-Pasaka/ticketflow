@@ -1,7 +1,10 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.dynamicComponents
 
 import android.app.Activity
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -38,6 +41,10 @@ fun TicketInformationMiddleScreen(
     val context = LocalContext.current
     val activity = LocalContext.current as Activity
     var scrollingDown by remember { mutableStateOf(true) }
+
+    var phoneNumber by remember { mutableStateOf("") }
+
+    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { }
 
     Column(
         verticalArrangement = Arrangement.Center,
@@ -92,128 +99,48 @@ fun TicketInformationMiddleScreen(
                 .height(250.dp)
                 .verticalScroll(state = scrollState),
         ) {
-            Column {
 
-                Column(
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
-                        .fillMaxWidth(),
-                ) {
-                    Text(
-                        text = "Project",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 16.sp,
-                        color = colorResource(id = R.color.button_link_color),
-                    )
-                    Text(
-                        text = ticketInformationViewModel.workOrderDetailState.data?.name ?: "",
-                        fontSize = 14.sp,
-                        color = Color.DarkGray
-                    )
-                }
 
-                Column(
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
-                        .fillMaxWidth(),
-                ) {
-                    Text(
-                        text = "Type",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 16.sp,
-                        color = colorResource(id = R.color.button_link_color),
-                    )
-                    Text(
-                        text = ticketInformationViewModel.workOrderDetailState.data?.type ?: "",
-                        fontSize = 14.sp,
-                        color = Color.DarkGray
-                    )
-                }
-                Surface(
-                    color = colorResource(id = R.color.background),
-                    onClick = {
-                    }
-                ) {
-
-                    Column(
-                        modifier = Modifier
-                            .padding(horizontal = 16.dp, vertical = 8.dp)
-                            .fillMaxWidth(),
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(250.dp)
+            ){
+                items(ticketInformationViewModel.workOrderDetailState.data?.ticketDetails?.size ?: 0){
+                    val ticketInfo = ticketInformationViewModel.workOrderDetailState.data?.ticketDetails?.get(it)
+                    Surface(
+                       // color = if (it.div(2) == 0) Color.White else Color.LightGray,
+                        enabled = Regex("^\\+(?:[0-9] ?){6,14}[0-9]$").matches(ticketInfo?.value ?: "")
+                                ||Regex("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}").matches(ticketInfo?.key ?: ""),
+                        onClick = {
+                            if (Regex("^\\+(?:[0-9] ?){6,14}[0-9]$").matches(ticketInfo?.value ?: "")){
+                                ticketInformationViewModel.openPhoneApp(context, ticketInfo?.value ?: "" )
+                            }else if(Regex("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}").matches(ticketInfo?.key ?: "")){
+                                ticketInformationViewModel.openEmailApp(context = context, emailAddress = ticketInfo?.value ?: "")
+                            }
+                        }
                     ) {
-                        Text(
-                            text = "Address",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 16.sp,
-                            color = colorResource(id = R.color.button_link_color),
-                        )
-                        Text(
-                            text = ticketInformationViewModel.workOrderDetailState.data?.address ?: "",
-                            fontSize = 14.sp,
-                            color = Color.DarkGray,
-                        )
+                        Column(
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp, vertical = 8.dp)
+                                .fillMaxWidth(),
+                        ) {
+                            Text(
+                                text = ticketInfo?.key ?: "",
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 16.sp,
+                                color = colorResource(id = R.color.button_link_color),
+                            )
+                            Text(
+                                text = ticketInfo?.value ?: "",
+                                fontSize = 14.sp,
+                                color = if(
+                                    Regex("^\\+(?:[0-9] ?){6,14}[0-9]$").matches(ticketInfo?.value ?: "")
+                                    ||Regex("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}").matches(ticketInfo?.key ?: "")
+                                    ) colorResource(id = R.color.light_blue) else Color.DarkGray
+                            )
+                        }
                     }
-                }
-
-                Column(
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
-                        .fillMaxWidth(),
-                ) {
-                    Text(
-                        text = "Client",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 16.sp,
-                        color = colorResource(id = R.color.button_link_color),
-                    )
-                    Text(
-                        text = ticketInformationViewModel.workOrderDetailState.data?.client ?: "",
-                        fontSize = 14.sp,
-                        color = Color.DarkGray
-                    )
-                }
-
-                Surface(
-                    color = colorResource(id = R.color.background),
-                    onClick = {
-
-                    }
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .padding(horizontal = 16.dp, vertical = 8.dp)
-                            .fillMaxWidth(),
-                    ) {
-                        Text(
-                            text = "Contact",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 16.sp,
-                            color = colorResource(id = R.color.button_link_color),
-                        )
-                        Text(
-                            text = ticketInformationViewModel.workOrderDetailState.data?.contact ?: "",
-                            fontSize = 14.sp,
-                            color = Color.Blue,
-                            textDecoration = TextDecoration.Underline
-                        )
-                    }
-                }
-
-                Column(
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
-                        .fillMaxWidth(),
-                ) {
-                    Text(
-                        text = "Equipment",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 16.sp,
-                        color = colorResource(id = R.color.button_link_color),
-                    )
-                    Text(
-                        text = ticketInformationViewModel.workOrderDetailState.data?.equipment ?: "",
-                        fontSize = 14.sp,
-                        color = Color.DarkGray
-                    )
                 }
             }
 

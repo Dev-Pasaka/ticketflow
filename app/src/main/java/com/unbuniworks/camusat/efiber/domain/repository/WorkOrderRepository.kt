@@ -6,6 +6,6 @@ import com.unbuniworks.camusat.efiber.data.remote.dto.PostWorkOrderResponseDto
 import com.unbuniworks.camusat.efiber.data.remote.dto.workOrderDto.WorkOrderDto
 
 interface WorkOrderRepository {
-    suspend fun getWorkOrder(workOrderId:String):WorkOrderDto
-    suspend fun postWorkOrderTask(postWorkOrderTaskDto: PostWorkOrderTaskDto,activity: Activity): PostWorkOrderResponseDto
+    suspend fun getWorkOrder(workOrderId:String, token:String):WorkOrderDto
+    suspend fun postWorkOrderTask(postWorkOrderTaskDto: PostWorkOrderTaskDto,activity: Activity, token: String): PostWorkOrderResponseDto
 }

@@ -2,9 +2,11 @@ package com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.ContentValues
 import android.content.Context
 import android.content.Context.LOCATION_SERVICE
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.location.Location
@@ -13,6 +15,7 @@ import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.ComponentActivity
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -50,7 +53,8 @@ import java.util.TimeZone
 class TicketInformationViewModel(
     private val workOrderDetailsUseCase: WorkOrderDetailsUseCase = WorkOrderDetailsUseCase(),
     private val postWorkOrderTaskUseCase: PostWorkOrderTaskUseCase = PostWorkOrderTaskUseCase(),
-    private val orderId: String
+    private val orderId: String,
+    private val activity: Activity
 
 ) : ViewModel() {
 
@@ -72,6 +76,11 @@ class TicketInformationViewModel(
     private var _currentFeaturesList: MutableStateFlow<List<Feature>> =
         MutableStateFlow(emptyList())
     val currentFeaturesList: StateFlow<List<Feature>> = _currentFeaturesList
+
+    var isSpecialFeature by mutableStateOf(false)
+        private set
+    var featureName by mutableStateOf("")
+        private set
 
 
 
@@ -125,7 +134,9 @@ class TicketInformationViewModel(
         openOrCloseBottomSheet: Boolean,
         currentFeatures: List<Feature>,
         featureId: String,
-        buttonName: String
+        buttonName: String,
+        isFeature:Boolean,
+        featureNm:String
     ) {
         isBottomSheetOpen = openOrCloseBottomSheet
         _currentFeaturesList.value = emptyList()
@@ -133,6 +144,9 @@ class TicketInformationViewModel(
         originalCurrentFeatureList.addAll(currentFeatures)
         currentFeatureId = featureId
         currentButtonName = buttonName
+        isSpecialFeature = isFeature
+        featureName = featureNm
+
     }
 
     fun openOrCloseBottomSheet() {
@@ -303,7 +317,7 @@ class TicketInformationViewModel(
 
 
     fun getWorkOrder(orderId: String) {
-        workOrderDetailsUseCase.getWorkOrderDetails(workOrderId = orderId).onEach { result ->
+        workOrderDetailsUseCase.getWorkOrderDetails(workOrderId = orderId, activity = activity).onEach { result ->
             workOrderDetailState = when (result) {
                 is Resource.Loading -> {
                     WorkOrderDetailState(isLoading = true)
@@ -399,6 +413,19 @@ class TicketInformationViewModel(
         }
     }
 
+    fun openPhoneApp(context: Context, phoneNumber: String) {
+        val intent = Intent(Intent.ACTION_DIAL).apply {
+            data = android.net.Uri.parse("tel:$phoneNumber")
+        }
+        context.startActivity(intent)
+    }
+
+    fun openEmailApp(context: Context, emailAddress: String) {
+        val intent = Intent(Intent.ACTION_SENDTO).apply {
+            data = android.net.Uri.parse("mailto:$emailAddress")
+        }
+        context.startActivity(Intent.createChooser(intent, "Send email"))
+    }
 
 
 
