@@ -1,6 +1,7 @@
 package com.unbuniworks.camusat.efiber.presentation.navigation
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -43,6 +44,7 @@ import com.unbuniworks.camusat.efiber.presentation.ui.screens.splashScreen.Splas
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.TicketInformationScreen
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.TicketInformationViewModel
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.dynamicComponents.Maps
+import com.unbuniworks.camusat.efiber.services.foregroundServices.NotificationService
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -80,7 +82,6 @@ fun NavGraph(navController: NavHostController) {
 
                 LoginsScreen(loginScreenViewModel = loginScreenViewModel) {
                     loginScreenViewModel.login(navController, activity)
-
                     }
                 }
 

@@ -22,6 +22,8 @@ data class Material(
     val materialName: String,
     @SerialName("materialbomId")
     val materialbomId: String?,
+    @SerialName("no")
+    val no: Int,
     @SerialName("quantityAdded")
     val quantityAdded: String,
     @SerialName("quantityRemaining")

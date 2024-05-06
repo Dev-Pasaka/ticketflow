@@ -1,42 +1,36 @@
 package com.unbuniworks.camusat.efiber.data.remote.dto.materialDto
 
 
+import com.unbuniworks.camusat.efiber.domain.model.FilterMaterials
+import com.unbuniworks.camusat.efiber.domain.model.Material
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class MaterialsDtoItem(
-    @SerialName("client")
-    val client: Client,
-    @SerialName("clientId")
-    val clientId: String,
-    @SerialName("createdAt")
-    val createdAt: String,
-    @SerialName("deletedAt")
-    val deletedAt: String?,
-    @SerialName("id")
-    val id: String,
-    @SerialName("material")
-    val material: Material,
-    @SerialName("materialId")
-    val materialId: String,
-    @SerialName("quantityAdded")
-    val quantityAdded: String,
-    @SerialName("quantityRemaining")
-    val quantityRemaining: String,
-    @SerialName("quantityUsed")
-    val quantityUsed: String,
+    @SerialName("data")
+    val `data`: List<Data>,
+    @SerialName("message")
+    val message: String,
     @SerialName("status")
-    val status: String,
-    @SerialName("type")
-    val type: String,
-    @SerialName("updatedAt")
-    val updatedAt: String
+    val status: String
 )
 
-fun MaterialsDtoItem.toMaterial():com.unbuniworks.camusat.efiber.domain.model.Material{
-    return com.unbuniworks.camusat.efiber.domain.model.Material(
-        name  = material.materialName,
-        qty = quantityRemaining
-    )
+fun MaterialsDtoItem.toMaterial():List<Material>{
+    return data.map { material ->
+        Material(
+            dispatchProjectId  = material.material.dispatchProjectId,
+            name = material.material.materialName,
+            qty = material.material.quantityRemaining
+        )
+    }
+}
+
+fun MaterialsDtoItem.toFilterMaterials():List<FilterMaterials>{
+    return data.map { material ->
+        FilterMaterials(
+            name = material.dispatchProject.first().name,
+            id = material.dispatchProject.first().id
+        )
+    }
 }

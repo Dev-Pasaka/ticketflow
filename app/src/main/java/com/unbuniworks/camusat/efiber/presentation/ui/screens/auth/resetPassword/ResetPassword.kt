@@ -112,12 +112,21 @@ fun ResetPassword(
 
 
 
+
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxWidth()
                     .offset(x = offsetX.dp)
             ) {
+                Image(
+                    painter = painterResource(id = R.drawable.camusat_logo_product_removebg_preview),
+                    contentDescription = "Logo product",
+                    modifier = Modifier
+                        .width(200.dp)
+                        .height(100.dp)
+                )
+                Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     text = "Update Password",
                     color = Color.DarkGray,
@@ -212,7 +221,7 @@ fun ResetPassword(
 
                             ) {
                             Text(
-                                text = "Update Password",
+                                text = "Update",
                             )
                         }
                     }
@@ -220,7 +229,7 @@ fun ResetPassword(
 
 
             }
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(64.dp))
 
         }
 

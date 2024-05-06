@@ -1,6 +1,7 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.screens.splashScreen
 
 import android.app.Activity
+import android.content.Intent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -32,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.unbuniworks.camusat.efiber.R
+import com.unbuniworks.camusat.efiber.services.foregroundServices.NotificationService
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -58,9 +60,13 @@ fun SplashScreen(navController: NavHostController) {
         startAnimation = true
         delay(3000)
         if (splashScreenViewModel.isTokenValid(activity = activity)){
+
             navController.navigate("bottom_navigation")
         }else{
             navController.navigate("auth"){
+                Intent(activity, NotificationService::class.java).also {
+                    it.action = NotificationService.Actions.START.toString()
+                }
                 navController.popBackStack()
             }
         }

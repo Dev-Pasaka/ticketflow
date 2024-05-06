@@ -17,7 +17,7 @@ data class ActivityLog(
     @SerialName("statusUpdate")
     val statusUpdate: String,
     @SerialName("team")
-    val team: TeamX,
+    val team: TeamX?,
     @SerialName("type")
     val type: String,
     @SerialName("User")

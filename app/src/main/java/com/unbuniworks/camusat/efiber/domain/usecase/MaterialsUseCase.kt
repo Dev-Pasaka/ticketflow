@@ -33,7 +33,7 @@ class MaterialsUseCase(
         try {
             val token = sharedPreferenceRepository.getString(Constants.token, activity)?: ""
             val response = repository.getMaterials(token)
-            val materials = response.map { it.toMaterial() }
+            val materials = response.toMaterial()
             materials
         } catch (e: Exception) {
             e.localizedMessage?.let { Log.e("ClientMaterials", it) }

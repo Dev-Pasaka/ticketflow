@@ -50,7 +50,10 @@ object Utils {
         val inputDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
 
         // Set the time zone to UTC
-        inputDateFormat.timeZone = TimeZone.getTimeZone("UTC")
+        val localTimeZone: TimeZone = TimeZone.getDefault()
+        val localTimeZoneAbbreviation: String = localTimeZone.getDisplayName(false, TimeZone.SHORT)
+
+        inputDateFormat.timeZone = TimeZone.getTimeZone(localTimeZoneAbbreviation)
 
         // Parse the string to obtain a Date object
         val date: Date = inputDateFormat.parse(inputDateString) ?: Date()
@@ -103,44 +106,36 @@ object Utils {
     }
 
 
-    fun formatIsoDateTime(dateTimeString: String): String {
-        // Split the date-time string into its components
-        val parts = dateTimeString.split("[-T:.Z]".toRegex())
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun formatTimestampInLocalTime(timestamp: String): String {
+        // Parse the timestamp into Instant
+        val instant = Instant.parse(timestamp)
 
-        // Extract the components
-        val year = parts[0].toInt()
-        val month = parts[1].toInt()
-        val day = parts[2].toInt()
-        val hour = parts[3].toInt()
-        val minute = parts[4].toInt()
-        val second = parts[5].toInt()
+        // Get the device's default time zone
+        val defaultZoneId = ZoneId.systemDefault()
 
-        // Convert the hour to 12-hour clock system and determine AM/PM
-        val formattedHour = if (hour == 0) 12 else if (hour <= 12) hour else hour - 12
-        val amPm = if (hour < 12) "AM" else "PM"
+        // Convert Instant to ZonedDateTime in the device's default time zone
+        val localDateTime = ZonedDateTime.ofInstant(instant, defaultZoneId)
 
-        // Format the date and time components into a user-readable string
-        return String.format("%04d-%02d-%02d  %02d:%02d $amPm", year, month, day, formattedHour, minute)
+        // Format the ZonedDateTime object into a user-readable string
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+        return localDateTime.format(formatter)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun formatIsoTime(dateTimeString: String): String {
-        // Split the date-time string into its components
-        val parts = dateTimeString.split("[-T:.Z]".toRegex())
+        // Parse the timestamp into Instant
+        val instant = Instant.parse(dateTimeString)
 
-        // Extract the components
-        val year = parts[0].toInt()
-        val month = parts[1].toInt()
-        val day = parts[2].toInt()
-        val hour = parts[3].toInt()
-        val minute = parts[4].toInt()
-        val second = parts[5].toInt()
+        // Get the device's default time zone
+        val defaultZoneId = ZoneId.systemDefault()
 
-        // Convert the hour to 12-hour clock system and determine AM/PM
-        val formattedHour = if (hour == 0) 12 else if (hour <= 12) hour else hour - 12
-        val amPm = if (hour < 12) "AM" else "PM"
+        // Convert Instant to ZonedDateTime in the device's default time zone
+        val localDateTime = ZonedDateTime.ofInstant(instant, defaultZoneId)
 
-        // Format the date and time components into a user-readable string
-        return String.format("%02d:%02d $amPm", formattedHour, minute)
+        // Format the ZonedDateTime object into a user-readable string
+        val formatter = DateTimeFormatter.ofPattern("HH:mm")
+        return localDateTime.format(formatter)
     }
 
     fun extractCoordinates(pairString: String): Pair<Double, Double>? {

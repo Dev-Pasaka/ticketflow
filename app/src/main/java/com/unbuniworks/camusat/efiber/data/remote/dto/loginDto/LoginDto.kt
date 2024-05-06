@@ -14,8 +14,8 @@ data class LoginDto(
     val status: Boolean,
     @SerialName("message")
     val message:String,
-    @SerialName("passwordSet")
-    val passwordSet:String =  "none",
+    @SerialName("passwordset")
+    val passwordSet:String = "none",
     @SerialName("user")
     val userDto: UserDto? = null
 )

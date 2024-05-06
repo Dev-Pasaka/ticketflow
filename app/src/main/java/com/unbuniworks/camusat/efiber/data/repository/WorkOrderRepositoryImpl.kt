@@ -14,12 +14,8 @@ import com.unbuniworks.camusat.efiber.data.remote.httpClient.HttpClient
 import com.unbuniworks.camusat.efiber.domain.repository.WorkOrderRepository
 import io.ktor.client.call.body
 import io.ktor.client.request.*
-import io.ktor.client.request.forms.formData
-import io.ktor.client.request.forms.submitFormWithBinaryData
-import io.ktor.http.ContentType
-import io.ktor.http.Headers
-import io.ktor.http.HttpHeaders
-import io.ktor.http.contentType
+import io.ktor.client.request.forms.*
+import io.ktor.http.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.ByteArrayOutputStream
@@ -42,39 +38,44 @@ class WorkOrderRepositoryImpl(
     ): PostWorkOrderResponseDto {
         val jsonFeatures = Json.encodeToString<List<Feature>>(postWorkOrderTaskDto.features)
 
+        Log.e("Token", token)
         Log.e("feature", jsonFeatures)
-        val result = api.client.submitFormWithBinaryData(
-            url = "${api.baseUrl}workorders/submitTask",
-            formData = formData {
-                append("workOrderId", postWorkOrderTaskDto.workOrderId)
-                append("taskId", postWorkOrderTaskDto.taskId)
-                append("featureName", postWorkOrderTaskDto.featureName ?: "")
-                append("isSpecialFeature", postWorkOrderTaskDto.isSpecialFeature)
-                postWorkOrderTaskDto.features.filter { it.inputType == "Image" }.forEach {
 
-                    val inputStream = it.value?.toUri()
-                        ?.let { it1 -> activity.contentResolver.openInputStream(it1) }
+        val result = api.client.post(urlString = "${api.baseUrl}workorders/submitTask"){
+            header(HttpHeaders.Authorization, "Bearer $token")
+            val body =  MultiPartFormDataContent(
+                formData {
+                    append("workOrderId", postWorkOrderTaskDto.workOrderId)
+                    append("taskId", postWorkOrderTaskDto.taskId)
+                    append("featureName", postWorkOrderTaskDto.featureName ?: "")
+                    append("isSpecialFeature", postWorkOrderTaskDto.isSpecialFeature)
+                    postWorkOrderTaskDto.features.filter { it.inputType == "Image" }.forEach {
 
-                    if (inputStream != null) {
-                        val bitmap = BitmapFactory.decodeStream(inputStream)
-                        val stream = ByteArrayOutputStream()
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-                        val bitmapByteArray = stream.toByteArray()
+                        val inputStream = it.value?.toUri()
+                            ?.let { it1 -> activity.contentResolver.openInputStream(it1) }
+
+                        if (inputStream != null) {
+                            val bitmap = BitmapFactory.decodeStream(inputStream)
+                            val stream = ByteArrayOutputStream()
+                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                            val bitmapByteArray = stream.toByteArray()
 
 
-                        append(it.name, bitmapByteArray, Headers.build {
-                            append(HttpHeaders.ContentType, "image/png")
-                            append(HttpHeaders.ContentDisposition, "filename=\"${it.name}.png\"")
-                        })
+                            append(it.name, bitmapByteArray, Headers.build {
+                                append(HttpHeaders.ContentType, "image/png")
+                                append(HttpHeaders.ContentDisposition, "filename=\"${it.name}.png\"")
+                            })
+                        }
                     }
+                    append("features", jsonFeatures)
                 }
-                append("features", jsonFeatures)
-            }
-        ).body<PostWorkOrderResponseDto>()
+            )
+            setBody(body)
+
+
+        }.body<PostWorkOrderResponseDto>()
         Log.e("Test", result.toString())
         return result
-
-
     }
 
 }

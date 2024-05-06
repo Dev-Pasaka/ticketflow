@@ -1,12 +1,11 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.screens.bottomBar.screens.material.components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -15,6 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.unbuniworks.camusat.efiber.R
@@ -54,6 +55,58 @@ fun MaterialsScreenUpperSection(materialScreenViewModel: MaterialScreenViewModel
             }
         }
 
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp)
+
+        ) {
+
+            OutlinedTextField(
+                readOnly = true,
+                placeholder = {
+                    Text(
+                        text = "Select Project",
+                        color = colorResource(id = R.color.button_color),
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 12.sp
+                    )
+                },
+                value = materialScreenViewModel.selectedMaterial,
+                onValueChange = {},
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    focusedTextColor = Color.DarkGray,
+                    unfocusedTextColor = Color.DarkGray,
+                    cursorColor = Color.DarkGray,
+                    focusedIndicatorColor = colorResource(id = R.color.button_color),
+                ),
+                trailingIcon = {
+                    IconButton(
+                        onClick = {
+                            materialScreenViewModel.openOrCloseMaterialsDropDown()
+                        },
+                        colors = IconButtonDefaults.iconButtonColors(
+                            contentColor = colorResource(id = R.color.button_color),
+
+                            )
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowDropDown,
+                            contentDescription = "Select Project",
+                            modifier = Modifier.size(30.dp)
+                        )
+                    }
+                },
+                modifier = Modifier
+                    .fillMaxWidth(),
+            )
+
+
+        }
+
+
         Surface(
             color = colorResource(id = R.color.light_gray),
 
@@ -83,6 +136,19 @@ fun MaterialsScreenUpperSection(materialScreenViewModel: MaterialScreenViewModel
             }
 
         }
+    }
+
+    if (materialScreenViewModel.isFilterMaterialsDropDownOpen){
+        FilterMaterialsDropDown(
+            materialScreenViewModel = materialScreenViewModel,
+            isExpanded = true ,
+            materialFilter = materialScreenViewModel.filterMaterials,
+            actionOnDismiss = {
+                materialScreenViewModel.openOrCloseMaterialsDropDown()
+            }
+        )
+
+
     }
 
 }

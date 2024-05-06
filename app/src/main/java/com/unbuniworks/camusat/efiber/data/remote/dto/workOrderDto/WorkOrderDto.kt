@@ -27,7 +27,8 @@ data class WorkOrderDto(
     val scheduledStartAt: String?,
     val status: String,
     val statusColour: String,
-    val team: Team?,
+    @SerialName("team")
+    val team: Team? = null,
     val teamId: String?,
     val updatedAt: String,
     val workOrderTasks: List<WorkOrderTask>,

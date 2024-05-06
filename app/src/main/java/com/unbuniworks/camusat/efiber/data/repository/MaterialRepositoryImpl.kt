@@ -14,10 +14,10 @@ import io.ktor.http.*
 class MaterialRepositoryImpl(
     private val api:HttpClient = HttpClient
 ):MaterialsRepository {
-    override suspend fun getMaterials(token:String): List<MaterialsDtoItem> {
-        return api.client.get("${api.baseUrl}clientMaterial"){
+    override suspend fun getMaterials(token:String): MaterialsDtoItem {
+        return api.client.get("${api.baseUrl}teamMaterial/team"){
             header(HttpHeaders.Authorization, "Bearer $token")
-        }.body<List<MaterialsDtoItem>>()
+        }.body<MaterialsDtoItem>()
     }
 }
 

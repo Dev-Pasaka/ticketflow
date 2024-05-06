@@ -79,7 +79,7 @@ fun CustomImageUpload(
         ) {
 
             Text(
-                text = "Select/Take photo",
+                text = feature.name,
                 fontSize = 14.sp
             )
             Spacer(modifier = Modifier.width(5.dp))

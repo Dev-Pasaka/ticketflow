@@ -3,6 +3,7 @@ package com.unbuniworks.camusat.efiber.presentation.ui.screens.auth.components
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
@@ -54,10 +55,13 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.ServiceCompat
+import androidx.core.content.ContextCompat
 import com.unbuniworks.camusat.efiber.R
 import com.unbuniworks.camusat.efiber.common.Constants
 import com.unbuniworks.camusat.efiber.presentation.ui.commonComponents.CustomCircularProgressBar
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.auth.LoginScreenViewModel
+import com.unbuniworks.camusat.efiber.services.foregroundServices.NotificationService
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -98,6 +102,8 @@ fun Login(loginScreenViewModel: LoginScreenViewModel, actionNavigateToSelectModu
     var startAnimation by remember {
         mutableStateOf(false)
     }
+
+    val context = LocalContext.current
 
     var isPasswordVisible by rememberSaveable {
         mutableStateOf(false)
@@ -143,6 +149,7 @@ fun Login(loginScreenViewModel: LoginScreenViewModel, actionNavigateToSelectModu
         )
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
+            singleLine = true,
             placeholder = {
                 Text(
                     text = "Email",
@@ -175,6 +182,7 @@ fun Login(loginScreenViewModel: LoginScreenViewModel, actionNavigateToSelectModu
 
 
         OutlinedTextField(
+            singleLine = true,
             placeholder = {
                 Text(
                     text = "Password",
@@ -261,14 +269,19 @@ fun Login(loginScreenViewModel: LoginScreenViewModel, actionNavigateToSelectModu
                 color = colorResource(id = R.color.button_color)
             )
         }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+
+
+
+
     }
 
 }
 
 @Composable
 fun ForgotPassword(loginScreenViewModel: LoginScreenViewModel) {
-
-
 
 
     val scope = rememberCoroutineScope()
@@ -301,6 +314,7 @@ fun ForgotPassword(loginScreenViewModel: LoginScreenViewModel) {
         )
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
+            singleLine = true,
             placeholder = {
                 Text(
                     text = "Enter Email",

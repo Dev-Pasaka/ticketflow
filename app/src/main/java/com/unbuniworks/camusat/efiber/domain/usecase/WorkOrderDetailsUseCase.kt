@@ -41,3 +41,10 @@ class WorkOrderDetailsUseCase(
     }
 }
 
+suspend fun main(){
+    val token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmYmYwZmY1Yi1kNzI4LTQwZmItOWI0Yy00YzYzZWYwZDkzZmMiLCJlbWFpbCI6ImRldi5wYXNha2FAZ21haWwuY29tIiwiaWF0IjoxNzE1MDE1NjM5LCJleHAiOjE3MTUwMTg2Mzl9.p-GdmCVOEGVnnnXpeR5JXRYiUyK72njxSj6u-jCvhcg"
+    val workOrderId = "25521f5b-6a62-4158-886c-9e9534c94b99"
+    println(
+        WorkOrderRepositoryImpl().getWorkOrder(workOrderId = workOrderId, token = token).toWorkOrderDetails()
+    )
+}

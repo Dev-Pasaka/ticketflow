@@ -5,5 +5,5 @@ import com.unbuniworks.camusat.efiber.data.remote.dto.materialDto.MaterialsDtoIt
 
 interface MaterialsRepository {
 
-    suspend fun getMaterials(token:String):List<MaterialsDtoItem>
+    suspend fun getMaterials(token:String):MaterialsDtoItem
 }

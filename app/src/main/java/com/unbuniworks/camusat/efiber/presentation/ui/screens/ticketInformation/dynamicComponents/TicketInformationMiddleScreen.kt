@@ -1,8 +1,10 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.dynamicComponents
 
 import android.app.Activity
+import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -31,6 +33,7 @@ import com.unbuniworks.camusat.efiber.common.Utils
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.TicketInformationEvents
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.TicketInformationViewModel
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TicketInformationMiddleScreen(
     ticketInformationViewModel: TicketInformationViewModel,
@@ -56,7 +59,7 @@ fun TicketInformationMiddleScreen(
 
         if (ticketInformationViewModel.workOrderDetailState.data?.dueDate != null){
             Text(
-                text = "Scheduled for ${Utils.formatIsoDateTime(dateTimeString = ticketInformationViewModel.workOrderDetailState.data?.dueDate ?: "")}",
+                text = "Scheduled for ${Utils.formatTimestampInLocalTime(timestamp = ticketInformationViewModel.workOrderDetailState.data?.dueDate ?: "")}",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
                 color = colorResource(id = R.color.button_color),
@@ -100,7 +103,6 @@ fun TicketInformationMiddleScreen(
                 .verticalScroll(state = scrollState),
         ) {
 
-
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -109,11 +111,12 @@ fun TicketInformationMiddleScreen(
                 items(ticketInformationViewModel.workOrderDetailState.data?.ticketDetails?.size ?: 0){
                     val ticketInfo = ticketInformationViewModel.workOrderDetailState.data?.ticketDetails?.get(it)
                     Surface(
-                       // color = if (it.div(2) == 0) Color.White else Color.LightGray,
-                        enabled = Regex("^\\+(?:[0-9] ?){6,14}[0-9]$").matches(ticketInfo?.value ?: "")
+                        color = Color.White,
+                        // color = if (it.div(2) == 0) Color.White else Color.LightGray,
+                        enabled = Regex("^(\\+?[1-9]\\d{1,14}|0[1-9]\\d{8})$").matches(ticketInfo?.value ?: "")
                                 ||Regex("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}").matches(ticketInfo?.key ?: ""),
                         onClick = {
-                            if (Regex("^\\+(?:[0-9] ?){6,14}[0-9]$").matches(ticketInfo?.value ?: "")){
+                            if (Regex("^(\\+?[1-9]\\d{1,14}|0[1-9]\\d{8})$").matches(ticketInfo?.value ?: "")){
                                 ticketInformationViewModel.openPhoneApp(context, ticketInfo?.value ?: "" )
                             }else if(Regex("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}").matches(ticketInfo?.key ?: "")){
                                 ticketInformationViewModel.openEmailApp(context = context, emailAddress = ticketInfo?.value ?: "")
@@ -135,7 +138,7 @@ fun TicketInformationMiddleScreen(
                                 text = ticketInfo?.value ?: "",
                                 fontSize = 14.sp,
                                 color = if(
-                                    Regex("^\\+(?:[0-9] ?){6,14}[0-9]$").matches(ticketInfo?.value ?: "")
+                                    Regex("^(\\+?[1-9]\\d{1,14}|0[1-9]\\d{8})$").matches(ticketInfo?.value ?: "")
                                     ||Regex("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}").matches(ticketInfo?.key ?: "")
                                     ) colorResource(id = R.color.light_blue) else Color.DarkGray
                             )
