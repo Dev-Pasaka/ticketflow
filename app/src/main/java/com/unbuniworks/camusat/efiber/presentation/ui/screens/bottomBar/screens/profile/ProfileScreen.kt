@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
 import com.unbuniworks.camusat.efiber.R
@@ -100,7 +101,7 @@ fun ProfileScreen(navController: NavHostController, profileScreenViewModel: Prof
                 ) {
 
                     Text(
-                        text = "Safety Passport",
+                        text = stringResource(id = R.string.safety_passport),
                         fontSize = 14.sp,
                         color = Color.Gray
                     )

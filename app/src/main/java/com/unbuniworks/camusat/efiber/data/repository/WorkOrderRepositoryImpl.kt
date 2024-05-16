@@ -38,6 +38,7 @@ class WorkOrderRepositoryImpl(
     ): PostWorkOrderResponseDto {
         val jsonFeatures = Json.encodeToString<List<Feature>>(postWorkOrderTaskDto.features)
 
+        Log.e("statusColor", postWorkOrderTaskDto.toString())
         Log.e("Token", token)
         Log.e("feature", jsonFeatures)
 
@@ -45,6 +46,7 @@ class WorkOrderRepositoryImpl(
             header(HttpHeaders.Authorization, "Bearer $token")
             val body =  MultiPartFormDataContent(
                 formData {
+                    append("statusColor", postWorkOrderTaskDto.statusColor ?: "")
                     append("workOrderId", postWorkOrderTaskDto.workOrderId)
                     append("taskId", postWorkOrderTaskDto.taskId)
                     append("featureName", postWorkOrderTaskDto.featureName ?: "")
@@ -74,6 +76,7 @@ class WorkOrderRepositoryImpl(
 
 
         }.body<PostWorkOrderResponseDto>()
+        Log.e("statusColor", postWorkOrderTaskDto.toString())
         Log.e("Test", result.toString())
         return result
     }

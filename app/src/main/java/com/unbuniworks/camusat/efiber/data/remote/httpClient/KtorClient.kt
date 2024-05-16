@@ -28,6 +28,7 @@ object HttpClient {
             json(Json {
                 prettyPrint = true
                 isLenient = true
+                encodeDefaults = false
                 ignoreUnknownKeys = true // Ignore unknown keys in JSON
             })
         }

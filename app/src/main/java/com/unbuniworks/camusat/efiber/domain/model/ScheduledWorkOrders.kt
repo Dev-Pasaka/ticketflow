@@ -4,5 +4,5 @@ data class ScheduledWorkOrders(
     val id:String,
     val ticketId:String,
     val dueDate:String,
-    val name:String
+
 )

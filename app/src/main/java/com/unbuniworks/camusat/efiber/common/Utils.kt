@@ -108,18 +108,15 @@ object Utils {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun formatTimestampInLocalTime(timestamp: String): String {
-        // Parse the timestamp into Instant
-        val instant = Instant.parse(timestamp)
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+        inputFormat.timeZone = TimeZone.getTimeZone("UTC")
 
-        // Get the device's default time zone
-        val defaultZoneId = ZoneId.systemDefault()
+        val outputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+        outputFormat.timeZone = TimeZone.getDefault() // Using the default local time zone
 
-        // Convert Instant to ZonedDateTime in the device's default time zone
-        val localDateTime = ZonedDateTime.ofInstant(instant, defaultZoneId)
+        val date: Date = inputFormat.parse(timestamp)
 
-        // Format the ZonedDateTime object into a user-readable string
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-        return localDateTime.format(formatter)
+        return outputFormat.format(date)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

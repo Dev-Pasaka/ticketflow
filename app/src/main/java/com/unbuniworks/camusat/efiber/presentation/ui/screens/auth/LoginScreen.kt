@@ -22,9 +22,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.unbuniworks.camusat.efiber.R
+import com.unbuniworks.camusat.efiber.common.LanguageManager
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.auth.components.LoginScreenLowerSection
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.auth.components.LoginScreenMiddleSection
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.auth.components.LoginScreenUpperSection
+import java.util.*
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -34,6 +36,7 @@ fun LoginsScreen(
     actionNavigateToSelectModule:() -> Unit
 ){
     val context = LocalContext.current
+
     var isSnackBarOpen by remember {
         mutableStateOf(true)
     }

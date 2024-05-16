@@ -18,6 +18,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.unbuniworks.camusat.efiber.R
@@ -71,13 +72,15 @@ fun TicketInformationLowerSection(
                             ticketInformationViewModel.event(
                                 TicketInformationEvents.SelectTemplate(template?.name ?: "")
                             )
+                            template?.statusColor
                             ticketInformationViewModel.updateCurrentTemplates(
                                 openOrCloseBottomSheet = true,
                                 currentFeatures = template?.features ?: emptyList(),
                                 buttonName = template?.buttonName ?: "",
                                 featureId = template?.id ?: "",
                                 isFeature = template?.isSpecialFeature ?: false,
-                                featureNm = template?.featureName ?: ""
+                                featureNm = template?.featureName ?: "",
+                                statusColor = template?.statusColor ?: ""
                             )
                             ticketInformationViewModel.updateStatus(status = template?.status ?: "")
                         }
@@ -111,8 +114,8 @@ fun TicketInformationLowerSection(
         if (ticketInformationViewModel.iscancelAlertDialogOpen) {
             ExitDialogBoxNotification(
                 icon = Icons.Default.Cancel,
-                dialogTitle = "Are you sure you want to exit?",
-                dialogText = "If you cancel before submitting changes will be lost.",
+                dialogTitle = stringResource(id = R.string.exit_ticket_template_dialog_heading),
+                dialogText = stringResource(id = R.string.exit_ticket_template_dialog_message),
                 onDismissRequest = { ticketInformationViewModel.openOrCloseCancelAlertDialog() },
                 onConfirmation = {
                     ticketInformationViewModel.openOrCloseCancelAlertDialog()

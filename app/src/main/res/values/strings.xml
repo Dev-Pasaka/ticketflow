@@ -1,3 +1,69 @@
 <resources>
     <string name="app_name">e.fiber</string>
+
+    //Auth
+    <string name="login">Login</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="forgot_password_lable">Forgot Password</string>
+    <string name="reset">Reset</string>
+    <string name="back_to_login">Back to login</string>
+    <string name="user_email">Email</string>
+    <string name="user_password">Password</string>
+    <string name="update_password_lable">Update Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_new_password">Confirm Password</string>
+    <string name="update">Update</string>
+
+    //Select Module
+    <string name="select_module">Select Module</string>
+    <string name="dispatch_module">Dispatch</string>
+
+    //Tickets screen bottom navigation
+    <string name="tickets_lable">Tickets</string>
+    <string name="work_orders_lable">Work Orders</string>
+
+    //Schedule word orders screen bottom navigation
+    <string name="scheduled_work_orders_lable">Scheduled Work orders</string>
+    <string name="search_scheduled_work_orders">Search</string>
+
+    //Materials screen bottom navigation
+    <string name="materials_lable">Materials</string>
+    <string name="select_project">Select Project</string>
+    <string name="item_number">No. Item</string>
+    <string name="available_quantity">Available Qty</string>
+
+    //More screen bottom navigation
+    <string name="more_applications_lable">More Applications</string>
+    <string name="user_manual">User Manual</string>
+
+    //Notification screen
+    <string name="notifications_lable">Notifications</string>
+    <string name="today_txt">Today</string>
+    <string name="yesterday_txt">Yesterday</string>
+    <string name="clear_notifications">Clear Notifications</string>
+
+    //Profile screen
+    <string name="profile_lable">Notifications</string>
+    <string name="user_id">User Id</string>
+    <string name="profile_name">Name</string>
+    <string name="position">Position</string>
+    <string name="staff_id_no">Staff ID No.</string>
+    <string name="dispatch_team">Dispatch Team</string>
+    <string name="build_no">Build No.</string>
+    <string name="safety_passport">Safety Passport</string>
+    <string name="profile_screen">Profile</string>
+    <string name="logout_screen">Logout</string>
+
+    //Ticket information
+    <string name="ticket_number">Ticket No.</string>
+    <string name="scheduled_for">Scheduled for</string>
+    <string name="information">Information</string>
+    <string name="exit_ticket_template_dialog_heading">Are you sure you want to exit?</string>
+    <string name="exit_ticket_template_dialog_message">If you cancel before submitting changes will be lost.</string>
+    <string name="exit_ticket_template_dialog_dismiss">Dismiss</string>
+    <string name="exit_ticket_template_dialog_confirm">Confirm</string>
+
+
+
+
 </resources>

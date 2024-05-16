@@ -8,6 +8,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class PostWorkOrderTaskDto(
+    val statusColor:String?,
     val isSpecialFeature:Boolean,
     val featureName:String?,
     val workOrderId: String,

@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.unbuniworks.camusat.efiber.R
@@ -45,7 +46,7 @@ fun ModuleItem(
 
         ) {
             Text(
-                text = item,
+                text = stringResource(id = R.string.dispatch_module),
                 fontWeight = if (selectModuleViewModel.selectedModule == item)
                     FontWeight.Bold
                 else FontWeight.Normal,

@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -22,7 +23,7 @@ fun NotificationsBodySections(notificationsViewModel: NotificationsViewModel) {
             Spacer(modifier = Modifier.height(5.dp))
             if (it == 0){
                 Text(
-                    text = "Today",
+                    text = stringResource(id = R.string.today_txt),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     color = colorResource(id = R.color.button_link_color),
@@ -32,7 +33,7 @@ fun NotificationsBodySections(notificationsViewModel: NotificationsViewModel) {
                 )
             }else if(it == 2){
                 Text(
-                    text = "Yesterday",
+                    text = stringResource(id = R.string.yesterday_txt),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     color = colorResource(id = R.color.button_link_color),

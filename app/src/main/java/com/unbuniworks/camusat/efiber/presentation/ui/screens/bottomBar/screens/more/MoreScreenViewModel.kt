@@ -22,7 +22,7 @@ class MoreScreenViewModel():ViewModel() {
 
     var originalListOfApplicationItems = listOf(
         ApplicationItem(
-            name = "User Manual",
+            name ="",
             icon = R.drawable.manual
         ),
 

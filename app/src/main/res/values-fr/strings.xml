@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name">e.fiber</string>
+
+    <!-- Auth -->
+    <string name="login">Connexion</string>
+    <string name="forgot_password">Mot de passe oublié ?</string>
+    <string name="forgot_password_lable">Mot de passe oublié</string>
+    <string name="reset">Réinitialiser</string>
+    <string name="back_to_login">Retour à la connexion</string>
+    <string name="user_email">E-mail</string>
+    <string name="user_password">Mot de passe</string>
+    <string name="update_password_lable">Mettre à jour le mot de passe</string>
+    <string name="new_password">Nouveau mot de passe</string>
+    <string name="confirm_new_password">Confirmer le mot de passe</string>
+    <string name="update">Mettre à jour</string>
+
+    <!-- Select Module -->
+    <string name="select_module">Sélectionner un module</string>
+    <string name="dispatch_module">Répartition</string>
+
+    <!-- Tickets screen bottom navigation -->
+    <string name="tickets_lable">Tickets</string>
+    <string name="work_orders_lable">Ordres de travail</string>
+
+    <!-- Scheduled work orders screen bottom navigation -->
+    <string name="scheduled_work_orders_lable">Ordres de travail planifiés</string>
+    <string name="search_scheduled_work_orders">Rechercher</string>
+
+    <!-- Materials screen bottom navigation -->
+    <string name="materials_lable">Matériaux</string>
+    <string name="select_project">Sélectionner un projet</string>
+    <string name="item_number">N° Article</string>
+    <string name="available_quantity">Quantité disponible</string>
+
+    <!-- More screen bottom navigation -->
+    <string name="more_applications_lable">Plus dapplications</string>
+    <string name="user_manual">Manuel dutilisateur</string>
+
+    <!-- Notification screen -->
+    <string name="notifications_lable">Notifications</string>
+    <string name="today_txt">Aujourdhui</string>
+    <string name="yesterday_txt">Hier</string>
+    <string name="clear_notifications">Effacer les notifications</string>
+
+    <!-- Profile screen -->
+    <string name="profile_lable">Profil</string>
+    <string name="user_id">Identifiant utilisateur</string>
+    <string name="profile_name">Nom</string>
+    <string name="position">Poste</string>
+    <string name="staff_id_no">N° Employé</string>
+    <string name="dispatch_team">Équipe de répartition</string>
+    <string name="build_no">N° de bâtiment</string>
+    <string name="safety_passport">Passeport de sécurité</string>
+    <string name="profile_screen">Profil</string>
+    <string name="logout_screen">Déconnexion</string>
+
+    <!-- Ticket information -->
+    <string name="ticket_number">N° Ticket</string>
+    <string name="scheduled_for">Planifié pour</string>
+    <string name="information">Information</string>
+    <string name="exit_ticket_template_dialog_heading">Êtes-vous sûr de vouloir quitter ?</string>
+    <string name="exit_ticket_template_dialog_message">Si vous annulez avant de soumettre, les modifications seront perdues.</string>
+    <string name="exit_ticket_template_dialog_dismiss">Annuler</string>
+    <string name="exit_ticket_template_dialog_confirm">Confirmer</string>
+</resources>

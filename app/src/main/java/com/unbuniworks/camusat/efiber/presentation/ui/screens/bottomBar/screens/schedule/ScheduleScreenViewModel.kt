@@ -63,7 +63,7 @@ class ScheduleScreenViewModel(
     fun updateSearch(searchValue: String) {
         search = searchValue
         getScheduledWorkOrderState = getScheduledWorkOrderState.copy(data = originalState.data.filter {
-            it.ticketId.contains(searchValue, ignoreCase = true) || it.name.contains(searchValue, ignoreCase = true)
+            it.ticketId.contains(searchValue, ignoreCase = true)
         })
     }
     fun formatDate() :String{

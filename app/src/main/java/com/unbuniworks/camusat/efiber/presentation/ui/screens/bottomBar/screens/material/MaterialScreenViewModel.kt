@@ -6,15 +6,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.unbuniworks.camusat.efiber.domain.model.FilterMaterials
+import com.unbuniworks.camusat.efiber.domain.model.Project
 import com.unbuniworks.camusat.efiber.domain.model.Material
-import com.unbuniworks.camusat.efiber.domain.usecase.GetFilterMaterialsUseCase
+import com.unbuniworks.camusat.efiber.domain.usecase.GetDispatchProjectUseCase
 import com.unbuniworks.camusat.efiber.domain.usecase.MaterialsUseCase
 import kotlinx.coroutines.launch
 
 class MaterialScreenViewModel(
     private val useCase: MaterialsUseCase = MaterialsUseCase(),
-    private val getFilterMaterialsUseCase: GetFilterMaterialsUseCase = GetFilterMaterialsUseCase(),
+    private val getDispatchProjectUseCase: GetDispatchProjectUseCase = GetDispatchProjectUseCase(),
     private val activity: Activity
 ) : ViewModel() {
 
@@ -35,7 +35,7 @@ class MaterialScreenViewModel(
         selectedMaterialId = id
         filterMaterials()
     }
-    var filterMaterials by mutableStateOf(emptyList<FilterMaterials>())
+    var filterMaterials by mutableStateOf(emptyList<Project>())
         private set
 
     private var originalMaterials by mutableStateOf(emptyList<Material>())
@@ -49,14 +49,10 @@ class MaterialScreenViewModel(
         viewModelScope.launch {
             materialsState = MaterialsState(isLoading = true)
             val result = useCase.getMaterials(activity)
-            getFilterMaterials()
-            materialsState = MaterialsState(isLoading = false, data = result)
-            originalMaterials = result
+            materialsState = MaterialsState(isLoading = false, data = result.materials)
+            originalMaterials = result.materials
+            filterMaterials = getDispatchProjectUseCase.getProjects(activity = activity)
         }
-    }
-
-    private suspend  fun getFilterMaterials(){
-        filterMaterials = getFilterMaterialsUseCase.getFilterMaterials(activity = activity)
     }
 
     private fun filterMaterials(){

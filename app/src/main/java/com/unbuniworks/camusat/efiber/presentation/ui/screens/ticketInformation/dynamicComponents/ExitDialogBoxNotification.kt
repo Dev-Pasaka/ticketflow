@@ -7,6 +7,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import com.unbuniworks.camusat.efiber.R
 
 @Composable
@@ -39,7 +40,7 @@ fun ExitDialogBoxNotification(
                     onConfirmation()
                 }
             ) {
-                Text("Confirm")
+                Text(stringResource(id = R.string.exit_ticket_template_dialog_confirm))
             }
         },
         dismissButton = {
@@ -48,7 +49,7 @@ fun ExitDialogBoxNotification(
                     onDismissRequest()
                 }
             ) {
-                Text("Dismiss")
+                Text(stringResource(id = R.string.exit_ticket_template_dialog_dismiss))
             }
         }
     )

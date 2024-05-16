@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -35,7 +36,7 @@ fun ProfileItems(profileScreenViewModel: ProfileScreenViewModel) {
                 .fillMaxWidth()
         ){
             Text(
-                text = "User Id",
+                text = stringResource(id = R.string.user_id),
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
                 color = colorResource(id = R.color.button_link_color)
@@ -72,7 +73,7 @@ fun ProfileItems(profileScreenViewModel: ProfileScreenViewModel) {
                 .fillMaxWidth()
         ){
             Text(
-                text = "Name",
+                text = stringResource(id = R.string.profile_name),
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
                 color = colorResource(id = R.color.button_link_color)
@@ -107,7 +108,7 @@ fun ProfileItems(profileScreenViewModel: ProfileScreenViewModel) {
                 .fillMaxWidth()
         ){
             Text(
-                text = "Position",
+                text = stringResource(id = R.string.position),
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
                 color = colorResource(id = R.color.button_link_color)
@@ -142,7 +143,7 @@ fun ProfileItems(profileScreenViewModel: ProfileScreenViewModel) {
                 .fillMaxWidth()
         ){
             Text(
-                text = "Staff ID No.",
+                text = stringResource(id = R.string.staff_id_no),
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
                 color = colorResource(id = R.color.button_link_color)
@@ -177,7 +178,7 @@ fun ProfileItems(profileScreenViewModel: ProfileScreenViewModel) {
                 .fillMaxWidth()
         ){
             Text(
-                text = "Dispatch Team",
+                text = stringResource(id = R.string.dispatch_team),
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
                 color = colorResource(id = R.color.button_link_color)
@@ -212,7 +213,7 @@ fun ProfileItems(profileScreenViewModel: ProfileScreenViewModel) {
                 .fillMaxWidth()
         ){
             Text(
-                text = "Build No.",
+                text = stringResource(id = R.string.build_no),
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
                 color = colorResource(id = R.color.button_link_color)

@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -35,7 +36,7 @@ fun MaterialsScreenUpperSection(materialScreenViewModel: MaterialScreenViewModel
                 .fillMaxWidth()
         ) {
             Text(
-                text = "Materials",
+                text = stringResource(id = R.string.materials_lable),
                 color = colorResource(id = R.color.button_color),
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp
@@ -66,7 +67,7 @@ fun MaterialsScreenUpperSection(materialScreenViewModel: MaterialScreenViewModel
                 readOnly = true,
                 placeholder = {
                     Text(
-                        text = "Select Project",
+                        text = stringResource(id = R.string.select_project),
                         color = colorResource(id = R.color.button_color),
                         fontWeight = FontWeight.Bold,
                         fontSize = 12.sp
@@ -124,12 +125,12 @@ fun MaterialsScreenUpperSection(materialScreenViewModel: MaterialScreenViewModel
                     .padding(horizontal = 16.dp, vertical = 16.dp)
             ) {
                 Text(
-                    text = "No. Item",
+                    text = stringResource(id = R.string.item_number),
                     fontSize = 14.sp,
                 )
 
                 Text(
-                    text = "Available Qty",
+                    text = stringResource(id = R.string.available_quantity),
                     color = Color.DarkGray,
                     fontSize = 14.sp
                 )

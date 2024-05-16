@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -40,7 +41,7 @@ fun ScheduleScreenUpperSection(
                 .fillMaxWidth()
         ) {
             Text(
-                text = "Scheduled Work orders",
+                text = stringResource(id = R.string.scheduled_work_orders_lable),
                 color = colorResource(id = R.color.button_color),
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 18.sp
@@ -64,7 +65,7 @@ fun ScheduleScreenUpperSection(
         OutlinedTextField(
             placeholder = {
                 Text(
-                    text = "Search",
+                    text = stringResource(id = R.string.search_scheduled_work_orders),
                     color = Color.DarkGray,
                 )
             },

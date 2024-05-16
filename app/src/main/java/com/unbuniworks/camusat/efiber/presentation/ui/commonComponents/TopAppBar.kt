@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -105,7 +106,7 @@ fun TopAppBar(
             modifier = Modifier.background(Color.White),
         ) {
             DropdownMenuItem(
-                text = { Text(text = "Profile") },
+                text = { Text(text = stringResource(id = R.string.profile_screen)) },
                 onClick = {
                     navController.navigate(Screen.Profile.route) {
                         navController.popBackStack()
@@ -114,7 +115,7 @@ fun TopAppBar(
                 }
             )
             DropdownMenuItem(
-                text = { Text(text = "Logout") },
+                text = { Text(text = stringResource(id = R.string.logout_screen)) },
                 onClick = {
                     scope.launch {
                         isDropDownOpen = !isDropDownOpen

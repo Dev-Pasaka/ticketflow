@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
@@ -59,7 +60,7 @@ fun TicketInformationMiddleScreen(
 
         if (ticketInformationViewModel.workOrderDetailState.data?.dueDate != null){
             Text(
-                text = "Scheduled for ${Utils.formatTimestampInLocalTime(timestamp = ticketInformationViewModel.workOrderDetailState.data?.dueDate ?: "")}",
+                text = "${stringResource(id = R.string.scheduled_for)} ${Utils.formatTimestampInLocalTime(timestamp = ticketInformationViewModel.workOrderDetailState.data?.dueDate ?: "")}",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
                 color = colorResource(id = R.color.button_color),

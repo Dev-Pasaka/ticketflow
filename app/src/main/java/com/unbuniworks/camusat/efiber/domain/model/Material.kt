@@ -5,3 +5,9 @@ data class Material(
     val name:String,
     val qty:String
 )
+
+data class MaterialsData(
+    val materials:List<Material> = emptyList(),
+    val projects:List<Project> = emptyList()
+)
+

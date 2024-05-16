@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresExtension
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,9 +18,12 @@ import com.unbuniworks.camusat.efiber.data.local.sharedPreference.SharedPreferen
 import com.unbuniworks.camusat.efiber.data.local.sharedPreference.SharedPreferenceRepositoryImpl
 import com.unbuniworks.camusat.efiber.data.remote.model.ResetPasswordCredentials
 import com.unbuniworks.camusat.efiber.data.remote.model.UserCredentials
+import com.unbuniworks.camusat.efiber.domain.usecase.ChangeLanguageUseCase
+import com.unbuniworks.camusat.efiber.domain.usecase.GetLanguageUseCase
 import com.unbuniworks.camusat.efiber.domain.usecase.LoginUseCase
 import com.unbuniworks.camusat.efiber.domain.usecase.ResetPasswordUseCase
 import com.unbuniworks.camusat.efiber.presentation.navigation.Screen
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -27,6 +31,8 @@ import kotlinx.coroutines.launch
 class LoginScreenViewModel(
     private val loginUseCase: LoginUseCase,
     private val resetPasswordUseCase: ResetPasswordUseCase,
+    private val changeLanguageUseCase: ChangeLanguageUseCase = ChangeLanguageUseCase(),
+    private val getLanguageUseCase: GetLanguageUseCase = GetLanguageUseCase(),
     val sharedPreferenceRepository: SharedPreferenceRepository = SharedPreferenceRepositoryImpl()
 ) : ViewModel() {
     var email by mutableStateOf("")
@@ -45,7 +51,29 @@ class LoginScreenViewModel(
     var resetPasswordState by mutableStateOf(ResetPasswordState())
         private set
 
+    var selectedLanguage by  mutableStateOf("")
+        private set
+    var isLanguageDropDownOpen by mutableStateOf(false)
+        private set
 
+    fun openOrCloseLanguageDropDown(){isLanguageDropDownOpen = !isLanguageDropDownOpen}
+
+
+
+
+
+    suspend fun changeLanguage(newLanguage:String, activity: Activity){
+        viewModelScope.async {
+            changeLanguageUseCase.newLanguage(newLanguage = newLanguage, activity)
+            getLanguage(activity =activity)
+        }.await()
+    }
+
+    suspend fun getLanguage(activity: Activity){
+        viewModelScope.launch {
+            selectedLanguage = getLanguageUseCase.newLanguage(activity = activity) ?: "en"
+        }
+    }
 
 
     fun updateEmail(emailString: String) {
@@ -124,6 +152,8 @@ class LoginScreenViewModel(
         }
 
     }
+
+
 
 
 }

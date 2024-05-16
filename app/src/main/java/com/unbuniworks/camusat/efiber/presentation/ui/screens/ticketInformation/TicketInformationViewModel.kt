@@ -81,6 +81,8 @@ class TicketInformationViewModel(
         private set
     var featureName by mutableStateOf("")
         private set
+    var templatestatusColor:String? by mutableStateOf(null)
+        private set
 
 
 
@@ -136,7 +138,8 @@ class TicketInformationViewModel(
         featureId: String,
         buttonName: String,
         isFeature:Boolean,
-        featureNm:String
+        featureNm:String,
+        statusColor:String?
     ) {
         isBottomSheetOpen = openOrCloseBottomSheet
         _currentFeaturesList.value = emptyList()
@@ -146,6 +149,8 @@ class TicketInformationViewModel(
         currentButtonName = buttonName
         isSpecialFeature = isFeature
         featureName = featureNm
+        templatestatusColor = statusColor
+
 
     }
 
@@ -176,7 +181,8 @@ class TicketInformationViewModel(
 
 
     fun formatDate(selectedDate: Long): String {
-        val date = Date(selectedDate)
+        val date = Date(selectedDate*1000)
+        Log.e("Seleteddate", selectedDate.toString())
         val format = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
         return format.format(date)
 
@@ -204,24 +210,8 @@ class TicketInformationViewModel(
     }
 
     fun convertFromUtc(inputTime: String): String {
-        // Create a SimpleDateFormat object to parse the input time string
-        val inputFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
 
-        // Set the time zone to UTC
-        inputFormat.timeZone = TimeZone.getTimeZone("UTC")
-
-        // Parse the input time string
-        val date = inputFormat.parse(inputTime)
-
-        // If parsing fails, return an empty string
-        if (date == null) {
-            return ""
-        }
-
-        // Format the time in the 12-hour clock format with AM/PM indicator
-        val outputFormat = SimpleDateFormat("h:mm a", Locale.getDefault())
-        outputFormat.timeZone = TimeZone.getDefault()
-        return outputFormat.format(date)
+        return inputTime
     }
 
     fun updateTextComponent(index: Int, text: String, inputType: String) {
@@ -250,11 +240,12 @@ class TicketInformationViewModel(
     fun updateDateComponent(index: Int, date: String) {
         val updatedFeaturesList = currentFeaturesList.value.mapIndexed { featureIndex, feature ->
             if (index == featureIndex) {
-                feature.copy(value = date)
+                feature.copy(value = (date.toLong()/1000).toString())
             } else {
                 feature
             }
         }
+        Log.e("Date",date)
         _currentFeaturesList.value = updatedFeaturesList
     }
 

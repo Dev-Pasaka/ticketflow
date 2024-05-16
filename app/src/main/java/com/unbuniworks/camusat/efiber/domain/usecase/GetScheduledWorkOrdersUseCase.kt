@@ -7,21 +7,21 @@ import com.unbuniworks.camusat.efiber.common.Constants
 import com.unbuniworks.camusat.efiber.common.Resource
 import com.unbuniworks.camusat.efiber.data.local.sharedPreference.SharedPreferenceRepository
 import com.unbuniworks.camusat.efiber.data.local.sharedPreference.SharedPreferenceRepositoryImpl
-import com.unbuniworks.camusat.efiber.data.remote.dto.workOrdersDto.toScheduledWorkOrder
-import com.unbuniworks.camusat.efiber.data.repository.WorkOrdersRepositoryImpl
+import com.unbuniworks.camusat.efiber.data.remote.dto.scheduledWorkOrders.toScheduledWorkOrder
+import com.unbuniworks.camusat.efiber.data.repository.ScheduledWorkOrdersRepositoryImpl
 import com.unbuniworks.camusat.efiber.domain.model.ScheduledWorkOrders
-import com.unbuniworks.camusat.efiber.domain.repository.WorkOrdersRepository
+import com.unbuniworks.camusat.efiber.domain.repository.ScheduledWorkOrdersRepository
 import io.ktor.serialization.*
 import io.ktor.utils.io.errors.*
 
 class GetScheduledWorkOrdersUseCase(
-    private val workOrdersRepository: WorkOrdersRepository = WorkOrdersRepositoryImpl(),
+    private val scheduledWorkOrdersRepository: ScheduledWorkOrdersRepository = ScheduledWorkOrdersRepositoryImpl(),
     private val sharedPreferenceRepository: SharedPreferenceRepository = SharedPreferenceRepositoryImpl()
 ) {
     suspend fun getScheduledWorkOrders(activity: Activity): Resource<List<ScheduledWorkOrders>> =
         try {
             val token = sharedPreferenceRepository.getString(Constants.token, activity) ?: ""
-            val result = workOrdersRepository.getWorkOrders(token = token)
+            val result = scheduledWorkOrdersRepository.getScheduledWorkOrders(token = token)
             if (result.isNotEmpty()){
                 val scheduledWorkOrders = result.mapIndexed { index, item ->
                     item.toScheduledWorkOrder(index = index)

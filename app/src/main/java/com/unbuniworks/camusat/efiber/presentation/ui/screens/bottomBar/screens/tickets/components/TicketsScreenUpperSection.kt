@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,7 +46,7 @@ fun TicketsScreenUpperSection(ticketsScreenViewModel: TicketsScreenViewModel){
                 .fillMaxWidth()
         ) {
             Text(
-                text = "Tickets",
+                text = stringResource(id = R.string.tickets_lable),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = colorResource(id = R.color.button_color)
@@ -68,7 +69,7 @@ fun TicketsScreenUpperSection(ticketsScreenViewModel: TicketsScreenViewModel){
                 .fillMaxWidth()
         ) {
             Text(
-                text = "Work Orders",
+                text = stringResource(id = R.string.work_orders_lable),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = colorResource(id = R.color.button_color)

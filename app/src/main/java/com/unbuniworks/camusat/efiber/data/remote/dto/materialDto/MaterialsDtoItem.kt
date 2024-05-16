@@ -1,7 +1,7 @@
 package com.unbuniworks.camusat.efiber.data.remote.dto.materialDto
 
 
-import com.unbuniworks.camusat.efiber.domain.model.FilterMaterials
+import com.unbuniworks.camusat.efiber.domain.model.Project
 import com.unbuniworks.camusat.efiber.domain.model.Material
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -21,14 +21,14 @@ fun MaterialsDtoItem.toMaterial():List<Material>{
         Material(
             dispatchProjectId  = material.material.dispatchProjectId,
             name = material.material.materialName,
-            qty = material.material.quantityRemaining
+            qty = material.quantityRemaining
         )
     }
 }
 
-fun MaterialsDtoItem.toFilterMaterials():List<FilterMaterials>{
+fun MaterialsDtoItem.toFilterMaterials():List<Project>{
     return data.map { material ->
-        FilterMaterials(
+        Project(
             name = material.dispatchProject.first().name,
             id = material.dispatchProject.first().id
         )

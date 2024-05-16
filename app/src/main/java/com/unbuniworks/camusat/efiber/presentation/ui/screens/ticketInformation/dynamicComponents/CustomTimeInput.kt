@@ -1,5 +1,6 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.dynamicComponents
 
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -107,6 +108,7 @@ fun CustomTimeInput(
                     time = ticketInformationViewModel.convertToUtc("${timePicker.hour}:${timePicker.minute}")
                 )
                 ticketInformationViewModel.openOrCloseTimePicker()
+                Log.e("Time", "${timePicker.hour}:${timePicker.minute}")
             },
             properties = DialogProperties(
                 dismissOnBackPress = true,

@@ -15,7 +15,7 @@ data class WorkOrdersDtoItem(
     @SerialName("createdAt")
     val createdAt: String,
     @SerialName("data")
-    val `data`: List<Data>,
+    val `data`: List<Data>?,
     @SerialName("deletedAt")
     val deletedAt: String? = null,
     @SerialName("emailConfigurationsId")
@@ -37,7 +37,7 @@ data class WorkOrdersDtoItem(
     @SerialName("rawData")
     val rawData: String,
     @SerialName("scheduledEndAt")
-    val scheduledEndAt: String,
+    val scheduledEndAt: String? = null,
     @SerialName("dueDate")
     val scheduledStartAt: String? = null,
     @SerialName("status")
@@ -48,6 +48,8 @@ data class WorkOrdersDtoItem(
     val team: Team?,
     @SerialName("teamId")
     val teamId: String?,
+    @SerialName("type")
+    val type: String? = null,
     @SerialName("updatedAt")
     val updatedAt: String,
     @SerialName("workOrderTasks")
@@ -68,16 +70,7 @@ fun WorkOrdersDtoItem.toWorkOrder(): WorkOrder {
     )
 }
 
-fun WorkOrdersDtoItem.toScheduledWorkOrder(index:Int): ScheduledWorkOrders{
 
-    return ScheduledWorkOrders(
-        id = id,
-        ticketId= mainId,
-        dueDate = scheduledEndAt,
-        name = workOrdersTasks?.filterIndexed { filteredIndex, _ ->  filteredIndex == index}?.firstOrNull()?.name ?: ""
-    )
-
-}
 
 
 

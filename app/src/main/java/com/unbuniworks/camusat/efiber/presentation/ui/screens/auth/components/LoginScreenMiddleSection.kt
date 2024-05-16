@@ -1,26 +1,14 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.screens.auth.components
 
 import android.app.Activity
-import android.content.Intent
-import android.net.Uri
-import android.os.Build
-import androidx.activity.compose.ManagedActivityResultLauncher
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.requiredHeight
-import androidx.compose.foundation.layout.requiredWidth
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -39,7 +27,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
@@ -47,6 +34,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction.Companion.Done
 import androidx.compose.ui.text.input.ImeAction.Companion.Next
@@ -55,15 +43,12 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.app.ServiceCompat
-import androidx.core.content.ContextCompat
 import com.unbuniworks.camusat.efiber.R
 import com.unbuniworks.camusat.efiber.common.Constants
-import com.unbuniworks.camusat.efiber.presentation.ui.commonComponents.CustomCircularProgressBar
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.auth.LoginScreenViewModel
-import com.unbuniworks.camusat.efiber.services.foregroundServices.NotificationService
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.*
 
 @Composable
 fun LoginScreenMiddleSection(
@@ -104,6 +89,11 @@ fun Login(loginScreenViewModel: LoginScreenViewModel, actionNavigateToSelectModu
     }
 
     val context = LocalContext.current
+    var locale by rememberSaveable { mutableStateOf(Locale.getDefault().language) }
+ /*   locale = if (locale == "en") "fr" else "en"
+    LanguageManager.setLocale(context, locale)
+    Log.e("Language", locale)*/
+
 
     var isPasswordVisible by rememberSaveable {
         mutableStateOf(false)
@@ -142,7 +132,7 @@ fun Login(loginScreenViewModel: LoginScreenViewModel, actionNavigateToSelectModu
             .offset(x = offsetX.dp)
     ) {
         Text(
-            text = "Login",
+            text = stringResource(id = R.string.login),
             color = Color.DarkGray,
             fontSize = 16.sp,
             fontWeight = FontWeight.SemiBold
@@ -152,7 +142,7 @@ fun Login(loginScreenViewModel: LoginScreenViewModel, actionNavigateToSelectModu
             singleLine = true,
             placeholder = {
                 Text(
-                    text = "Email",
+                    text = stringResource(id = R.string.user_email),
                     color = Color.DarkGray,
                 )
             },
@@ -185,7 +175,7 @@ fun Login(loginScreenViewModel: LoginScreenViewModel, actionNavigateToSelectModu
             singleLine = true,
             placeholder = {
                 Text(
-                    text = "Password",
+                    text = stringResource(id = R.string.user_password),
                     color = Color.DarkGray,
                 )
             },
@@ -251,7 +241,7 @@ fun Login(loginScreenViewModel: LoginScreenViewModel, actionNavigateToSelectModu
 
                     ) {
                     Text(
-                        text = "Login",
+                        text = stringResource(id = R.string.login),
                     )
                 }
             }
@@ -265,7 +255,7 @@ fun Login(loginScreenViewModel: LoginScreenViewModel, actionNavigateToSelectModu
             color = colorResource(id = R.color.background)
         ) {
             Text(
-                text = "Forgot Password?",
+                text = stringResource(id = R.string.forgot_password),
                 color = colorResource(id = R.color.button_color)
             )
         }
@@ -307,7 +297,7 @@ fun ForgotPassword(loginScreenViewModel: LoginScreenViewModel) {
             .offset(x = offsetX.dp)
     ) {
         Text(
-            text = "Forgot Password",
+            text = stringResource(id = R.string.forgot_password_lable),
             color = Color.DarkGray,
             fontSize = 16.sp,
             fontWeight = FontWeight.SemiBold
@@ -367,7 +357,7 @@ fun ForgotPassword(loginScreenViewModel: LoginScreenViewModel) {
 
                     ) {
                     Text(
-                        text = "Reset",
+                        text = stringResource(id = R.string.reset),
                     )
                 }
             }
@@ -382,7 +372,7 @@ fun ForgotPassword(loginScreenViewModel: LoginScreenViewModel) {
         color = colorResource(id = R.color.background)
     ) {
         Text(
-            text = "Back to login",
+            text = stringResource(id = R.string.back_to_login),
             color = colorResource(id = R.color.button_color)
         )
     }

@@ -15,14 +15,14 @@ data class LoginDto(
     @SerialName("message")
     val message:String,
     @SerialName("passwordset")
-    val passwordSet:String = "none",
+    val passwordSet:String? = "none",
     @SerialName("user")
     val userDto: UserDto? = null
 )
 fun LoginDto.toUser():User{
     return User(
         status = status,
-        passwordSet = passwordSet,
+        passwordSet = passwordSet ?: "",
         email = userDto?.email ?: "",
         firstName = userDto?.firstname ?: "",
         surname = userDto?.surname ?:"",

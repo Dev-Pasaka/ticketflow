@@ -20,6 +20,8 @@ data class WorkOrderTask(
     val name: String,
     @SerialName("status")
     val status: String,
+    @SerialName("statusColor")
+    val statusColor:String?,
     @SerialName("technicianId")
     val technicianId: String?,
     @SerialName("templateComponentId")

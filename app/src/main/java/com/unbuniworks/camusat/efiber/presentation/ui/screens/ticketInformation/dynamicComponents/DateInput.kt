@@ -128,6 +128,4 @@ fun DateInput(
 
         }
     }
-
-
 }

@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -53,7 +54,7 @@ fun  ApplicationItem(applicationItem: ApplicationItem) {
             )
             Spacer(modifier = Modifier.height(5.dp))
             Text(
-                text = applicationItem.name,
+                text = stringResource(id = R.string.user_manual),
                 color  = colorResource(id = R.color.button_color),
                 fontSize = 14.sp,
                 textAlign = TextAlign.Center,

@@ -11,17 +11,17 @@ data class Team(
     @SerialName("deletedAt")
     val deletedAt: String?,
     @SerialName("firstTechnicianId")
-    val firstTechnicianId: String,
+    val firstTechnicianId: String?,
     @SerialName("id")
     val id: String,
     @SerialName("leadTechnicianId")
-    val leadTechnicianId: String,
+    val leadTechnicianId: String?,
     @SerialName("name")
     val name: String,
     @SerialName("otherTechnicianId")
     val otherTechnicianId: String?,
     @SerialName("secondTechnicianId")
-    val secondTechnicianId: String,
+    val secondTechnicianId: String?,
     @SerialName("status")
     val status: String,
     @SerialName("type")

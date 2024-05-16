@@ -183,6 +183,7 @@ fun TemplatesBottomSheet(
                             ticketInformationViewModel.event(
                                 TicketInformationEvents.PostWorkOrderTask(
                                     PostWorkOrderTaskDto(
+                                        statusColor = ticketInformationViewModel.templatestatusColor,
                                         isSpecialFeature = isSpecialFeature,
                                         featureName = featureName,
                                         workOrderId = ticketInformationViewModel.workOrderId,

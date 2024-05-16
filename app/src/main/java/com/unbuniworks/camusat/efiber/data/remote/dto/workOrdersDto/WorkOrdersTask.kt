@@ -6,7 +6,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class WorkOrdersTask(
-
     @SerialName("createdAt")
     val createdAt: String?,
     @SerialName("deletedAt")
@@ -17,6 +16,8 @@ data class WorkOrdersTask(
     val name: String,
     @SerialName("status")
     val status: String,
+    @SerialName("statusColor")
+    val statusColor:String?,
     @SerialName("technicianId")
     val technicianId: String? = null,
     @SerialName("updatedAt")

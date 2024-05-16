@@ -12,6 +12,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
 import androidx.compose.material.icons.outlined.Language
+import androidx.compose.material.icons.outlined.Visibility
+import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -22,6 +24,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction.Companion.Next
 import androidx.compose.ui.text.input.KeyboardType
@@ -128,7 +131,7 @@ fun ResetPassword(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = "Update Password",
+                    text = stringResource(id = R.string.update_password_lable),
                     color = Color.DarkGray,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.SemiBold
@@ -137,7 +140,7 @@ fun ResetPassword(
                 OutlinedTextField(
                     placeholder = {
                         Text(
-                            text = "New password",
+                            text = stringResource(id = R.string.new_password),
                             color = Color.DarkGray,
                         )
                     },
@@ -151,7 +154,22 @@ fun ResetPassword(
 
                         }
                     ),
-                    visualTransformation = PasswordVisualTransformation(),
+                    visualTransformation = if (resetPasswordViewModel.isNewPasswordVisible) VisualTransformation.None else
+                        PasswordVisualTransformation(),
+                    trailingIcon = {
+                        when (!resetPasswordViewModel.isNewPasswordVisible) {
+                            true -> IconButton(onClick = { resetPasswordViewModel.showOrHideNewPassword() }) {
+                                Icon(imageVector = Icons.Outlined.VisibilityOff, contentDescription = "Show password")
+                            }
+
+                            false -> {
+                                IconButton(onClick = { resetPasswordViewModel.showOrHideNewPassword() }) {
+                                    Icon(imageVector = Icons.Outlined.Visibility, contentDescription = "Hide password")
+                                }
+                            }
+                        }
+                    },
+
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = Color.Transparent,
                         unfocusedContainerColor = Color.Transparent,
@@ -167,7 +185,7 @@ fun ResetPassword(
                 OutlinedTextField(
                     placeholder = {
                         Text(
-                            text = "Confirm password",
+                            text = stringResource(id = R.string.confirm_new_password),
                             color = Color.DarkGray,
                         )
                     },
@@ -181,7 +199,21 @@ fun ResetPassword(
 
                         }
                     ),
-                    visualTransformation = PasswordVisualTransformation(),
+                    visualTransformation = if (resetPasswordViewModel.isConfirmNewPasswordVisible) VisualTransformation.None else
+                        PasswordVisualTransformation(),
+                    trailingIcon = {
+                        when (!resetPasswordViewModel.isConfirmNewPasswordVisible) {
+                            true -> IconButton(onClick = { resetPasswordViewModel.showOrHideConfirmNewPassword() }) {
+                                Icon(imageVector = Icons.Outlined.VisibilityOff, contentDescription = "Show password")
+                            }
+
+                            false -> {
+                                IconButton(onClick = { resetPasswordViewModel.showOrHideConfirmNewPassword() }) {
+                                    Icon(imageVector = Icons.Outlined.Visibility, contentDescription = "Hide password")
+                                }
+                            }
+                        }
+                    },
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = Color.Transparent,
                         unfocusedContainerColor = Color.Transparent,
@@ -221,7 +253,7 @@ fun ResetPassword(
 
                             ) {
                             Text(
-                                text = "Update",
+                                text = stringResource(id = R.string.update),
                             )
                         }
                     }

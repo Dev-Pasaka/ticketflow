@@ -11,7 +11,7 @@ data class WorkOrderDto(
     val actionDate: String?,
     val channel: String,
     val createdAt: String,
-    val `data`: List<Data>,
+    val `data`: List<Data>?,
     val deletedAt: String?,
     val emailConfigurationsId: String,
     val emailsIncomingId: String,

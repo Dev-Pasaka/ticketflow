@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -46,7 +47,7 @@ fun SelectModuleUpperSection(){
        ) {
 
            Text(
-               text = "Select Module",
+               text = stringResource(id = R.string.select_module),
                color = colorResource(id = R.color.button_color),
                fontSize = 20.sp,
                fontWeight = FontWeight.Bold
