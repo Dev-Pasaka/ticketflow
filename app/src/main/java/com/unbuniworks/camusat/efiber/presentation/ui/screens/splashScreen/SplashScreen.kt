@@ -31,8 +31,10 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.unbuniworks.camusat.efiber.R
+import com.unbuniworks.camusat.efiber.presentation.navigation.Screen
 import com.unbuniworks.camusat.efiber.services.foregroundServices.NotificationService
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -59,9 +61,17 @@ fun SplashScreen(navController: NavHostController) {
     LaunchedEffect(key1 = true) {
         startAnimation = true
         delay(3000)
-        if (splashScreenViewModel.isTokenValid(activity = activity)){
+        val notificationScreen = activity.intent.getStringExtra("notification_screen")
+        if (notificationScreen == "notification") {
+            val title = activity.intent.getStringExtra("notification_title") ?: ""
+            val body = activity.intent.getStringExtra("notification_body") ?: ""
+            navController.navigate("notification_screen/${title}/${body}")
+        }
+        else if (splashScreenViewModel.isTokenValid(activity = activity)){
 
-            navController.navigate("bottom_navigation")
+            navController.navigate(Screen.SelectModule.route){
+                navController.popBackStack()
+            }
         }else{
             navController.navigate("auth"){
                 Intent(activity, NotificationService::class.java).also {
@@ -94,4 +104,15 @@ fun SplashScreen(navController: NavHostController) {
         }
     }
 
+
+
+}
+
+fun handleNotificationIntent(intent: Intent, navController: NavController) {
+    val notificationScreen = intent.getStringExtra("notification_screen")
+    if (notificationScreen == "notification") {
+        val title = intent.getStringExtra("notification_title") ?: ""
+        val body = intent.getStringExtra("notification_body") ?: ""
+        navController.navigate("notification_screen/${title}/${body}")
+    }
 }

@@ -191,6 +191,7 @@ fun TemplatesBottomSheet(
                                         userId = SharedPreferenceRepositoryImpl().getString(
                                             Constants.userId, activity
                                         ) ?: "",
+                                        buttonName = buttonName,
                                         features = ticketInformationViewModel.currentFeaturesList.value
                                     ),
                                     activity = activity

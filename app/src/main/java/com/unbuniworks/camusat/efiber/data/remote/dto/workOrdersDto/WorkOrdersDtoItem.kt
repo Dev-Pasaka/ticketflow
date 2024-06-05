@@ -19,9 +19,9 @@ data class WorkOrdersDtoItem(
     @SerialName("deletedAt")
     val deletedAt: String? = null,
     @SerialName("emailConfigurationsId")
-    val emailConfigurationsId: String,
+    val emailConfigurationsId: String?,
     @SerialName("emailsIncomingId")
-    val emailsIncomingId: String,
+    val emailsIncomingId: String?,
     @SerialName("id")
     val id: String,
     @SerialName("mainId")
@@ -35,7 +35,7 @@ data class WorkOrdersDtoItem(
     @SerialName("projectId")
     val projectId: String?,
     @SerialName("rawData")
-    val rawData: String,
+    val rawData: String?,
     @SerialName("scheduledEndAt")
     val scheduledEndAt: String? = null,
     @SerialName("dueDate")

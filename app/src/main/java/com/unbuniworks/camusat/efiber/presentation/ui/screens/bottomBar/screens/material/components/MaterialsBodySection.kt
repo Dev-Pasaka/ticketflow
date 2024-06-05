@@ -50,9 +50,12 @@ fun MaterialsBodySection(materialScreenViewModel: MaterialScreenViewModel) {
 
         LazyColumn(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxWidth(),
+
         ) {
-            items(count = materialScreenViewModel.materialsState.data.size) {
+            items(
+                count = materialScreenViewModel.materialsState.data.size
+            ) {
                 val material = materialScreenViewModel.materialsState.data[it]
 
                 ElevatedCard(
@@ -63,7 +66,7 @@ fun MaterialsBodySection(materialScreenViewModel: MaterialScreenViewModel) {
                     shape = RoundedCornerShape(5.dp),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                        .padding(horizontal = 16.dp, vertical = 5.dp)
                 ) {
 
                     Row(
@@ -98,6 +101,9 @@ fun MaterialsBodySection(materialScreenViewModel: MaterialScreenViewModel) {
                     }
 
                 }
+               if (it >= materialScreenViewModel.materialsState.data.size-1){
+                   Spacer(modifier = Modifier.height(32.dp))
+               }
             }
         }
     }

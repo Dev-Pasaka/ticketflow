@@ -2,6 +2,7 @@ package com.unbuniworks.camusat.efiber.presentation
 
 import android.Manifest
 import android.app.AlertDialog
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -13,6 +14,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.res.colorResource
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.work.BackoffPolicy
@@ -79,8 +81,16 @@ class MainActivity : ComponentActivity() {
 
     }
 
+    private fun handleNotificationIntent(intent: Intent, navController: NavController) {
+        val notificationScreen = intent.getStringExtra("notification_screen")
+        if (notificationScreen == "notification") {
+            val title = intent.getStringExtra("notification_title") ?: ""
+            val body = intent.getStringExtra("notification_body") ?: ""
+            navController.navigate("notification_screen/${title}/${body}")
+        }
+    }
+
     override fun onBackPressed() {
-        super.onBackPressed()
         if (backClickCount == 1) {
             // If it's the second back click within a certain time, show exit confirmation dialog
             showExitConfirmationDialog()

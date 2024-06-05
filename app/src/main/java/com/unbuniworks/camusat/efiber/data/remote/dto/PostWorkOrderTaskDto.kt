@@ -14,6 +14,7 @@ data class PostWorkOrderTaskDto(
     val workOrderId: String,
     val taskId:String,
     val  userId:String,
+    val buttonName:String,
     val features:List<Feature>
 
 )

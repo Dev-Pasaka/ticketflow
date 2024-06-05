@@ -12,7 +12,7 @@ class SharedPreferenceRepositoryImpl: SharedPreferenceRepository {
 
     }
 
-    override suspend fun setString(key: String,value:String?, activity: Activity): Boolean {
+    override suspend fun setString(key: String, value:String?, activity: Activity): Boolean {
         val sharedPref = activity.getPreferences(Context.MODE_PRIVATE) ?: return false
         with (sharedPref.edit()) {
             putString(key, value)

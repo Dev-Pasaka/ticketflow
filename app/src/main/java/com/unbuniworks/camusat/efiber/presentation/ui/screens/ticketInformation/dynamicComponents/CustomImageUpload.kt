@@ -61,6 +61,7 @@ fun CustomImageUpload(
             }
         }
 
+
     Surface(
         onClick = {
                   ticketInformationViewModel.openOrCloseTakePhotoOrUploadImage(key = key)

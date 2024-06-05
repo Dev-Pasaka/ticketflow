@@ -37,7 +37,7 @@ class PostWorkOrderTaskUseCase(
         }
         catch (e: JsonConvertException){
             e.localizedMessage?.let { Log.e("Failed", it) }
-            PostingWorkOrderResult(status = false, "An expected Error Occurred")
+            PostingWorkOrderResult(status = false, "Invalid json response")
         }
         catch (e:Exception){
             e.localizedMessage?.let { Log.e("Failed", it) }

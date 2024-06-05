@@ -14,8 +14,11 @@
     <color name="unselected_item_color">#F2F2F2</color>
     <color name="light_gray">#E7E6E6</color>
     <color name="green">#27B96A</color>
+    <color name="dark_green">#034521</color>
+    <color name="dark_navy_blue">#020C45</color>
     <color name="light_blue">#9AE0F9</color>
     <color name="ticket_green">#92D050</color>
     <color name="ticket_orange">#FFCC66</color>
+    <color name="orange">#FF9800</color>
     <color name="ticket_maroon">#FF5050</color>
 </resources>

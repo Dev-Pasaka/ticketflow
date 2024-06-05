@@ -345,19 +345,41 @@ class TicketInformationViewModel(
 
             is TicketInformationEvents.PostWorkOrderTask -> {
                 viewModelScope.launch {
-                    postingWorkOrderState = PostingWorkOrderState(isLoading = true)
+                    try {
+                        // Validate mandatory fields
+                        val incompleteMandatoryFields = currentFeaturesList.value.filter { it.classification == "Mandatory" && it.value.isNullOrBlank() }
+                        if (incompleteMandatoryFields.isNotEmpty()) {
+                            val errorMessage = incompleteMandatoryFields.joinToString(separator = ", ") { it.name } + " can't be blank"
+                            Toast.makeText(event.activity, errorMessage, Toast.LENGTH_LONG).show()
+                            return@launch
+                        }
 
-                    val result = postWorkOrderTaskUseCase.postWorkOrdersTask(event.workOrderTaskDto, event.activity)
-                    Log.e("PostingResult", result.toString())
-                    if (result.status){
-                        postingWorkOrderState = PostingWorkOrderState(isLoading = false, isSuccessFul = true, message = result.message)
-                        Toast.makeText(event.activity, result.message, Toast.LENGTH_LONG).show()
+                        // All mandatory fields are filled out, proceed with posting
+                        postingWorkOrderState = PostingWorkOrderState(isLoading  =true)
+                        val result = postWorkOrderTaskUseCase.postWorkOrdersTask(event.workOrderTaskDto, event.activity)
+                        Log.e("PostingResult", result.toString())
+                        if (result.status) {
+                            // Posting successful
+                            postingWorkOrderState = PostingWorkOrderState(isLoading  =false)
 
-                    }else{
-                        postingWorkOrderState = PostingWorkOrderState(isLoading = false, isSuccessFul = false, message = result.message)
-                        Toast.makeText(event.activity, result.message, Toast.LENGTH_LONG).show()
-
+                            Toast.makeText(event.activity, result.message, Toast.LENGTH_LONG).show()
+                            viewModelScope.launch {
+                                getWorkOrder(orderId)
+                            }
+                        } else {
+                            // Posting failed
+                            postingWorkOrderState = PostingWorkOrderState(isLoading = false)
+                            Toast.makeText(event.activity, result.message, Toast.LENGTH_LONG).show()
+                        }
+                    } catch (e: Exception) {
+                        // Handle exceptions, e.g., network errors
+                        Log.e("PostingError", "Error posting work order task", e)
+                        Toast.makeText(event.activity, "Error posting work order: ${e.message}", Toast.LENGTH_LONG).show()
+                    } finally {
+                        // Update loading state
+                        postingWorkOrderState = PostingWorkOrderState(isLoading = false)
                     }
+
 
                 }
             }
@@ -366,7 +388,6 @@ class TicketInformationViewModel(
                    postingWorkOrderState = PostingWorkOrderState(isLoading = true)
                    getWorkOrder(orderId)
                    postingWorkOrderState = PostingWorkOrderState(isLoading = false)
-
                }
             }
         }

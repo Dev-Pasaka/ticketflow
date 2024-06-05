@@ -2,6 +2,7 @@ package com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation
 
 import android.app.Activity
 import android.os.Build
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -18,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,8 +33,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.unbuniworks.camusat.efiber.R
 import com.unbuniworks.camusat.efiber.common.Utils
+import com.unbuniworks.camusat.efiber.data.remote.dto.SubmitUserLogsDto
+import com.unbuniworks.camusat.efiber.domain.usecase.SubmitLogsUseCase
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.TicketInformationEvents
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.TicketInformationViewModel
+import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -43,6 +48,7 @@ fun TicketInformationMiddleScreen(
 
     val scrollState = rememberScrollState()
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     val activity = LocalContext.current as Activity
     var scrollingDown by remember { mutableStateOf(true) }
 
@@ -118,6 +124,17 @@ fun TicketInformationMiddleScreen(
                                 ||Regex("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}").matches(ticketInfo?.key ?: ""),
                         onClick = {
                             if (Regex("^(\\+?[1-9]\\d{1,14}|0[1-9]\\d{8})$").matches(ticketInfo?.value ?: "")){
+                                scope.launch {
+                                    val result = SubmitLogsUseCase().submitLogs(
+                                        logs = SubmitUserLogsDto(
+                                            module = "Work order",
+                                            activity = "Dialed client",
+                                            detail = "Dialed client  phone: ${ticketInfo?.value ?: ""}"
+                                        ),
+                                        activity = context as Activity
+                                    )
+                                    Log.e("Log out", result.toString())
+                                }
                                 ticketInformationViewModel.openPhoneApp(context, ticketInfo?.value ?: "" )
                             }else if(Regex("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}").matches(ticketInfo?.key ?: "")){
                                 ticketInformationViewModel.openEmailApp(context = context, emailAddress = ticketInfo?.value ?: "")

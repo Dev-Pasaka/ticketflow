@@ -62,8 +62,6 @@
     <string name="exit_ticket_template_dialog_message">If you cancel before submitting changes will be lost.</string>
     <string name="exit_ticket_template_dialog_dismiss">Dismiss</string>
     <string name="exit_ticket_template_dialog_confirm">Confirm</string>
-
-
-
+    
 
 </resources>

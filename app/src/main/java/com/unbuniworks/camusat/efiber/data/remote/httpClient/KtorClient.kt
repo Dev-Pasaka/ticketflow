@@ -4,8 +4,8 @@ import com.google.gson.Gson
 import com.unbuniworks.camusat.efiber.common.Constants
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
+import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.accept
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
@@ -33,6 +33,12 @@ object HttpClient {
             })
         }
 
+        install(HttpTimeout) {
+            requestTimeoutMillis = 1000*120 // Adjust timeout as needed (in milliseconds)
+            connectTimeoutMillis = 15000*120 // Adjust timeout as needed (in milliseconds)
+            socketTimeoutMillis = 15000*120 // Adjust timeout as needed (in milliseconds)
+        }
+
         defaultRequest {
             contentType(ContentType.Application.Json)
             accept(ContentType.Application.Json)
@@ -42,6 +48,7 @@ object HttpClient {
             // Set timeout
             requestTimeout = (60000) * 4 // 2 minutes
             // SSL/TLS settings
+
 
 
             SSLContext.getInstance("TLS").apply {

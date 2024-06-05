@@ -57,10 +57,29 @@ fun NavGraph(navController: NavHostController) {
     val bottomNavigationViewModel = viewModel<BottomNavigationViewModel>()
 
     val scope = rememberCoroutineScope()
-    NavHost(navController = navController, startDestination = Screen.SplashScreen.route) {
+
+    val notificationScreen = activity.intent.getStringExtra("notification_screen")
+
+
+    NavHost(
+        navController = navController,
+        startDestination = if (notificationScreen == "notification") {
+            "notification_screen"
+        } else Screen.SplashScreen.route
+
+    ) {
 
         composable(route = Screen.SplashScreen.route) {
             SplashScreen(navController = navController)
+        }
+
+        composable(route = Screen.SelectModule.route) {
+            val selectModuleViewModel = viewModel<SelectModuleViewModel>()
+            SelectModule(selectModuleViewModel = selectModuleViewModel) {
+                navController.navigate(route = "bottom_navigation") {
+                    navController.popBackStack()
+                }
+            }
         }
 
         navigation(
@@ -82,160 +101,149 @@ fun NavGraph(navController: NavHostController) {
 
                 LoginsScreen(loginScreenViewModel = loginScreenViewModel) {
                     loginScreenViewModel.login(navController, activity)
-                    }
                 }
+            }
 
             composable(route = Screen.UpdatePassword.route) {
-                ResetPassword(navController =  navController)
+                ResetPassword(navController = navController)
             }
+        }
+
+        navigation(startDestination = Screen.Tickets.route, route = "bottom_navigation") {
 
 
-                composable(route = Screen.SelectModule.route) {
-                    val selectModuleViewModel = viewModel<SelectModuleViewModel>()
-                    SelectModule(selectModuleViewModel = selectModuleViewModel) {
-                        navController.navigate(route = "bottom_navigation") {
-                            navController.popBackStack()
+            composable(route = Screen.Tickets.route) {
+                val ticketsScreenActivity = LocalContext.current as Activity
+                val ticketsScreenViewModel = viewModel<TicketsScreenViewModel>(
+                    factory = object : ViewModelProvider.Factory {
+                        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                            return TicketsScreenViewModel(
+                                useCase = WorkOrdersUseCase(),
+                                activity = activity
+                            ) as T
                         }
                     }
-                }
+                )
+                TicketsScreen(
+                    bottomNavigationViewModel = bottomNavigationViewModel,
+                    ticketsScreenViewModel = ticketsScreenViewModel,
+                    navController = navController
+                )
             }
-
-            navigation(startDestination = Screen.Tickets.route, route = "bottom_navigation") {
-
-
-                composable(route = Screen.Tickets.route) {
-                    val ticketsScreenActivity = LocalContext.current as Activity
-                    val ticketsScreenViewModel = viewModel<TicketsScreenViewModel>(
-                        factory = object : ViewModelProvider.Factory {
-                            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                                return TicketsScreenViewModel(
-                                    useCase = WorkOrdersUseCase(),
-                                    activity = activity
-                                ) as T
-                            }
+            composable(route = Screen.Schedule.route) {
+                val scheduledActivity = LocalContext.current as Activity
+                val scheduleScreenViewModel = viewModel<ScheduleScreenViewModel>(
+                    factory = object : ViewModelProvider.Factory {
+                        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                            return ScheduleScreenViewModel(
+                                activity = scheduledActivity
+                            ) as T
                         }
-                    )
-                    TicketsScreen(
-                        bottomNavigationViewModel = bottomNavigationViewModel,
-                        ticketsScreenViewModel = ticketsScreenViewModel,
-                        navController = navController
-                    )
-                }
-                composable(route = Screen.Schedule.route) {
-                    val scheduledActivity = LocalContext.current as Activity
-                    val scheduleScreenViewModel = viewModel<ScheduleScreenViewModel>(
-                        factory = object : ViewModelProvider.Factory {
-                            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                                return ScheduleScreenViewModel(
-                                    activity = scheduledActivity
-                                ) as T
-                            }
+                    }
+                )
+                Schedule(
+                    bottomNavigationViewModel = bottomNavigationViewModel,
+                    scheduleScreenViewModel = scheduleScreenViewModel,
+                    navController = navController
+                )
+            }
+            composable(route = Screen.Material.route) {
+                val materialActivity = LocalContext.current as Activity
+                val materialScreenViewModel = viewModel<MaterialScreenViewModel>(
+                    factory = object : ViewModelProvider.Factory {
+                        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                            return MaterialScreenViewModel(
+                                useCase = MaterialsUseCase(),
+                                activity = materialActivity
+                            ) as T
                         }
-                    )
-                    Schedule(
-                        bottomNavigationViewModel = bottomNavigationViewModel,
-                        scheduleScreenViewModel = scheduleScreenViewModel,
-                        navController = navController
-                    )
-                }
-                composable(route = Screen.Material.route) {
-                    val materialActivity = LocalContext.current as Activity
-                    val materialScreenViewModel = viewModel<MaterialScreenViewModel>(
-                        factory = object : ViewModelProvider.Factory {
-                            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                                return MaterialScreenViewModel(
-                                    useCase = MaterialsUseCase(),
-                                    activity = materialActivity
-                                ) as T
-                            }
-                        }
-                    )
-                    Material(
-                        bottomNavigationViewModel = bottomNavigationViewModel,
-                        navController = navController,
-                        materialScreenViewModel = materialScreenViewModel
-                    )
-                }
-                composable(route = Screen.More.route) {
-                    val moreScreenViewModel = viewModel<MoreScreenViewModel>()
-                    MoreScreen(
-                        bottomNavigationViewModel = bottomNavigationViewModel,
-                        navController = navController,
-                        moreScreenViewModel = moreScreenViewModel
-                    )
-                }
-
+                    }
+                )
+                Material(
+                    bottomNavigationViewModel = bottomNavigationViewModel,
+                    navController = navController,
+                    materialScreenViewModel = materialScreenViewModel
+                )
             }
-
-            navigation(
-                startDestination = Screen.TicketInformation.route,
-                route = "ticket_information"
-            ) {
-                composable(route = Screen.TicketInformation.route) {
-                    val ticketInformationActivity = LocalContext.current as Activity
-                    val workOrderId = navController.previousBackStackEntry?.arguments?.getString("workOrderId") ?: ""
-
-                    val ticketInformationViewModel = viewModel<TicketInformationViewModel>(
-                        factory = object : ViewModelProvider.Factory {
-                            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                                return TicketInformationViewModel(
-                                    orderId = workOrderId,
-                                    activity = ticketInformationActivity
-                                ) as T
-                            }
-                        }
-                    )
-
-                    Log.e("workOrderId", workOrderId)
-
-                    TicketInformationScreen(
-                        navController = navController,
-                        ticketInformationViewModel = ticketInformationViewModel,
-                        workOrder = workOrderId
-                    )
-                }
-                composable(route = Screen.TakePhoto.route) {
-                    /*Camera(
-                        index = ticketInformationViewModel.selectedImageAndIndex?.first ?: 0,
-                        imageIndex = ticketInformationViewModel.selectedImageAndIndex?.second ?: 0,
-                        navController = navController,
-                        ticketInformationViewModel = ticketInformationViewModel
-                    )*/
-                }
-                composable(route = Screen.Maps.route) {
-                    val coordinates = navController.previousBackStackEntry?.arguments?.getString("coordinates") ?: ""
-                    Log.e("Coordinates", coordinates)
-                    Maps(navController = navController, coordinates = coordinates)
-                }
+            composable(route = Screen.More.route) {
+                val moreScreenViewModel = viewModel<MoreScreenViewModel>()
+                MoreScreen(
+                    bottomNavigationViewModel = bottomNavigationViewModel,
+                    navController = navController,
+                    moreScreenViewModel = moreScreenViewModel
+                )
             }
-
-            navigation(
-                startDestination = Screen.Notifications.route,
-                route = "notification_screen"
-            ) {
-                composable(route = Screen.Notifications.route) {
-                    val notificationsViewModel = viewModel<NotificationsViewModel>()
-
-                    NotificationsScreen(
-                        navController = navController,
-                        notificationsViewModel = notificationsViewModel
-                    )
-                }
-            }
-
-            navigation(startDestination = Screen.Profile.route, route = "profile_screen") {
-                composable(route = Screen.Profile.route) {
-                    val profileScreenViewModel = viewModel<ProfileScreenViewModel>()
-                    ProfileScreen(
-                        navController = navController,
-                        profileScreenViewModel = profileScreenViewModel
-                    )
-                }
-            }
-
-
-
-
 
         }
+
+        navigation(
+            startDestination = Screen.TicketInformation.route,
+            route = "ticket_information"
+        ) {
+            composable(route = Screen.TicketInformation.route) {
+                val ticketInformationActivity = LocalContext.current as Activity
+                val workOrderId =
+                    navController.previousBackStackEntry?.arguments?.getString("workOrderId") ?: ""
+
+                val ticketInformationViewModel = viewModel<TicketInformationViewModel>(
+                    factory = object : ViewModelProvider.Factory {
+                        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                            return TicketInformationViewModel(
+                                orderId = workOrderId,
+                                activity = ticketInformationActivity
+                            ) as T
+                        }
+                    }
+                )
+
+                Log.e("workOrderId", workOrderId)
+
+                TicketInformationScreen(
+                    navController = navController,
+                    ticketInformationViewModel = ticketInformationViewModel,
+                    workOrder = workOrderId
+                )
+            }
+            composable(route = Screen.TakePhoto.route) {
+                /*Camera(
+                    index = ticketInformationViewModel.selectedImageAndIndex?.first ?: 0,
+                    imageIndex = ticketInformationViewModel.selectedImageAndIndex?.second ?: 0,
+                    navController = navController,
+                    ticketInformationViewModel = ticketInformationViewModel
+                )*/
+            }
+            composable(route = Screen.Maps.route) {
+                val coordinates =
+                    navController.previousBackStackEntry?.arguments?.getString("coordinates") ?: ""
+                Log.e("Coordinates", coordinates)
+                Maps(navController = navController, coordinates = coordinates)
+            }
+        }
+
+        navigation(
+            startDestination = Screen.Notifications.route,
+            route = "notification_screen"
+        ) {
+            composable(route = Screen.Notifications.route) {
+                val notificationsViewModel = viewModel<NotificationsViewModel>()
+
+                NotificationsScreen(
+                    navController = navController,
+                    notificationsViewModel = notificationsViewModel
+                )
+            }
+        }
+
+        navigation(startDestination = Screen.Profile.route, route = "profile_screen") {
+            composable(route = Screen.Profile.route) {
+                val profileScreenViewModel = viewModel<ProfileScreenViewModel>()
+                ProfileScreen(
+                    navController = navController,
+                    profileScreenViewModel = profileScreenViewModel
+                )
+            }
+        }
+
+
     }
+}

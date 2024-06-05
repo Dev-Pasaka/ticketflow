@@ -47,7 +47,7 @@ fun WorkOrderDto.toWorkOrderDetails():WorkOrderDetails{
         statusColor = statusColour,
         workOrderTasks = workOrderTasks,
         ticketDetails = ticketDetails,
-        dueDate = scheduledEndAt
+        dueDate = scheduledStartAt
     )
 
 }

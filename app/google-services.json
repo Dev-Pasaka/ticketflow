@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "672047334153",
+    "project_id": "efiber-tst",
+    "storage_bucket": "efiber-tst.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:672047334153:android:0a187a32eeed6b463409d8",
+        "android_client_info": {
+          "package_name": "com.unbuniworks.camusat.efiber"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuK7VLzsXsGkIOycoNVI99nCx2PRWj1Lo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

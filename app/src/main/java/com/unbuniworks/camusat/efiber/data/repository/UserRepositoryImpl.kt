@@ -1,5 +1,6 @@
 package com.unbuniworks.camusat.efiber.data.repository
 
+import com.unbuniworks.camusat.efiber.data.remote.dto.SubmitUserLogsDto
 import com.unbuniworks.camusat.efiber.data.remote.dto.getUserDto.GetUserDto
 import com.unbuniworks.camusat.efiber.data.remote.dto.loginDto.LoginDto
 import com.unbuniworks.camusat.efiber.data.remote.dto.resetPasswordDto.ResetPasswordDto
@@ -48,10 +49,17 @@ class UserRepositoryImpl(
         }.body<UpdatePasswordDto>()
     }
 
+    override suspend fun submitUserLogs(logs: SubmitUserLogsDto, token: String): Map<String, Boolean>  = withContext(Dispatchers.IO){
+        httpClient.client.post("${httpClient.baseUrl}logs/user"){
+            header(HttpHeaders.Authorization, "Bearer $token")
+            setBody(logs)
+        }.body<Map<String, Boolean>>()
+    }
+
 }
 
 suspend fun main() {
-    println(
+  /*  println(
         UserRepositoryImpl().login(
             credentials = UserCredentials(
                 email = "dev.pasaka@gmail.com",
@@ -61,6 +69,18 @@ suspend fun main() {
         )
 
        // UserRepositoryImpl().resetPassword(resetPasswordCredentials = ResetPasswordCredentials(email = "dev.pasaka@gmail.com"))
+    )*/
+
+    val token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmYmYwZmY1Yi1kNzI4LTQwZmItOWI0Yy00YzYzZWYwZDkzZmMiLCJlbWFpbCI6ImRldi5wYXNha2FAZ21haWwuY29tIiwiaWF0IjoxNzE3NTc2MDE4LCJleHAiOjE3MTc1NzkwMTh9.YPigJTx5DyV7UxGHUC22s5h8WpaFA2RSeey9i9Tt6sk"
+    println(
+        UserRepositoryImpl().submitUserLogs(
+            logs = SubmitUserLogsDto(
+                module = "Test",
+                activity = "Testing",
+                detail = "TEST 0NE"
+            ),
+            token = token
+        )
     )
 
 }

@@ -20,8 +20,12 @@ class SplashScreenViewModel(
     suspend fun isTokenValid(activity: Activity):Boolean {
         return viewModelScope.async {
             try {
-                sharedPreferenceRepository.getString(key = Constants.isLoggedIn, activity = activity) == Constants.isLoggedIn
-
+                val isLoggedIn = sharedPreferenceRepository.getString(key = Constants.isLoggedIn, activity = activity).toBoolean()
+                val isExpired = (System.currentTimeMillis()/1000) > (sharedPreferenceRepository.getString(
+                    key = Constants.tokenExpiration,
+                    activity = activity
+                )?.toLong() ?: 0L)
+                isLoggedIn && !isExpired
             }catch (e:Exception){
                 false
             }

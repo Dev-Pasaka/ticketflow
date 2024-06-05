@@ -1,6 +1,7 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.commonComponents
 
 import android.app.Activity
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -26,6 +27,8 @@ import com.unbuniworks.camusat.efiber.R
 import com.unbuniworks.camusat.efiber.common.Constants
 import com.unbuniworks.camusat.efiber.data.local.sharedPreference.SharedPreferenceRepository
 import com.unbuniworks.camusat.efiber.data.local.sharedPreference.SharedPreferenceRepositoryImpl
+import com.unbuniworks.camusat.efiber.data.remote.dto.SubmitUserLogsDto
+import com.unbuniworks.camusat.efiber.domain.usecase.SubmitLogsUseCase
 import com.unbuniworks.camusat.efiber.presentation.navigation.Screen
 import kotlinx.coroutines.launch
 
@@ -124,6 +127,15 @@ fun TopAppBar(
                             value = "false",
                             activity = context as Activity
                         )
+                        val result = SubmitLogsUseCase().submitLogs(
+                            logs = SubmitUserLogsDto(
+                                module = "Auth",
+                                activity = "Log out",
+                                detail = "User has logged out"
+                            ),
+                            activity = context as Activity
+                        )
+                        Log.e("Log out", result.toString())
                         navController.navigate("auth") {
                             popUpTo("auth") { inclusive = false }
                         }

@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     kotlin("plugin.serialization") version "1.9.22"
     id("kotlin-kapt")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -139,6 +140,10 @@ dependencies {
 
     //TimeZones
     implementation("com.jakewharton.threetenabp:threetenabp:1.3.0")
+
+    //Firebase
+    implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
+    implementation("com.google.firebase:firebase-messaging")
 
 
 

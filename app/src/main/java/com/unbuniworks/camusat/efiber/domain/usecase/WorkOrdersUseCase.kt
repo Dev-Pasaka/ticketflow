@@ -44,6 +44,3 @@ class WorkOrdersUseCase(
 
 }
 
-suspend fun main(){
-
-}

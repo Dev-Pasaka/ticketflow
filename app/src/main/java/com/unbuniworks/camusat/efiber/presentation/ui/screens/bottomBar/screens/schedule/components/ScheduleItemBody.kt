@@ -55,41 +55,42 @@ fun ScheduleItemBody(scheduleScreenViewModel: ScheduleScreenViewModel, navContro
         }
     }else {
 
+        var currentDateCategory: String? = null // Initialize outside the LazyColumn
         LazyColumn(
             userScrollEnabled = true
         ) {
             // Sort the scheduled work orders by due date
             val sortedWorkOrders = scheduleScreenViewModel.getScheduledWorkOrderState.data.sortedBy { it.dueDate }.reversed()
 
-            // Group the sorted work orders by date
-            val groupedByDate = sortedWorkOrders.groupBy { Utils.categorizeDate(it.dueDate) }
+            // Iterate over each work order and display it
+            sortedWorkOrders.forEachIndexed { index, workOrder ->
+                val dateCategory = Utils.categorizeDate(workOrder.dueDate)
 
-            // Iterate over each date group
-            groupedByDate.forEach { (dateCategory, items) ->
-                // Display the date category
+                // Display the date category if it's different from the previous one
                 item {
-                    Text(
-                        text = dateCategory,
-                        fontSize = 12.sp,
-                        color = colorResource(id = R.color.button_color),
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-                    )
+                    if (currentDateCategory != dateCategory) {
+                        Text(
+                            text = dateCategory,
+                            fontSize = 12.sp,
+                            color = colorResource(id = R.color.button_color),
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                        )
+                        currentDateCategory = dateCategory
+                    }
                 }
 
-                // Display the ScheduleItems for this date
-                items.forEachIndexed { index, scheduleItem ->
-                    item {
-                        ScheduleItem(
-                            index = index,
-                            scheduleScreenViewModel = scheduleScreenViewModel,
-                            navController = navController,
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                    }
+                // Display the ScheduleItem for this work order
+                item {
+                    ScheduleItem(
+                        index = index,
+                        scheduleScreenViewModel = scheduleScreenViewModel,
+                        navController = navController,
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
                 }
             }
 
-            item{
+            item {
                 Spacer(modifier = Modifier.height(100.dp))
             }
         }

@@ -25,15 +25,15 @@ data class ScheduledWorkOrdersDtoItem(
     @SerialName("emailConfigurationsId")
     val emailConfigurationsId: String,
     @SerialName("emailsIncomingId")
-    val emailsIncomingId: String,
+    val emailsIncomingId: String?,
     @SerialName("id")
     val id: String,
     @SerialName("mainId")
     val mainId: String,
     @SerialName("manager")
-    val manager: Manager,
+    val manager: Manager?,
     @SerialName("managerId")
-    val managerId: String,
+    val managerId: String?,
     @SerialName("no")
     val no: Int,
     @SerialName("Project")
@@ -41,7 +41,7 @@ data class ScheduledWorkOrdersDtoItem(
     @SerialName("projectId")
     val projectId: String,
     @SerialName("rawData")
-    val rawData: String,
+    val rawData: String?,
     @SerialName("scheduledEndAt")
     val scheduledEndAt: String,
     @SerialName("scheduledStartAt")
@@ -69,7 +69,7 @@ fun ScheduledWorkOrdersDtoItem.toScheduledWorkOrder(index:Int): ScheduledWorkOrd
     return ScheduledWorkOrders(
         id = id,
         ticketId= mainId,
-        dueDate = scheduledEndAt ?: "",
+        dueDate = scheduledStartAt ?: "",
     )
 
 }
