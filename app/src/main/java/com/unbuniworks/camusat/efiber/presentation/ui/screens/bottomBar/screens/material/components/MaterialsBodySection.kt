@@ -58,6 +58,7 @@ fun MaterialsBodySection(materialScreenViewModel: MaterialScreenViewModel) {
             ) {
                 val material = materialScreenViewModel.materialsState.data[it]
 
+
                 ElevatedCard(
                     colors = CardDefaults.cardColors(
                         contentColor = Color.DarkGray,

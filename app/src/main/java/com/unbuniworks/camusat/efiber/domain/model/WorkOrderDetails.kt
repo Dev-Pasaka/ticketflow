@@ -1,5 +1,6 @@
 package com.unbuniworks.camusat.efiber.domain.model
 
+import com.unbuniworks.camusat.efiber.data.remote.dto.workOrderDto.EmailTemplates
 import com.unbuniworks.camusat.efiber.data.remote.dto.workOrderDto.TicketDetail
 import com.unbuniworks.camusat.efiber.data.remote.dto.workOrderDto.WorkOrderTask
 
@@ -11,6 +12,7 @@ data class WorkOrderDetails(
     val statusColor: String,
     val ticketDetails:List<TicketDetail>,
     val dueDate:String?,
-    val workOrderTasks: List<WorkOrderTask>?
+    val workOrderTasks: List<WorkOrderTask>?,
+    val emailTemplates:List<EmailTemplates>
 
 )

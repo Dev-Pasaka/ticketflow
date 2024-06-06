@@ -12,6 +12,7 @@ import androidx.core.net.toUri
 import com.unbuniworks.camusat.efiber.common.Constants
 import com.unbuniworks.camusat.efiber.data.remote.dto.PostWorkOrderTaskDto
 import com.unbuniworks.camusat.efiber.data.remote.dto.PostWorkOrderResponseDto
+import com.unbuniworks.camusat.efiber.data.remote.dto.SubmitEmailTemplateResponseDto
 import com.unbuniworks.camusat.efiber.data.remote.dto.workOrderDto.Feature
 import com.unbuniworks.camusat.efiber.data.remote.dto.workOrderDto.WorkOrderDto
 import com.unbuniworks.camusat.efiber.data.remote.httpClient.HttpClient
@@ -104,6 +105,18 @@ class WorkOrderRepositoryImpl(
         Log.e("statusColor", postWorkOrderTaskDto.toString())
         Log.e("Test", result.toString())
         return result
+    }
+
+    override suspend fun sendEmailTemplate(
+        workOrderId: String,
+        templateId: String,
+        token: String
+    ): SubmitEmailTemplateResponseDto = withContext(Dispatchers.IO) {
+        api.client.get("${Constants.baseUrl}emailTemplates/sendEmail"){
+            header(HttpHeaders.Authorization, "Bearer $token")
+            parameter(key = "workorderId", value = workOrderId)
+            parameter(key = "templateId", value = templateId)
+        }.body<SubmitEmailTemplateResponseDto>()
     }
 
     private fun isUrlMatchingFormat(input: String): Boolean {

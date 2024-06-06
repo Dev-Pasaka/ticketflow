@@ -62,6 +62,12 @@
     <string name="exit_ticket_template_dialog_message">If you cancel before submitting changes will be lost.</string>
     <string name="exit_ticket_template_dialog_dismiss">Dismiss</string>
     <string name="exit_ticket_template_dialog_confirm">Confirm</string>
-    
+
+    //BottomNavigation
+    <string name="bottom_bar_tickets_lable">Tickets</string>
+    <string name="bottom_bar_tickets_schedule_lable">Schedule</string>
+    <string name="bottom_bar_tickets_material_lable">Material</string>
+    <string name="bottom_bar_tickets_more_lable">More</string>
+
 
 </resources>

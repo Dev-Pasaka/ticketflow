@@ -46,7 +46,10 @@ fun TicketInformationLowerSection(
             .fillMaxWidth()
             .padding(16.dp)
     ) {
+
+
         LazyColumn {
+
             items(
                 count = ticketInformationViewModel.workOrderDetailState
                     .data?.workOrderTasks?.size ?: 0
@@ -56,7 +59,7 @@ fun TicketInformationLowerSection(
                         .data?.workOrderTasks?.get(it)
                 val isSelected =
                     ticketInformationViewModel.workOrderDetailState
-                        .selectedTemplate == template?.name
+                        .selectedTemplate == (template?.id ?: "")
 
                 Template(
                     status = template?.status ?: "",
@@ -69,8 +72,9 @@ fun TicketInformationLowerSection(
                     templatePosition = it + 1,
                     onclick = {
                         scope.launch {
+
                             ticketInformationViewModel.event(
-                                TicketInformationEvents.SelectTemplate(template?.name ?: "")
+                                TicketInformationEvents.SelectTemplate(template?.id ?: "")
                             )
                             template?.statusColor
                             ticketInformationViewModel.updateCurrentTemplates(
@@ -88,6 +92,37 @@ fun TicketInformationLowerSection(
 
                     }
                 )
+            }
+
+            item {
+               if (!ticketInformationViewModel.workOrderDetailState.isLoading){
+                   SendEmailTemplate(
+                       workOrderId = ticketInformationViewModel.workOrderId,
+                       emailTemplates = ticketInformationViewModel.workOrderDetailState
+                           .data?.emailTemplates ?: emptyList(),
+                       templateName = "Email",
+                       isSelected = ticketInformationViewModel.isEmailTemplateSelected,
+                       containerColor = if (ticketInformationViewModel.isEmailTemplateSelected)
+                           colorResource(id = R.color.light_blue)
+                       else Color.LightGray ,
+                       textColor = Color.DarkGray ,
+                       templatePosition = (ticketInformationViewModel.workOrderDetailState
+                           .data?.workOrderTasks?.size ?: 0) + 1 ,
+                       onClick = {
+                           ticketInformationViewModel.event(
+                               TicketInformationEvents.SelectTemplate("")
+                           )
+
+                       },
+                       onCloseDropDown = {
+                           ticketInformationViewModel.openOrCloseEmailTemplate()
+                       },
+                       ticketInformationViewModel = ticketInformationViewModel
+
+                   )
+               }
+                    
+
             }
 
 

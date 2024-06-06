@@ -1,11 +1,14 @@
 package com.unbuniworks.camusat.efiber.data.repository
 
 import com.unbuniworks.camusat.efiber.common.Constants
+import com.unbuniworks.camusat.efiber.data.remote.dto.notificationsDto.NotificationDto
 import com.unbuniworks.camusat.efiber.data.remote.httpClient.HttpClient
 import com.unbuniworks.camusat.efiber.domain.repository.NotificationRepository
 import io.ktor.client.call.body
+import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.headers
+import io.ktor.client.request.parameter
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.bodyAsText
@@ -23,13 +26,22 @@ class NotificationRepositoryImpl(
         }.bodyAsText().toBoolean()
     }
 
-    override suspend fun getNotification() {
-        TODO("Not yet implemented")
-
+    override suspend fun getAllNotifications(token:String): NotificationDto = withContext(Dispatchers.IO) {
+        httpClient.client.get("${Constants.baseUrl}notifications/user/unread"){
+            header(Authorization, "Bearer $token")
+        }.body<NotificationDto>()
     }
 
-    override suspend fun clearNotification() {
-        TODO("Not yet implemented")
+    override suspend fun clearAllNotifications(token:String): NotificationDto  = withContext(Dispatchers.IO) {
+        httpClient.client.get("${Constants.baseUrl}notifications/user/clear"){
+            header(Authorization, "Bearer $token")
+        }.body<NotificationDto>()
+    }
+
+    override suspend fun clearNotification(token:String,notificationId:String): NotificationDto  = withContext(Dispatchers.IO) {
+        httpClient.client.get("${Constants.baseUrl}notifications/notification/clear/$notificationId"){
+            header(Authorization, "Bearer $token")
+        }.body<NotificationDto>()
     }
 }
 

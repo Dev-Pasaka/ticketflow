@@ -13,8 +13,8 @@ data class WorkOrderDto(
     val createdAt: String,
     val `data`: List<Data>?,
     val deletedAt: String?,
-    val emailConfigurationsId: String,
-    val emailsIncomingId: String,
+    val emailConfigurationsId: String?,
+    val emailsIncomingId: String?,
     val id: String,
     val mainId: String,
     val manager: Manager? = null,
@@ -22,7 +22,7 @@ data class WorkOrderDto(
     @SerialName("Project")
     val project: Project?,
     val projectId: String?,
-    val rawData: String,
+    val rawData: String?,
     val scheduledEndAt: String?,
     val scheduledStartAt: String?,
     val status: String,
@@ -47,7 +47,9 @@ fun WorkOrderDto.toWorkOrderDetails():WorkOrderDetails{
         statusColor = statusColour,
         workOrderTasks = workOrderTasks,
         ticketDetails = ticketDetails,
-        dueDate = scheduledStartAt
+        dueDate = scheduledStartAt,
+        emailTemplates = project?.emailTemplates ?: emptyList()
     )
 
 }
+

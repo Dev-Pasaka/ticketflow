@@ -13,4 +13,6 @@ data class Project(
     val name: String,
    // @SerialName("types")
   //  val types: List<TypeName>?
+    @SerialName("EmailTemplates")
+    val emailTemplates: List<EmailTemplates>
 )

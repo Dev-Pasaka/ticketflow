@@ -1,65 +1,73 @@
 <resources>
     <string name="app_name">e.fiber</string>
 
-    <!-- Auth -->
+    //Auth
     <string name="login">Connexion</string>
-    <string name="forgot_password">Mot de passe oublié ?</string>
-    <string name="forgot_password_lable">Mot de passe oublié</string>
-    <string name="reset">Réinitialiser</string>
-    <string name="back_to_login">Retour à la connexion</string>
-    <string name="user_email">E-mail</string>
+    <string name="forgot_password">Mot de passe oublié?</string>
+    <string name="forgot_password_lable">Mot de passe oublié?</string>
+    <string name="reset">Réinitialisez</string>
+    <string name="back_to_login">Retour Connexion</string>
+    <string name="user_email">Email</string>
     <string name="user_password">Mot de passe</string>
-    <string name="update_password_lable">Mettre à jour le mot de passe</string>
-    <string name="new_password">Nouveau mot de passe</string>
-    <string name="confirm_new_password">Confirmer le mot de passe</string>
-    <string name="update">Mettre à jour</string>
+    <string name="update_password_lable">Modifier le Mot de Passe</string>
+    <string name="new_password">Nouveau Mot de Passe</string>
+    <string name="confirm_new_password">Confirmez le Mot de Passe</string>
+    <string name="update">Mettre à Jour le compte</string>
 
-    <!-- Select Module -->
-    <string name="select_module">Sélectionner un module</string>
-    <string name="dispatch_module">Répartition</string>
+    //Select Module
+    <string name="select_module">Sélectionner Module</string>
+    <string name="dispatch_module">Dispatch</string>
 
-    <!-- Tickets screen bottom navigation -->
-    <string name="tickets_lable">Tickets</string>
-    <string name="work_orders_lable">Ordres de travail</string>
+    //Tickets screen bottom navigation
+    <string name="tickets_lable">Demande</string>
+    <string name="work_orders_lable">Ordre de Travail</string>
 
-    <!-- Scheduled work orders screen bottom navigation -->
-    <string name="scheduled_work_orders_lable">Ordres de travail planifiés</string>
-    <string name="search_scheduled_work_orders">Rechercher</string>
+    //Schedule word orders screen bottom navigation
+    <string name="scheduled_work_orders_lable">Programme Demande</string>
+    <string name="search_scheduled_work_orders">Recherche</string>
 
-    <!-- Materials screen bottom navigation -->
-    <string name="materials_lable">Matériaux</string>
-    <string name="select_project">Sélectionner un projet</string>
-    <string name="item_number">N° Article</string>
-    <string name="available_quantity">Quantité disponible</string>
+    //Materials screen bottom navigation
+    <string name="materials_lable">Matériel</string>
+    <string name="select_project">Sélectionne Projet</string>
+    <string name="item_number">No. Article</string>
+    <string name="available_quantity">Qté Disponible</string>
 
-    <!-- More screen bottom navigation -->
-    <string name="more_applications_lable">Plus dapplications</string>
-    <string name="user_manual">Manuel dutilisateur</string>
+    //More screen bottom navigation
+    <string name="more_applications_lable">Plus d\'Applications</string>
+    <string name="user_manual">Manuel de l\'Utilisateur</string>
 
-    <!-- Notification screen -->
+    //Notification screen
     <string name="notifications_lable">Notifications</string>
-    <string name="today_txt">Aujourdhui</string>
+    <string name="today_txt">Aujourd\'hui</string>
     <string name="yesterday_txt">Hier</string>
-    <string name="clear_notifications">Effacer les notifications</string>
+    <string name="clear_notifications">Effacer Notifications</string>
 
-    <!-- Profile screen -->
-    <string name="profile_lable">Profil</string>
-    <string name="user_id">Identifiant utilisateur</string>
+    //Profile screen
+    <string name="profile_lable">Notifications</string>
+    <string name="user_id">ID Utilisateur</string>
     <string name="profile_name">Nom</string>
     <string name="position">Poste</string>
-    <string name="staff_id_no">N° Employé</string>
-    <string name="dispatch_team">Équipe de répartition</string>
-    <string name="build_no">N° de bâtiment</string>
-    <string name="safety_passport">Passeport de sécurité</string>
+    <string name="staff_id_no">ID du Personnel No.</string>
+    <string name="dispatch_team">Dispatch Équipe</string>
+    <string name="build_no">Équipement No.</string>
+    <string name="safety_passport">Passeport de Sécurité</string>
     <string name="profile_screen">Profil</string>
     <string name="logout_screen">Déconnexion</string>
 
-    <!-- Ticket information -->
-    <string name="ticket_number">N° Ticket</string>
+    //Ticket information
+    <string name="ticket_number">Demande No.</string>
     <string name="scheduled_for">Planifié pour</string>
     <string name="information">Information</string>
-    <string name="exit_ticket_template_dialog_heading">Êtes-vous sûr de vouloir quitter ?</string>
-    <string name="exit_ticket_template_dialog_message">Si vous annulez avant de soumettre, les modifications seront perdues.</string>
-    <string name="exit_ticket_template_dialog_dismiss">Annuler</string>
+    <string name="exit_ticket_template_dialog_heading">Êtes-vous sûr de vouloir quitter?</string>
+    <string name="exit_ticket_template_dialog_message">Si vous annulez avant de soumettre les modifications, elles seront perdues.</string>
+    <string name="exit_ticket_template_dialog_dismiss">Rejeter</string>
     <string name="exit_ticket_template_dialog_confirm">Confirmer</string>
+
+    <!-- BottomNavigation -->
+    <string name="bottom_bar_tickets_lable">Billets</string>
+    <string name="bottom_bar_tickets_schedule_lable">Horaire</string>
+    <string name="bottom_bar_tickets_material_lable">Matériel</string>
+    <string name="bottom_bar_tickets_more_lable">Plus</string>
+
+
 </resources>

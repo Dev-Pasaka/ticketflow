@@ -34,7 +34,9 @@ import com.google.android.gms.tasks.CancellationTokenSource
 import com.unbuniworks.camusat.efiber.common.Resource
 import com.unbuniworks.camusat.efiber.data.remote.dto.workOrderDto.Feature
 import com.unbuniworks.camusat.efiber.domain.usecase.PostWorkOrderTaskUseCase
+import com.unbuniworks.camusat.efiber.domain.usecase.SubmitEmailTemplateUseCase
 import com.unbuniworks.camusat.efiber.domain.usecase.WorkOrderDetailsUseCase
+import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.model.SubmitEmailTemplateState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -53,6 +55,7 @@ import java.util.TimeZone
 class TicketInformationViewModel(
     private val workOrderDetailsUseCase: WorkOrderDetailsUseCase = WorkOrderDetailsUseCase(),
     private val postWorkOrderTaskUseCase: PostWorkOrderTaskUseCase = PostWorkOrderTaskUseCase(),
+    private val submitEmailTemplateUseCase: SubmitEmailTemplateUseCase = SubmitEmailTemplateUseCase(),
     private val orderId: String,
     private val activity: Activity
 
@@ -130,6 +133,16 @@ class TicketInformationViewModel(
 
     var postingWorkOrderState by mutableStateOf(PostingWorkOrderState())
         private set
+
+    var isEmailTemplateSelected by mutableStateOf(false)
+        private set
+
+    var submitEmailTemplateState by mutableStateOf(SubmitEmailTemplateState())
+        private set
+
+    fun openOrCloseEmailTemplate(){
+        isEmailTemplateSelected = !isEmailTemplateSelected
+    }
 
 
     fun updateCurrentTemplates(
@@ -389,6 +402,43 @@ class TicketInformationViewModel(
                    getWorkOrder(orderId)
                    postingWorkOrderState = PostingWorkOrderState(isLoading = false)
                }
+            }
+            is TicketInformationEvents.SubmitEmailTemplate ->{
+                viewModelScope.launch {
+                    submitEmailTemplateUseCase.submitEmailTemplate(
+                        event.workOrderId,
+                        event.templateId,
+                        activity
+                    ).collect {
+                        submitEmailTemplateState = when (it) {
+                            is Resource.Loading -> {
+                                val result = SubmitEmailTemplateState(isLoading = true)
+                                Toast.makeText(activity, "Sending Email ...", Toast.LENGTH_LONG).show()
+                                result
+                            }
+
+                            is Resource.Success -> {
+                                val result = SubmitEmailTemplateState(
+                                    isLoading = false,
+                                    status = true,
+                                    message = it.message.toString()
+                                )
+                                Toast.makeText(activity, result.message, Toast.LENGTH_LONG).show()
+                                result
+                            }
+
+                            is Resource.Error -> {
+                                val result =SubmitEmailTemplateState(
+                                    isLoading = false,
+                                    status = false,
+                                    message = it.message.toString()
+                                )
+                                Toast.makeText(activity, result.message, Toast.LENGTH_LONG).show()
+                                result
+                            }
+                        }
+                    }
+                }
             }
         }
     }

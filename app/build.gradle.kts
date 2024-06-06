@@ -145,6 +145,9 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
     implementation("com.google.firebase:firebase-messaging")
 
+    //Swipe
+    implementation("me.saket.swipe:swipe:1.1.1")
+
 
 
 

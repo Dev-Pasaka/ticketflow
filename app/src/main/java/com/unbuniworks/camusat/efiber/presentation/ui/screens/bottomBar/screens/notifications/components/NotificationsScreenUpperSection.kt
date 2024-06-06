@@ -1,14 +1,18 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.screens.bottomBar.screens.notifications.components
 
+import android.app.Activity
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowBackIosNew
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -17,10 +21,12 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.unbuniworks.camusat.efiber.R
 import com.unbuniworks.camusat.efiber.presentation.navigation.Screen
+import com.unbuniworks.camusat.efiber.presentation.ui.screens.bottomBar.screens.notifications.NotificationEvents
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.bottomBar.screens.notifications.NotificationsViewModel
 
 @Composable
 fun NotificationsScreenUpperSection(navController:NavHostController, notificationsViewModel: NotificationsViewModel){
+    val activity = LocalContext.current as Activity
     Row (
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -46,7 +52,7 @@ fun NotificationsScreenUpperSection(navController:NavHostController, notificatio
                 )
             }
             Text(
-                text = "${stringResource(id = R.string.notifications_lable)} (${notificationsViewModel.notifications.size})",
+                text = "${stringResource(id = R.string.notifications_lable)} (${notificationsViewModel.state.data.size})",
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp,
                 color = colorResource(id = R.color.button_color)
@@ -54,28 +60,24 @@ fun NotificationsScreenUpperSection(navController:NavHostController, notificatio
         }
         Spacer(modifier = Modifier.width(16.dp))
 
-
         Surface(
-            onClick = {},
-            color = colorResource(id = R.color.light_blue),
-            shape = RoundedCornerShape(5.dp),
-            modifier = Modifier.height(30.dp)
+            onClick = {
+                notificationsViewModel.event(
+                    NotificationEvents.ClearAllNotifications(
+                        activity = activity
+                    )
+                )
+            },
+            color = colorResource(id = R.color.ticket_maroon),
+            shape = CircleShape,
 
-        ) {
-           Column(
-               modifier = Modifier
-                   .fillMaxSize()
-                   .padding(8.dp),
-               verticalArrangement = Arrangement.Center,
-               horizontalAlignment = Alignment.CenterHorizontally,
-
-           ) {
-               Text(
-                   text = stringResource(id = R.string.clear_notifications),
-                   fontSize = 12.sp,
-                   color = colorResource(id = R.color.button_color)
-               )
-           }
+            ) {
+            Icon(
+                imageVector = Icons.Outlined.Delete,
+                contentDescription = "go back",
+                tint = Color.White,
+                modifier = Modifier.padding(4.dp)
+            )
         }
     }
 }

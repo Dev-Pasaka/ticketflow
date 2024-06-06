@@ -4,6 +4,7 @@ import android.app.Activity
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -28,6 +29,7 @@ import com.unbuniworks.camusat.efiber.common.Constants
 import com.unbuniworks.camusat.efiber.data.local.sharedPreference.SharedPreferenceRepository
 import com.unbuniworks.camusat.efiber.data.local.sharedPreference.SharedPreferenceRepositoryImpl
 import com.unbuniworks.camusat.efiber.data.remote.dto.SubmitUserLogsDto
+import com.unbuniworks.camusat.efiber.domain.usecase.GetAllNotificationUseCase
 import com.unbuniworks.camusat.efiber.domain.usecase.SubmitLogsUseCase
 import com.unbuniworks.camusat.efiber.presentation.navigation.Screen
 import kotlinx.coroutines.launch
@@ -39,10 +41,19 @@ fun TopAppBar(
 ) {
     val sharedPreferenceRepositoryImpl = SharedPreferenceRepositoryImpl()
     val context = LocalContext.current
+    val activity = LocalContext.current as Activity
     val scope = rememberCoroutineScope()
 
     var isDropDownOpen by remember {
         mutableStateOf(false)
+    }
+
+    var notificationCount by remember { mutableIntStateOf(0) }
+
+    LaunchedEffect(Unit) {
+        GetAllNotificationUseCase().getAllNotification(activity).collect {
+            notificationCount = it.data?.size ?: 0
+        }
     }
     Column(
         horizontalAlignment = Alignment.End,
@@ -72,21 +83,43 @@ fun TopAppBar(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
-                IconButton(onClick = {
-                    navController.navigate(Screen.Notifications.route) {
-                        navController.popBackStack()
-                    }
-                }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.notification_on_icon),
-                        contentDescription = "Language Icon",
-                        tint = Color.DarkGray,
-                        modifier = Modifier.size(25.dp)
 
-                    )
+
+
+                if (notificationCount > 0) {
+                   IconButton(
+                       onClick = {
+                           navController.navigate(Screen.Notifications.route) {
+                               navController.popBackStack()
+                           }
+                       }
+                   ) {
+                       Image(
+                           painter = painterResource(id = R.drawable.notification_on_icon_with_red),
+                           contentDescription = "Language Icon",
+                           modifier = Modifier.size(25.dp)
+                       )
+                   }
+
+                }else{
+                    IconButton(
+                        onClick = {
+                            navController.navigate(Screen.Notifications.route) {
+                                navController.popBackStack()
+                            }
+                        }
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.notification_on_icon),
+                            contentDescription = "Language Icon",
+                            modifier = Modifier.size(25.dp)
+
+                        )
+                    }
                 }
 
-                Spacer(modifier = Modifier.width(5.dp))
+                Spacer(modifier = Modifier.width(1.dp))
+
 
                 IconButton(
                     onClick = { isDropDownOpen = !isDropDownOpen }
@@ -100,6 +133,8 @@ fun TopAppBar(
                             .padding(8.dp)
                     )
                 }
+
+
             }
         }
 

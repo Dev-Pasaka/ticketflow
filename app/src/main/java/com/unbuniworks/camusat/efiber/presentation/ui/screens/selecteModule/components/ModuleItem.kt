@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,32 +29,44 @@ fun ModuleItem(
 ){
     val item = selectModuleViewModel.listOfModules.first()
     Surface(
-        color = colorResource(id = R.color.light_blue),
-        shape = RoundedCornerShape(5.dp),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+        color = Color.Transparent,
         onClick = {
             selectModuleViewModel.updateSelectedModule(name = item)
             actionNavigateToHome()
         }
     ) {
-        Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.Start,
+        ElevatedCard(
+            colors = CardDefaults.cardColors(
+                contentColor = Color.DarkGray,
+                containerColor = Color.White
+            ),
+            shape = RoundedCornerShape(5.dp),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 16.dp)
+                .padding(horizontal = 16.dp, vertical = 5.dp)
+        ){
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.Start,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 16.dp)
 
-        ) {
-            Text(
-                text = stringResource(id = R.string.dispatch_module),
-                fontWeight = if (selectModuleViewModel.selectedModule == item)
-                    FontWeight.Bold
-                else FontWeight.Normal,
-                color =  Color.DarkGray
-            )
+
+            ) {
+                Text(
+                    text = stringResource(id = R.string.dispatch_module),
+                    fontWeight = if (selectModuleViewModel.selectedModule == item)
+                        FontWeight.Bold
+                    else FontWeight.Normal,
+                    color =  Color.DarkGray
+                )
+            }
+
         }
+
+
+
     }
 
     Spacer(modifier = Modifier.height(8.dp))

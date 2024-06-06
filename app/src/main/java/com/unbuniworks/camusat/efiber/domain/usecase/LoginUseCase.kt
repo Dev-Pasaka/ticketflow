@@ -61,7 +61,7 @@ class LoginUseCase(
                         Log.e("FCMTokenResponse", result.toString())
                     }
                 } catch (e: Exception) {
-                    e.localizedMessage?.let { Log.e("LoginStatus", it.toString()) }
+                    e.localizedMessage?.let { Log.e("LoginStatus", it) }
                 }
             }
 

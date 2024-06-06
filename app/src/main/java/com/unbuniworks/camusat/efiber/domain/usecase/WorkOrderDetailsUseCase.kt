@@ -22,8 +22,13 @@ class WorkOrderDetailsUseCase(
         try {
             emit(Resource.Loading( message = "Loading"))
             val token = sharedPreferenceRepository.getString(Constants.token, activity) ?: ""
-            val result = repository.getWorkOrder(workOrderId = workOrderId, token = token).toWorkOrderDetails()
-            emit(Resource.Success(data = result, message = "Data fetch was successful"))
+            val workOrderDetails = repository.getWorkOrder(workOrderId = workOrderId, token = token).toWorkOrderDetails()
+            emit(
+                Resource.Success(
+                    data =  workOrderDetails ,
+                    message = "Data fetch was successful"
+                )
+            )
 
         } catch (e:IOException){
             e.localizedMessage?.let { Log.e("WorkOrdersStatus", it) }

@@ -28,6 +28,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -92,10 +93,11 @@ fun BottomAppBar(bottomNavigationViewModel: BottomNavigationViewModel, navContro
                                 .padding(horizontal = 8.dp, vertical = 8.dp)
                         ) {
 
-                            if (bottomNavigationViewModel.bottomBarDestinations[it].title == "Request") {
+                            val screen = stringResource(id = bottomNavigationViewModel.bottomBarDestinations[it].title)
+                            if (screen == "Request") {
                                 Icon(
                                     imageVector = Icons.Outlined.SignalCellularAlt,
-                                    contentDescription = bottomNavigationViewModel.bottomBarDestinations[it].title,
+                                    contentDescription = screen,
                                     tint = colorResource(id = R.color.button_color),
                                     modifier = Modifier.size(30.dp)
                                 )
@@ -103,7 +105,7 @@ fun BottomAppBar(bottomNavigationViewModel: BottomNavigationViewModel, navContro
                             } else {
                                 Icon(
                                     painter = painterResource(id = bottomNavigationViewModel.bottomBarDestinations[it].icon),
-                                    contentDescription = bottomNavigationViewModel.bottomBarDestinations[it].title,
+                                    contentDescription = screen,
                                     tint = colorResource(id = R.color.button_color),
                                     modifier = if (
                                         bottomNavigationViewModel.selectedDestination.title
@@ -114,7 +116,7 @@ fun BottomAppBar(bottomNavigationViewModel: BottomNavigationViewModel, navContro
                             }
                             Spacer(modifier = Modifier.height(5.dp))
                             Text(
-                                text = bottomNavigationViewModel.bottomBarDestinations[it].title,
+                                text = screen,
                                 color = colorResource(id = R.color.button_color),
                                 fontSize = 12.sp,
                                 fontWeight = if (
