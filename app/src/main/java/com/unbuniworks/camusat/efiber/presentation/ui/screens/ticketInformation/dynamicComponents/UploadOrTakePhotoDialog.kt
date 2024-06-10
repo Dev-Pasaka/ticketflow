@@ -1,11 +1,16 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.dynamicComponents
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
@@ -35,22 +40,28 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.core.content.FileProvider
 import androidx.navigation.NavHostController
 import com.unbuniworks.camusat.efiber.R
 import com.unbuniworks.camusat.efiber.presentation.navigation.Screen
 import com.unbuniworks.camusat.efiber.presentation.ui.screens.ticketInformation.TicketInformationViewModel
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @Composable
 fun UploadOrTakePhotoDialog(
-    index:Int,
+    index: Int,
     ticketInformationViewModel: TicketInformationViewModel,
-    navController:NavHostController
+    navController: NavHostController
 ) {
     val context = LocalContext.current
     val pickMedia =
         rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
 
-            // photo picker.
+            // Photo picker.
             if (uri != null) {
                 ticketInformationViewModel.selectImage(uri = uri, index = index)
                 ticketInformationViewModel.openOrCloseTakePhotoOrUploadImage(key = "$index")
@@ -60,30 +71,25 @@ fun UploadOrTakePhotoDialog(
         }
 
     var bitmap: Bitmap? by remember { mutableStateOf(null) }
-    val resultLauncher =
-        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                if (result.data != null) {
-                    bitmap = result.data?.extras?.get("data") as Bitmap
-                    Log.e("Bitmap", bitmap.toString())
-                    if (bitmap != null) {
-                        val uri = ticketInformationViewModel.getImageUriFromBitmap(
-                            context = context,
-                            bitmap = bitmap!!
-                        )
-                        Log.e("Uri", uri.toString())
-                        ticketInformationViewModel.selectImage(index = index, uri = uri)
-                        ticketInformationViewModel.openOrCloseTakePhotoOrUploadImage(key = "$index")
-                    }
+    var photoUri: Uri? by remember { mutableStateOf(null) }
+
+    val resultLauncher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            photoUri?.let {
+                bitmap = MediaStore.Images.Media.getBitmap(context.contentResolver, it)
+                Log.e("Bitmap", bitmap.toString())
+                if (bitmap != null) {
+                    val uri = ticketInformationViewModel.getImageUriFromBitmap(
+                        context = context,
+                        bitmap = bitmap!!
+                    )
+                    Log.e("Uri", uri.toString())
+                    ticketInformationViewModel.selectImage(index = index, uri = uri)
+                    ticketInformationViewModel.openOrCloseTakePhotoOrUploadImage(key = "$index")
                 }
             }
         }
-
-    // Open camera
-    val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-
-// Get your image
-
+    }
 
     Dialog(
         onDismissRequest = { ticketInformationViewModel.openOrCloseTakePhotoOrUploadImage(key = "$index") },
@@ -133,7 +139,17 @@ fun UploadOrTakePhotoDialog(
                 }
                 Surface(
                     onClick = {
-                        resultLauncher.launch(cameraIntent)
+                        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                        val photoFile: File? = createImageFile(context)
+                        photoFile?.also {
+                            photoUri = FileProvider.getUriForFile(
+                                context,
+                                "${context.packageName}.fileprovider",
+                                it
+                            )
+                            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+                            resultLauncher.launch(cameraIntent)
+                        }
                     },
                     color = Color.Transparent
                 ) {
@@ -158,10 +174,21 @@ fun UploadOrTakePhotoDialog(
             }
         }
     }
+
 }
 
 
 
-
-
-
+fun createImageFile(context: Context): File? {
+    val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
+    val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+    return try {
+        File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        )
+    } catch (ex: IOException) {
+        null
+    }
+}
