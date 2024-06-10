@@ -40,8 +40,6 @@ data class ScheduledWorkOrdersDtoItem(
     val project: Project,
     @SerialName("projectId")
     val projectId: String,
-    @SerialName("rawData")
-    val rawData: String?,
     @SerialName("scheduledEndAt")
     val scheduledEndAt: String,
     @SerialName("scheduledStartAt")

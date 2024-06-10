@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "com.unbuniworks.camusat.efiber"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -144,9 +144,9 @@ dependencies {
     //Firebase
     implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
     implementation("com.google.firebase:firebase-messaging")
-
     //Swipe
     implementation("me.saket.swipe:swipe:1.1.1")
+
 
 
 

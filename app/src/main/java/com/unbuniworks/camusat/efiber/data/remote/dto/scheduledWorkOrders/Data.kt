@@ -8,8 +8,6 @@ import kotlinx.serialization.Serializable
 data class Data(
     @SerialName("info")
     val info: String,
-    @SerialName("infoData")
-    val infoData: String,
     @SerialName("kpi")
     val kpi: String,
     @SerialName("link")

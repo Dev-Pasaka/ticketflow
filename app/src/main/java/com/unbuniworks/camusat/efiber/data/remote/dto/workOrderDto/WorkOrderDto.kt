@@ -22,7 +22,6 @@ data class WorkOrderDto(
     @SerialName("Project")
     val project: Project?,
     val projectId: String?,
-    val rawData: String?,
     val scheduledEndAt: String?,
     val scheduledStartAt: String?,
     val status: String,

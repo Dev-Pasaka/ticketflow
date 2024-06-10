@@ -34,8 +34,6 @@ data class WorkOrdersDtoItem(
     val project: Project?,
     @SerialName("projectId")
     val projectId: String?,
-    @SerialName("rawData")
-    val rawData: String?,
     @SerialName("scheduledEndAt")
     val scheduledEndAt: String? = null,
     @SerialName("dueDate")

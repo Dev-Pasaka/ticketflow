@@ -31,7 +31,6 @@ class PushNotificationService(
     private val CHANNEL_ID = "EfiberDispath"
     private val CHANNEL_NAME = "Efiber"
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onNewToken(token: String) {
         super.onNewToken(token)
         // Handle the new token
@@ -48,7 +47,9 @@ class PushNotificationService(
             }
         }
 
-        createNotificationChannel()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createNotificationChannel()
+        }
         Log.d("FCMToken", "Refreshed token: $token")
     }
 

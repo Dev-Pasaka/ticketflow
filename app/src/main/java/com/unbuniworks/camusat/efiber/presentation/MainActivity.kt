@@ -25,7 +25,7 @@ import com.unbuniworks.camusat.efiber.R
 import com.unbuniworks.camusat.efiber.presentation.navigation.NavGraph
 import com.unbuniworks.camusat.efiber.presentation.ui.theme.CamusatTheme
 import com.unbuniworks.camusat.efiber.services.backgroundServices.WorkOrderWorker
-import java.time.Duration
+import org.threeten.bp.Duration
 
 class MainActivity : ComponentActivity() {
     private lateinit var navController: NavHostController
@@ -51,14 +51,14 @@ class MainActivity : ComponentActivity() {
                 0
             )
         }*/
-        val workRequest = OneTimeWorkRequestBuilder<WorkOrderWorker>()
+     /*   val workRequest = OneTimeWorkRequestBuilder<WorkOrderWorker>()
             .setInitialDelay(Duration.ofSeconds(10))
             .setBackoffCriteria(
                 backoffPolicy = BackoffPolicy.LINEAR,
                 duration = Duration.ofSeconds(1)
             )
             .build()
-        WorkManager.getInstance(applicationContext).enqueue(workRequest)
+        WorkManager.getInstance(applicationContext).enqueue(workRequest)*/
 
         super.onCreate(savedInstanceState)
         setContent {

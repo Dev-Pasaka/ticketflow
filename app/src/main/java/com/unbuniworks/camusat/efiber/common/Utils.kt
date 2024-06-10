@@ -1,19 +1,23 @@
 package com.unbuniworks.camusat.efiber.common
 
+import android.icu.util.Calendar
 import android.os.Build
-import android.text.format.DateUtils.getDayOfWeekString
-import androidx.annotation.RequiresApi
 import androidx.compose.ui.graphics.Color
 import com.unbuniworks.camusat.efiber.data.remote.httpClient.HttpClient
-import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
-import java.net.URL
 import java.text.SimpleDateFormat
-import java.time.*
+import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
-import java.util.*
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
+
 
 
 object Utils {
@@ -63,30 +67,34 @@ object Utils {
         return outputDateFormat.format(date)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun convertUtcToLocal(utcDateTime: String?): String {
         utcDateTime?.let {
             if (it.isNotEmpty()) {
-                try {
-                    val utcInstant = Instant.parse(utcDateTime)
-                    val localDateTime = ZonedDateTime.ofInstant(utcInstant, ZoneId.systemDefault())
-                    val formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss a")
-                    return localDateTime.format(formatter)
-                } catch (e: DateTimeParseException) {
-                    e.printStackTrace()
-                    return "Error parsing date: $utcDateTime"
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    try {
+                        val utcInstant = Instant.parse(utcDateTime)
+                        val localDateTime = ZonedDateTime.ofInstant(utcInstant, ZoneId.systemDefault())
+                        val formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss a")
+                        return localDateTime.format(formatter)
+                    } catch (e: DateTimeParseException) {
+                        e.printStackTrace()
+                        return "Error parsing date: $utcDateTime"
+                    }
                 }
             }
         }
         return ""
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun categorizeDate(utcDateTime: String?): String {
         utcDateTime?.let {
             if (it.isNotEmpty()) {
                 try {
-                    val utcInstant = Instant.parse(utcDateTime)
+                    val utcInstant = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        Instant.parse(utcDateTime)
+                    } else {
+                        TODO("VERSION.SDK_INT < O")
+                    }
                     val localDateTime = LocalDateTime.ofInstant(utcInstant, ZoneId.systemDefault())
                     val today = LocalDate.now()
                     val inputDate = localDateTime.toLocalDate()
@@ -106,7 +114,6 @@ object Utils {
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun formatTimestampInLocalTime(timestamp: String): String {
         val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
         inputFormat.timeZone = TimeZone.getTimeZone("UTC")
@@ -119,10 +126,13 @@ object Utils {
         return outputFormat.format(date)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun formatIsoTime(dateTimeString: String): String {
         // Parse the timestamp into Instant
-        val instant = Instant.parse(dateTimeString)
+        val instant = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Instant.parse(dateTimeString)
+        } else {
+            TODO("VERSION.SDK_INT < O")
+        }
 
         // Get the device's default time zone
         val defaultZoneId = ZoneId.systemDefault()

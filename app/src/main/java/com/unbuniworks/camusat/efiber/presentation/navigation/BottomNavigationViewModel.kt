@@ -13,7 +13,7 @@ class BottomNavigationViewModel():ViewModel() {
         BottomBarDestinations(title = R.string.tickets_lable, icon = R.drawable.tickets, route = Screen.Tickets.route),
         BottomBarDestinations(title = R.string.bottom_bar_tickets_schedule_lable, icon = R.drawable.schedule, route = Screen.Schedule.route),
         BottomBarDestinations(title = R.string.materials_lable, icon = R.drawable.materials, route = Screen.Material.route),
-        BottomBarDestinations(title = R.string.more_applications_lable, icon = R.drawable.more, route = Screen.More.route),
+        BottomBarDestinations(title = R.string.bottom_bar_tickets_more_lable, icon = R.drawable.more, route = Screen.More.route),
     )
     var selectedDestination by mutableStateOf(bottomBarDestinations.first())
         private set
