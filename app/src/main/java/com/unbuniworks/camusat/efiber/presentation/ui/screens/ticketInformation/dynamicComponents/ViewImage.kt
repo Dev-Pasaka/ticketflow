@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.ErrorOutline
+import androidx.compose.material.icons.filled.Loop
 import androidx.compose.material.icons.filled.Repeat
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -112,7 +114,13 @@ fun ViewImage(
             Image(
                 painter = rememberAsyncImagePainter(
                     if(feature.value?.contains("workOrderTaskFiles") == true)"${Constants.baseUrl}uploads${feature.value?.toUri()}" else
-                    feature.value?.toUri()
+                    feature.value?.toUri(),
+                    onError = {
+                        Icons.Default.ErrorOutline
+                    },
+                    onLoading = {
+                        Icons.Default.Loop
+                    }
                 ),
                 contentDescription = "Image",
                 contentScale = ContentScale.FillBounds,

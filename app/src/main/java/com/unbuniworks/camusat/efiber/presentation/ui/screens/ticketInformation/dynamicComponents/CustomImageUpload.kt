@@ -15,6 +15,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ErrorOutline
+import androidx.compose.material.icons.filled.Loop
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -91,7 +94,14 @@ fun CustomImageUpload(
                     || feature.value?.toUri() == Uri.EMPTY
                 ) painterResource(id = R.drawable.image) else rememberAsyncImagePainter(
                     model = if(feature.value?.contains("workOrderTaskFiles") == true)"${Constants.baseUrl}uploads${feature.value?.toUri()}" else
-                    feature.value?.toUri()),
+                    feature.value?.toUri(),
+                    onError = {
+                        Icons.Default.ErrorOutline
+                    },
+                    onLoading = {
+                        Icons.Default.Loop
+                    }
+                ),
                 contentDescription = "Image",
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier
