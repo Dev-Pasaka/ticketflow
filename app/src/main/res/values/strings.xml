@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">e.fiber</string>
+    <string name="app_name">Ticketflow</string>
 
     //Auth
     <string name="login">Login</string>
@@ -16,7 +16,7 @@
 
     //Select Module
     <string name="select_module">Select Module</string>
-    <string name="dispatch_module">Dispatch</string>
+    <string name="dispatch_module">Ticket</string>
 
     //Tickets screen bottom navigation
     <string name="tickets_lable">Tickets</string>

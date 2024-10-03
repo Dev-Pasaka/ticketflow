@@ -5,7 +5,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Logout
-import androidx.compose.material.icons.outlined.Logout
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -19,7 +18,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.unbuniworks.camusat.efiber.R
-import com.unbuniworks.camusat.efiber.common.Constants
 import com.unbuniworks.camusat.efiber.data.local.sharedPreference.SharedPreferenceRepository
 import com.unbuniworks.camusat.efiber.data.local.sharedPreference.SharedPreferenceRepositoryImpl
 import com.unbuniworks.camusat.efiber.presentation.navigation.Screen
@@ -56,7 +54,7 @@ fun NavDrawerContent(
         drawerContainerColor = colorResource(id = R.color.background),
     ) {
         Image(
-            painter = painterResource(id = R.drawable.camusat_logo),
+            painter = painterResource(id = R.drawable.ticket_flow_logo),
             contentDescription = "person Icon",
             modifier = Modifier
                 .padding(16.dp)

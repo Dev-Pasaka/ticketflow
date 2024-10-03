@@ -61,7 +61,7 @@ fun LoginScreenMiddleSection(
     ) {
 
         Image(
-            painter = painterResource(id = R.drawable.camusat_logo_product_removebg_preview),
+            painter = painterResource(id = R.drawable.ticket_flow_logo_product_removebg_preview),
             contentDescription = "Logo product",
             modifier = Modifier
                 .width(200.dp)

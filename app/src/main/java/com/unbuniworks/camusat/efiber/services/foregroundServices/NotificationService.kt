@@ -1,13 +1,9 @@
 package com.unbuniworks.camusat.efiber.services.foregroundServices
 
-import android.annotation.SuppressLint
 import android.app.Service
 import android.content.Intent
-import android.content.pm.ServiceInfo
-import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
-import androidx.core.app.ServiceCompat
 import com.unbuniworks.camusat.efiber.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -34,7 +30,7 @@ class NotificationService : Service() {
         CoroutineScope(Dispatchers.Default).launch {
             newWorkOder().collect{wordOrderId ->
                 val notification = NotificationCompat.Builder(this@NotificationService, "work_order")
-                    .setSmallIcon(R.drawable.camusat_logo_icon)
+                    .setSmallIcon(R.drawable.ticket_flow_logo_icon)
                     .setContentTitle("New work order created")
                     .setContentText("WorkOrder id: $wordOrderId")
                     .build()

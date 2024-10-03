@@ -2,19 +2,14 @@ package com.unbuniworks.camusat.efiber.presentation.ui.screens.splashScreen
 
 import android.app.Activity
 import android.content.Intent
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -37,7 +32,6 @@ import com.unbuniworks.camusat.efiber.R
 import com.unbuniworks.camusat.efiber.presentation.navigation.Screen
 import com.unbuniworks.camusat.efiber.services.foregroundServices.NotificationService
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @Composable
 fun SplashScreen(navController: NavHostController) {
@@ -94,7 +88,7 @@ fun SplashScreen(navController: NavHostController) {
         ) {
 
             Image(
-                painter = painterResource(id = R.drawable.camusat_logo_product_removebg_preview),
+                painter = painterResource(id = R.drawable.ticket_flow_logo_product_removebg_preview),
                 contentDescription = "Logo product",
                 modifier = Modifier
                     .width(200.dp)

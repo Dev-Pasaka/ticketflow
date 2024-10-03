@@ -1,7 +1,6 @@
 package com.unbuniworks.camusat.efiber.presentation.ui.screens.auth.resetPassword
 
 import android.app.Activity
-import android.widget.Toast
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -35,8 +34,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.unbuniworks.camusat.efiber.R
-import com.unbuniworks.camusat.efiber.presentation.navigation.Screen
-import com.unbuniworks.camusat.efiber.presentation.ui.screens.auth.LoginScreenViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -83,7 +80,7 @@ fun ResetPassword(
 
                 //Logo
                 Image(
-                    painter = painterResource(id = R.drawable.camusat_logo),
+                    painter = painterResource(id = R.drawable.ticket_flow_logo),
                     contentDescription = "Camusat logo",
                     modifier = Modifier
                         .width(150.dp)
@@ -123,7 +120,7 @@ fun ResetPassword(
                     .offset(x = offsetX.dp)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.camusat_logo_product_removebg_preview),
+                    painter = painterResource(id = R.drawable.ticket_flow_logo_product_removebg_preview),
                     contentDescription = "Logo product",
                     modifier = Modifier
                         .width(200.dp)

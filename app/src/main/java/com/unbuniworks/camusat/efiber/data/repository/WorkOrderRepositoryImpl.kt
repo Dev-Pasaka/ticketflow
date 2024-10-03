@@ -83,7 +83,7 @@ class WorkOrderRepositoryImpl(
                                 inputStream?.use { stream ->
                                     val bitmap = BitmapFactory.decodeStream(stream)
                                     val outputStream = ByteArrayOutputStream()
-                                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 60, outputStream)
                                     outputStream.toByteArray()
                                 }
                             }
@@ -130,7 +130,7 @@ class WorkOrderRepositoryImpl(
             connection.inputStream.use { inputStream ->
                 val bitmap = BitmapFactory.decodeStream(inputStream)
                 val outputStream = ByteArrayOutputStream()
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
                 outputStream.toByteArray()
             }
         } catch (e: Exception) {

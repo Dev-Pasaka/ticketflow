@@ -300,7 +300,7 @@ class TicketInformationViewModel(
 
     fun getImageUriFromBitmap(context: Context, bitmap: Bitmap): Uri {
         val bytes = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes)
 
         val values = ContentValues().apply {
             put(MediaStore.Images.Media.DISPLAY_NAME, "Title")

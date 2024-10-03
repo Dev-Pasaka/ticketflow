@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">e.fiber</string>
+    <string name="app_name">Ticketflow</string>
 
     //Auth
     <string name="login">Connexion</string>

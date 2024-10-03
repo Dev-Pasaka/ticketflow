@@ -49,7 +49,7 @@ fun LoginScreenUpperSection(loginScreenViewModel: LoginScreenViewModel) {
 
         //Logo
         Image(
-            painter = painterResource(id = R.drawable.camusat_logo),
+            painter = painterResource(id = R.drawable.ticket_flow_logo),
             contentDescription = "Camusat logo",
             modifier = Modifier
                 .width(150.dp)

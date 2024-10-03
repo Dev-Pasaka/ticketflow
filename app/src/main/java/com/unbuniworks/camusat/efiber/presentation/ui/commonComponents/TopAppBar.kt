@@ -4,29 +4,20 @@ import android.app.Activity
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.PopupProperties
 import androidx.navigation.NavHostController
 import com.unbuniworks.camusat.efiber.R
 import com.unbuniworks.camusat.efiber.common.Constants
-import com.unbuniworks.camusat.efiber.data.local.sharedPreference.SharedPreferenceRepository
 import com.unbuniworks.camusat.efiber.data.local.sharedPreference.SharedPreferenceRepositoryImpl
 import com.unbuniworks.camusat.efiber.data.remote.dto.SubmitUserLogsDto
 import com.unbuniworks.camusat.efiber.domain.usecase.GetAllNotificationUseCase
@@ -71,12 +62,12 @@ fun TopAppBar(
 
 
             Image(
-                painter = painterResource(id = R.drawable.camusat_logo),
+                painter = painterResource(id = R.drawable.ticket_flow_logo),
                 contentDescription = "person Icon",
                 modifier = Modifier
                     .fillMaxWidth(0.6f)
                     .offset(x = (-30).dp)
-                    .height(35.dp)
+                    .height(25.dp)
             )
 
             Row(

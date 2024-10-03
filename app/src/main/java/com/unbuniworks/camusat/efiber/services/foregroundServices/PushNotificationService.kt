@@ -1,6 +1,5 @@
 package com.unbuniworks.camusat.efiber.services.foregroundServices
 
-import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -81,7 +80,7 @@ class PushNotificationService(
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(title)
             .setContentText(body)
-            .setSmallIcon(R.drawable.camusat_logo_icon) // Ensure this resource exists
+            .setSmallIcon(R.drawable.ticket_flow_logo_icon) // Ensure this resource exists
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
             .build()
